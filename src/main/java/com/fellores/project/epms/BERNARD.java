@@ -13,6 +13,7 @@ public class BERNARD {
         System.out.println("wtf");
         System.out.println("OMG");
         System.out.println("OMG lodi");
+        System.out.println("LUIS LUIS LUIS");
         
     }
 }
