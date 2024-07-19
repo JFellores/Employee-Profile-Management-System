@@ -9,5 +9,7 @@ package com.fellores.project.epms;
  * @author Jomar Fellores
  */
 public class BERNARD {
-    
+    public static void main(String[] args) {
+        System.out.println("wtf");
+    }
 }
