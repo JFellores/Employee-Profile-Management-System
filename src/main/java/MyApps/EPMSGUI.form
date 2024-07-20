@@ -152,7 +152,7 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="5" rowCount="4">
-                    <Column editable="true" title="EMPLOYEE NUMBER" type="java.lang.Integer"/>
+                    <Column editable="true" title="EMPLOYEE NUMBER" type="java.lang.String"/>
                     <Column editable="true" title="NAME " type="java.lang.String"/>
                     <Column editable="true" title="DEPARTMENT " type="java.lang.String"/>
                     <Column editable="true" title="POSITION " type="java.lang.String"/>
