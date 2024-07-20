@@ -41,6 +41,7 @@ public class EPMSGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Employee Profile Management System");
+        setBackground(new java.awt.Color(51, 51, 255));
 
         AddEmployee.setText("Add");
         AddEmployee.addActionListener(new java.awt.event.ActionListener() {
@@ -106,6 +107,7 @@ public class EPMSGUI extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        ShowEmployeeData.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(ShowEmployeeData);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
