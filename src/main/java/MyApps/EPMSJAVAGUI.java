@@ -82,10 +82,12 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Employee Profile Management System");
 
-        kGradientPanel1.setkStartColor(new java.awt.Color(56, 174, 204));
+        kGradientPanel1.setkEndColor(new java.awt.Color(153, 204, 255));
+        kGradientPanel1.setkStartColor(new java.awt.Color(102, 102, 255));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-user-96.png"))); // NOI18N
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         jLabel2.setFont(new java.awt.Font("Arial Narrow", 0, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -296,6 +298,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         );
 
         EmployeeTable.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        EmployeeTable.setForeground(new java.awt.Color(255, 255, 255));
         EmployeeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -342,12 +345,11 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         SearchButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         SearchButton.setFocusPainted(false);
         SearchButton.setFocusable(false);
-        SearchButton.setOpaque(false);
         SearchButton.setRequestFocusEnabled(false);
         SearchButton.setVerifyInputWhenFocusTarget(false);
 
         jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 14)); // NOI18N
-        jLabel5.setText("Sort By:");
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-sort-26.png"))); // NOI18N
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -404,7 +406,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         public Component getTableCellRendererComponent(JTable table, Object value, boolean selected, boolean focused, int row, int column) {
             super.getTableCellRendererComponent(table, value, selected, focused, row, column);
            
-           setBackground(new java.awt.Color(144, 238, 144));
+           setBackground(new java.awt.Color(95, 125, 255));
 //you can change the color that u want 
             return this;
         }
@@ -424,42 +426,39 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
     private void AddButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddButtonMouseEntered
         AddButton.setOpaque(true);
-        AddButton.setBackground(new Color(0, 0, 255, 100));
+        AddButton.setBackground(new Color(0, 200, 255, 100));
     }//GEN-LAST:event_AddButtonMouseEntered
 
     private void AddButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddButtonMouseExited
         AddButton.setOpaque(false);
-        AddButton.setBackground(new Color(0, 0, 255, 100));
+        
     }//GEN-LAST:event_AddButtonMouseExited
 
     private void EditButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditButtonMouseEntered
         EditButton.setOpaque(true);
-        EditButton.setBackground(new Color(0, 0, 255, 100));
+        EditButton.setBackground(new Color(0, 200, 255, 100));
     }//GEN-LAST:event_EditButtonMouseEntered
 
     private void EditButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditButtonMouseExited
         EditButton.setOpaque(false);
-        EditButton.setBackground(new Color(0, 0, 255, 100));
     }//GEN-LAST:event_EditButtonMouseExited
 
     private void DeleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteButtonMouseEntered
         DeleteButton.setOpaque(true);
-        DeleteButton.setBackground(new Color(0, 0, 255, 100));
+        DeleteButton.setBackground(new Color(0, 200, 255, 100));
     }//GEN-LAST:event_DeleteButtonMouseEntered
 
     private void DeleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteButtonMouseExited
         DeleteButton.setOpaque(false);
-        DeleteButton.setBackground(new Color(0, 0, 255, 100));
     }//GEN-LAST:event_DeleteButtonMouseExited
 
     private void LogOutButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogOutButtonMouseExited
         LogOutButton.setOpaque(false);
-        LogOutButton.setBackground(new Color(0, 0, 255, 100));
     }//GEN-LAST:event_LogOutButtonMouseExited
 
     private void LogOutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogOutButtonMouseEntered
         LogOutButton.setOpaque(true);
-        LogOutButton.setBackground(new Color(0, 0, 255, 100));
+        LogOutButton.setBackground(new Color(100, 0, 240, 100));
     }//GEN-LAST:event_LogOutButtonMouseEntered
 
     private void EmployeeSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmployeeSearchActionPerformed
