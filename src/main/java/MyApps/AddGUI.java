@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package MyApps;
+import MyLibs.*;
 
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
@@ -11,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -47,7 +49,7 @@ public class AddGUI extends javax.swing.JFrame {
         javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
         javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
         TF_EmpID = new javax.swing.JTextField();
-        TF_Name = new javax.swing.JTextField();
+        TF_FirstName = new javax.swing.JTextField();
         TF_Position = new javax.swing.JTextField();
         TF_PR = new javax.swing.JTextField();
         javax.swing.JButton BTNAdd = new javax.swing.JButton();
@@ -106,15 +108,21 @@ public class AddGUI extends javax.swing.JFrame {
             }
         });
 
-        TF_Name.addActionListener(new java.awt.event.ActionListener() {
+        TF_FirstName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TF_NameActionPerformed(evt);
+                TF_FirstNameActionPerformed(evt);
             }
         });
 
         TF_Position.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_PositionActionPerformed(evt);
+            }
+        });
+
+        TF_PR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TF_PRActionPerformed(evt);
             }
         });
 
@@ -171,7 +179,7 @@ public class AddGUI extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(TF_EmpID, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(TF_Name))
+                                        .addComponent(TF_FirstName))
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(29, 29, 29)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -220,7 +228,7 @@ public class AddGUI extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TF_Name)
+                    .addComponent(TF_FirstName)
                     .addComponent(TF_LastName, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -249,7 +257,7 @@ public class AddGUI extends javax.swing.JFrame {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {BTNAdd, BTNClear});
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {TF_EmpID, TF_Name, TF_PR, TF_Position});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {TF_EmpID, TF_FirstName, TF_PR, TF_Position});
 
         Emp_Table.setAutoCreateRowSorter(true);
         Emp_Table.setModel(new javax.swing.table.DefaultTableModel(
@@ -257,7 +265,7 @@ public class AddGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Employee ID", "Name", "Department", "Position", "Performance Rating"
+                "Employee ID", "Name", "Department", "Position", "Salary"
             }
         ));
         Emp_Table.getTableHeader().setReorderingAllowed(false);
@@ -316,48 +324,69 @@ public class AddGUI extends javax.swing.JFrame {
         close();
     }//GEN-LAST:event_GoBackActionPerformed
 
-    private void TF_NameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_NameActionPerformed
+    private void TF_FirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_FirstNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TF_NameActionPerformed
+    }//GEN-LAST:event_TF_FirstNameActionPerformed
 
     private void BTNAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNAddActionPerformed
-        String EmpId = TF_EmpID.getText();
-        String name= TF_Name.getText();
-        String Position= TF_Position.getText();
-        String Performance= TF_PR.getText();
-        String Lastname= TF_LastName.getText();
-        String Hours= TF_Hours.getText();
-        String Base= TF_Base.getText();
-        String Department= TF_Depart.getText();
-        
-        
-        if (name.isEmpty()||EmpId.isEmpty()||Performance.isEmpty()||Position.isEmpty()||Lastname.isEmpty()||Hours.isEmpty()||Base.isEmpty()||Department.isEmpty()){
-        
-            JOptionPane.showMessageDialog(this, "Please fill up all fields", "Try again", JOptionPane.ERROR_MESSAGE);
-        
-        }else {
-        
-            DefaultTableModel model = (DefaultTableModel) Emp_Table.getModel();
-            model.addRow(new Object[]{EmpId, name, Position, Performance});
-            
-                TF_EmpID.setText("");
-                TF_Name.setText("");
-                TF_Position.setText("");
-                TF_PR.setText("");
-                TF_LastName.setText("");
-                TF_Hours.setText("");
-                TF_Base.setText("");
-                TF_Depart.setText("");
+        String empId = TF_EmpID.getText();
+        String firstName = TF_FirstName.getText();
+        String lastName = TF_LastName.getText();
+        String position = TF_Position.getText();
+        String performance = TF_PR.getText();
+        String hours = TF_Hours.getText();
+        String base = TF_Base.getText();
+        String department = TF_Depart.getText();
 
-                
-        
+        // Validate input fields
+        if (firstName.isEmpty() || empId.isEmpty() || performance.isEmpty() || position.isEmpty() || lastName.isEmpty() || hours.isEmpty() || base.isEmpty() || department.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill up all fields", "Try again", JOptionPane.ERROR_MESSAGE);
+        } else {
+            // Convert hours and base to their appropriate types
+            int hoursWorked;
+            double baseSalary, performanceRating;
+
+            try {
+                hoursWorked = Integer.parseInt(hours);
+                baseSalary = Double.parseDouble(base);
+                performanceRating = Double.parseDouble(performance);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Invalid number format", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Create facade instance
+            EmployeeManagementFacade facade = new EmployeeManagementFacade();
+
+            // Create an employee based on the position
+            Employee employee = facade.createEmployee(empId, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position);
+
+            // Add employee details to JTable
+            DefaultTableModel model = (DefaultTableModel) Emp_Table.getModel();
+            model.addRow(new Object[]{
+                employee.getEmployeeID(), 
+                employee.getLastName() + " " + employee.getFirstName(), 
+                employee.getDepartment(),
+                employee.getPosition(), 
+                employee.calculateSalary(), 
+            });
+
+            // Clear text fields
+            TF_EmpID.setText("");
+            TF_FirstName.setText("");
+            TF_Position.setText("");
+            TF_PR.setText("");
+            TF_LastName.setText("");
+            TF_Hours.setText("");
+            TF_Base.setText("");
+            TF_Depart.setText("");
         }
        
     }//GEN-LAST:event_BTNAddActionPerformed
 
     private void BTNClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNClearActionPerformed
                 TF_EmpID.setText("");
-                TF_Name.setText("");
+                TF_FirstName.setText("");
                 TF_Position.setText("");
                 TF_PR.setText("");
                 TF_LastName.setText("");
@@ -389,6 +418,10 @@ public class AddGUI extends javax.swing.JFrame {
     private void TF_DepartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_DepartActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TF_DepartActionPerformed
+
+    private void TF_PRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_PRActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TF_PRActionPerformed
 
     /**
      * @param args the command line arguments
@@ -427,7 +460,7 @@ public class AddGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddGUI().setVisible(true);
+            new AddGUI().setVisible(true);
             }
         });
     }
@@ -438,9 +471,9 @@ public class AddGUI extends javax.swing.JFrame {
     private javax.swing.JTextField TF_Base;
     private javax.swing.JTextField TF_Depart;
     private javax.swing.JTextField TF_EmpID;
+    private javax.swing.JTextField TF_FirstName;
     private javax.swing.JTextField TF_Hours;
     private javax.swing.JTextField TF_LastName;
-    private javax.swing.JTextField TF_Name;
     private javax.swing.JTextField TF_PR;
     private javax.swing.JTextField TF_Position;
     private javax.swing.JLabel jLabel1;

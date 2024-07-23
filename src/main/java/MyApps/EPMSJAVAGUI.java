@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import MyLibs.*;
 
+
 /**
  *
  * @author Jomar Fellores
@@ -27,6 +28,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
      */
     public EPMSJAVAGUI() {
         initComponents();
+       
         
         EmployeeTable.getTableHeader().setFont(new Font("Arial Narrow",Font.BOLD,12));
         EmployeeTable.getTableHeader().setOpaque(false);
@@ -34,6 +36,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         EmployeeTable.getTableHeader().setForeground(new Color(255, 255, 255));
         EmployeeTable.setRowHeight(25);
     }
+    
     
     
 
@@ -582,7 +585,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_UpdateButtonMouseExited
 
     private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_UpdateButtonActionPerformed
 
     private void SaveButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveButtonMouseEntered
@@ -636,7 +639,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EPMSJAVAGUI().setVisible(true);
+            new EPMSJAVAGUI().setVisible(true);
             }
         });
     }
