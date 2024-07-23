@@ -8,6 +8,6 @@ package MyLibs;
  *
  * @author Jomar Fellores
  */
-public interface iEmployee {
-    
+public interface PerformanceStrategy {
+    String classifyPerformance(double rating);
 }
