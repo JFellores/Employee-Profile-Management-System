@@ -55,10 +55,13 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         AddButton = new javax.swing.JButton();
         EditButton = new javax.swing.JButton();
         DeleteButton = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
+        UpdateButton = new javax.swing.JButton();
+        SaveButton = new javax.swing.JButton();
+        LoadButton = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
+        jSeparator1 = new javax.swing.JSeparator();
         LogOutButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         EmployeeTable = new javax.swing.JTable();
@@ -170,6 +173,75 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             }
         });
 
+        UpdateButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        UpdateButton.setForeground(new java.awt.Color(255, 255, 255));
+        UpdateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-cog-24.png"))); // NOI18N
+        UpdateButton.setText(" Update Data");
+        UpdateButton.setBorderPainted(false);
+        UpdateButton.setContentAreaFilled(false);
+        UpdateButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        UpdateButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        UpdateButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-cog-unscreen.gif"))); // NOI18N
+        UpdateButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                UpdateButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                UpdateButtonMouseExited(evt);
+            }
+        });
+        UpdateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateButtonActionPerformed(evt);
+            }
+        });
+
+        SaveButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        SaveButton.setForeground(new java.awt.Color(255, 255, 255));
+        SaveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-save-23.png"))); // NOI18N
+        SaveButton.setText(" Save Data");
+        SaveButton.setBorderPainted(false);
+        SaveButton.setContentAreaFilled(false);
+        SaveButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SaveButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        SaveButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-save-unscreen.gif"))); // NOI18N
+        SaveButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                SaveButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                SaveButtonMouseExited(evt);
+            }
+        });
+        SaveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SaveButtonActionPerformed(evt);
+            }
+        });
+
+        LoadButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        LoadButton.setForeground(new java.awt.Color(255, 255, 255));
+        LoadButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-up-23.png"))); // NOI18N
+        LoadButton.setText("Load Data");
+        LoadButton.setBorderPainted(false);
+        LoadButton.setContentAreaFilled(false);
+        LoadButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        LoadButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        LoadButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-up-unscreen-ezgif.com-resize.gif"))); // NOI18N
+        LoadButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                LoadButtonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                LoadButtonMouseExited(evt);
+            }
+        });
+        LoadButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoadButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -177,26 +249,35 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             .addComponent(AddButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(EditButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(DeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-            .addComponent(jSeparator1)
+            .addComponent(jSeparator2)
+            .addComponent(UpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(SaveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(LoadButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
                 .addComponent(AddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(EditButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(DeleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LoadButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel4.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Manage Employees");
-
-        jPanel3.setOpaque(false);
 
         LogOutButton.setFont(new java.awt.Font("Arial Narrow", 1, 12)); // NOI18N
         LogOutButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -214,20 +295,11 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
                 LogOutButtonMouseExited(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LogOutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addComponent(LogOutButton)
-                .addContainerGap())
-        );
+        LogOutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogOutButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
@@ -247,21 +319,19 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel4)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(6, 6, 6)
+                        .addComponent(LogOutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator2)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         kGradientPanel1Layout.setVerticalGroup(
@@ -273,15 +343,15 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addComponent(LogOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -289,12 +359,15 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         EmployeeTable.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
@@ -362,17 +435,17 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(SearchButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(EmployeeSearch)
+                        .addComponent(EmployeeSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)))
+                        .addGap(12, 12, 12))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -389,7 +462,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
 
@@ -413,15 +486,17 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
     }
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
-        // TODO add your handling code here:
+        AddGUI add = new AddGUI();
+        add.setVisible(true);
     }//GEN-LAST:event_AddButtonActionPerformed
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
-        // TODO add your handling code here:
+        EditGUI edit = new EditGUI();
+        edit.setVisible(true);
     }//GEN-LAST:event_EditButtonActionPerformed
 
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
-        // TODO add your handling code here:
+        int row = EmployeeTable.getSelectedRow();  
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
     private void AddButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddButtonMouseEntered
@@ -469,6 +544,49 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {}
     }//GEN-LAST:event_EmployeeSearchKeyPressed
 
+    private void LoadButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadButtonMouseEntered
+        LoadButton.setOpaque(true);
+        LoadButton.setBackground(new Color(0, 200, 255, 100));
+    }//GEN-LAST:event_LoadButtonMouseEntered
+
+    private void LoadButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadButtonMouseExited
+        LoadButton.setOpaque(false);
+    }//GEN-LAST:event_LoadButtonMouseExited
+
+    private void LoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LoadButtonActionPerformed
+
+    private void UpdateButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateButtonMouseEntered
+        UpdateButton.setOpaque(true);
+        UpdateButton.setBackground(new Color(0, 200, 255, 100));
+    }//GEN-LAST:event_UpdateButtonMouseEntered
+
+    private void UpdateButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateButtonMouseExited
+        UpdateButton.setOpaque(false);
+    }//GEN-LAST:event_UpdateButtonMouseExited
+
+    private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UpdateButtonActionPerformed
+
+    private void SaveButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveButtonMouseEntered
+        SaveButton.setOpaque(true);
+        SaveButton.setBackground(new Color(0, 200, 255, 100));
+    }//GEN-LAST:event_SaveButtonMouseEntered
+
+    private void SaveButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveButtonMouseExited
+        SaveButton.setOpaque(false);
+    }//GEN-LAST:event_SaveButtonMouseExited
+
+    private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SaveButtonActionPerformed
+
+    private void LogOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LogOutButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -510,8 +628,11 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     private javax.swing.JButton EditButton;
     private javax.swing.JTextField EmployeeSearch;
     private javax.swing.JTable EmployeeTable;
+    private javax.swing.JButton LoadButton;
     private javax.swing.JButton LogOutButton;
+    private javax.swing.JButton SaveButton;
     private javax.swing.JToggleButton SearchButton;
+    private javax.swing.JButton UpdateButton;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -519,12 +640,12 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private keeptoo.KGradientPanel kGradientPanel1;
     private keeptoo.KGradientPanel kGradientPanel2;
     // End of variables declaration//GEN-END:variables
