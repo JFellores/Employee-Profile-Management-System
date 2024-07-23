@@ -50,7 +50,10 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     }
     
     
-    
+    public static void AddRow(Object[] dataRow) {
+        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+        model.addRow(dataRow);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -387,11 +390,9 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         );
 
         EmployeeTable.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
-        EmployeeTable.setForeground(new java.awt.Color(255, 255, 255));
         EmployeeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Employee ID", "Name ", "Department", "Position", "Salary", "Performance Rating"
@@ -489,6 +490,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
     
       public class HeaderColor extends DefaultTableCellRenderer {
 
@@ -662,7 +664,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     private javax.swing.JButton DeleteButton;
     private javax.swing.JButton EditButton;
     private javax.swing.JTextField EmployeeSearch;
-    private javax.swing.JTable EmployeeTable;
+    private static javax.swing.JTable EmployeeTable;
     private javax.swing.JButton LoadButton;
     private javax.swing.JButton LogOutButton;
     private javax.swing.JButton SaveButton;
