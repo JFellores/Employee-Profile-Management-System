@@ -36,6 +36,18 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         EmployeeTable.getTableHeader().setForeground(new Color(255, 255, 255));
         EmployeeTable.setRowHeight(25);
     }
+    public void transferDataToEPMSJAVAGUI(Object[][] data) {
+        // Assuming EmployeeTable is already initialized and set up
+        DefaultTableModel targetModel = (DefaultTableModel) EmployeeTable.getModel();
+
+        // Clear existing data
+        targetModel.setRowCount(0);
+
+        // Add new data
+        for (Object[] row : data) {
+            targetModel.addRow(row);
+        }
+    }
     
     
     
@@ -585,6 +597,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_UpdateButtonMouseExited
 
     private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
+        
         
     }//GEN-LAST:event_UpdateButtonActionPerformed
 
