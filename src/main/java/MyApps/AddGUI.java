@@ -52,7 +52,6 @@ public class AddGUI extends javax.swing.JFrame {
         TF_PR = new javax.swing.JTextField();
         javax.swing.JButton BTNAdd = new javax.swing.JButton();
         javax.swing.JButton BTNClear = new javax.swing.JButton();
-        javax.swing.JButton BTNDelete = new javax.swing.JButton();
         javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
         Emp_Table = new javax.swing.JTable();
 
@@ -88,7 +87,7 @@ public class AddGUI extends javax.swing.JFrame {
 
         jLabel3.setText("Name");
 
-        jLabel4.setText("Position");
+        jLabel4.setText("Salary");
 
         jLabel5.setText("Performance Rating");
 
@@ -177,14 +176,6 @@ public class AddGUI extends javax.swing.JFrame {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {TF_EmpID, TF_Name, TF_PR, TF_Position});
 
-        BTNDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/bin.png"))); // NOI18N
-        BTNDelete.setText("Delete");
-        BTNDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BTNDeleteActionPerformed(evt);
-            }
-        });
-
         Emp_Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -204,10 +195,8 @@ public class AddGUI extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BTNDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,8 +206,7 @@ public class AddGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(BTNDelete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(29, 29, 29)
                         .addComponent(jScrollPane1))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
@@ -284,19 +272,6 @@ public class AddGUI extends javax.swing.JFrame {
                 TF_Position.setText("");
                 TF_PR.setText("");
     }//GEN-LAST:event_BTNClearActionPerformed
-
-    private void BTNDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNDeleteActionPerformed
-        int row = Emp_Table.getSelectedRow();
-        
-        if (row < 0){
-       
-        JOptionPane.showMessageDialog(this, "No row is selected", "Select row", JOptionPane.ERROR_MESSAGE);
-        
-        }else{
-            DefaultTableModel model = (DefaultTableModel) Emp_Table.getModel();
-            model.removeRow(row);
-        }
-    }//GEN-LAST:event_BTNDeleteActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
 // TODO add your handling code here:
