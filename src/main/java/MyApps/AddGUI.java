@@ -38,6 +38,7 @@ public class AddGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         GoBack.setText("Go Back");
+        GoBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         GoBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GoBackActionPerformed(evt);
