@@ -51,6 +51,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             e.printStackTrace();
         }
         
+        EmployeeTable.setDefaultEditor(Object.class, null);
         
         EmployeeTable.getTableHeader().setFont(new Font("Arial Narrow",Font.BOLD,12));
         EmployeeTable.getTableHeader().setOpaque(false);
@@ -454,7 +455,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Employee ID", "Name ", "Department", "Position", "Salary / month", "Performance Rating"
+                "Employee ID", "Name ", "Department", "Position", "Salary", "Performance Rating"
             }
         ));
         EmployeeTable.setFocusable(false);
