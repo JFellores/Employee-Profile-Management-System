@@ -340,7 +340,7 @@ public class AddGUI extends javax.swing.JFrame {
             
             EPMSJAVAGUI.AddRow(new Object[]{
                 employee.getEmployeeID(), 
-                employee.getLastName() + " " + employee.getFirstName(), 
+                employee.getLastName() + ", " + employee.getFirstName(), 
                 employee.getDepartment(),
                 employee.getPosition(), 
                 employee.calculateSalary(),
