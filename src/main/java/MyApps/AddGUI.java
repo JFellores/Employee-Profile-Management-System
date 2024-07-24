@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +23,8 @@ import javax.swing.table.TableModel;
  * @author Jomar Fellores
  */
 public class AddGUI extends javax.swing.JFrame {
-
+   int mousePx;
+   int mousePy;
     /**
      * Creates new form AddGUI
      */
@@ -43,19 +45,18 @@ public class AddGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
-        javax.swing.JPanel jPanel2 = new javax.swing.JPanel();
-        javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
-        javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
-        javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
-        javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
+        kGradientPanel1 = new keeptoo.KGradientPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         TF_EmpID = new javax.swing.JTextField();
         TF_FirstName = new javax.swing.JTextField();
         TF_Position = new javax.swing.JTextField();
         TF_PR = new javax.swing.JTextField();
-        javax.swing.JButton BTNAdd = new javax.swing.JButton();
-        javax.swing.JButton BTNClear = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
+        BTNAdd = new javax.swing.JButton();
+        BTNClear = new javax.swing.JButton();
         TF_LastName = new javax.swing.JTextField();
         TF_Depart = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -67,6 +68,7 @@ public class AddGUI extends javax.swing.JFrame {
         GoBack = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -76,7 +78,18 @@ public class AddGUI extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        kGradientPanel1.setkEndColor(new java.awt.Color(0, 0, 204));
+        kGradientPanel1.setkStartColor(new java.awt.Color(153, 255, 255));
+        kGradientPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                kGradientPanel1MouseDragged(evt);
+            }
+        });
+        kGradientPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                kGradientPanel1MousePressed(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "New employee", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 14))); // NOI18N
         jPanel2.setOpaque(false);
@@ -199,9 +212,7 @@ public class AddGUI extends javax.swing.JFrame {
                         .addGap(0, 17, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(GoBack, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addComponent(GoBack)))
                 .addContainerGap())
         );
 
@@ -247,9 +258,7 @@ public class AddGUI extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BTNAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BTNClear))
-                .addGap(3, 3, 3)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(GoBack)
                 .addContainerGap())
         );
@@ -258,46 +267,67 @@ public class AddGUI extends javax.swing.JFrame {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {TF_EmpID, TF_FirstName, TF_PR, TF_Position});
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
+        kGradientPanel1.setLayout(kGradientPanel1Layout);
+        kGradientPanel1Layout.setHorizontalGroup(
+            kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        kGradientPanel1Layout.setVerticalGroup(
+            kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(42, 42, 42))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+// TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
+
     private void GoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoBackActionPerformed
         close();
     }//GEN-LAST:event_GoBackActionPerformed
 
-    private void TF_FirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_FirstNameActionPerformed
+    private void TF_DepartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_DepartActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TF_FirstNameActionPerformed
+    }//GEN-LAST:event_TF_DepartActionPerformed
+
+    private void TF_LastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_LastNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TF_LastNameActionPerformed
+
+    private void BTNClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNClearActionPerformed
+        TF_EmpID.setText("");
+        TF_FirstName.setText("");
+        TF_Position.setText("");
+        TF_PR.setText("");
+        TF_LastName.setText("");
+        TF_Hours.setText("");
+        TF_Base.setText("");
+        TF_Depart.setText("");
+    }//GEN-LAST:event_BTNClearActionPerformed
 
     private void BTNAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNAddActionPerformed
         String empId = TF_EmpID.getText();
@@ -308,13 +338,13 @@ public class AddGUI extends javax.swing.JFrame {
         String hours = TF_Hours.getText();
         String base = TF_Base.getText();
         String department = TF_Depart.getText();
-        
+
         Set<String> validPositions = new HashSet<>(Arrays.asList("Manager", "Sales Associate", "Cashier", "Janitor", "Merchandiser"));
         // Validate input fields
         if (firstName.isEmpty() || empId.isEmpty() || performance.isEmpty() || position.isEmpty() || lastName.isEmpty() || hours.isEmpty() || base.isEmpty() || department.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill up all fields", "Try again", JOptionPane.ERROR_MESSAGE);
         } else if (!validPositions.contains(position)) {
-        // Validate the position
+            // Validate the position
             JOptionPane.showMessageDialog(this, "Invalid position. Please enter a valid position. \nManager | Sales Associate | Cashier | Janitor | Merchandiser", "Error", JOptionPane.ERROR_MESSAGE);
         }  else{
             // Convert hours and base to their appropriate types
@@ -337,13 +367,13 @@ public class AddGUI extends javax.swing.JFrame {
             Employee employee = facade.createEmployee(empId, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position);
 
             // Add employee details to JTable
-            
+            DecimalFormat df = new DecimalFormat("#.00");
             EPMSJAVAGUI.AddRow(new Object[]{
-                employee.getEmployeeID(), 
-                employee.getLastName() + ", " + employee.getFirstName(), 
+                employee.getEmployeeID(),
+                employee.getLastName() + ", " + employee.getFirstName(),
                 employee.getDepartment(),
-                employee.getPosition(), 
-                employee.calculateSalary(),
+                employee.getPosition(),
+                df.format(employee.calculateSalary()),
                 employee.classifyPerformance()
             });
 
@@ -357,47 +387,36 @@ public class AddGUI extends javax.swing.JFrame {
             TF_Base.setText("");
             TF_Depart.setText("");
         }
-       
+
     }//GEN-LAST:event_BTNAddActionPerformed
 
-    private void BTNClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNClearActionPerformed
-                TF_EmpID.setText("");
-                TF_FirstName.setText("");
-                TF_Position.setText("");
-                TF_PR.setText("");
-                TF_LastName.setText("");
-                TF_Hours.setText("");
-                TF_Base.setText("");
-                TF_Depart.setText("");
-    }//GEN-LAST:event_BTNClearActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-// TODO add your handling code here:
-    }//GEN-LAST:event_formWindowClosing
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    private void TF_PRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_PRActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_formWindowOpened
-
-    private void TF_EmpIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_EmpIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TF_EmpIDActionPerformed
+    }//GEN-LAST:event_TF_PRActionPerformed
 
     private void TF_PositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_PositionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TF_PositionActionPerformed
 
-    private void TF_LastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_LastNameActionPerformed
+    private void TF_FirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_FirstNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TF_LastNameActionPerformed
+    }//GEN-LAST:event_TF_FirstNameActionPerformed
 
-    private void TF_DepartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_DepartActionPerformed
+    private void TF_EmpIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_EmpIDActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TF_DepartActionPerformed
+    }//GEN-LAST:event_TF_EmpIDActionPerformed
 
-    private void TF_PRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_PRActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TF_PRActionPerformed
+    private void kGradientPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kGradientPanel1MouseDragged
+       int corX = evt.getXOnScreen();
+       int corY = evt.getYOnScreen();
+                
+       setLocation(corX - mousePx, corY - mousePy);
+    }//GEN-LAST:event_kGradientPanel1MouseDragged
+
+    private void kGradientPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kGradientPanel1MousePressed
+       mousePx = evt.getX();
+       mousePy = evt.getY();
+    }//GEN-LAST:event_kGradientPanel1MousePressed
 
     /**
      * @param args the command line arguments
@@ -442,6 +461,8 @@ public class AddGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTNAdd;
+    private javax.swing.JButton BTNClear;
     private javax.swing.JToggleButton GoBack;
     private javax.swing.JTextField TF_Base;
     private javax.swing.JTextField TF_Depart;
@@ -452,9 +473,14 @@ public class AddGUI extends javax.swing.JFrame {
     private javax.swing.JTextField TF_PR;
     private javax.swing.JTextField TF_Position;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JPanel jPanel2;
+    private keeptoo.KGradientPanel kGradientPanel1;
     // End of variables declaration//GEN-END:variables
 }

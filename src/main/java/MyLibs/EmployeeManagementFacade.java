@@ -14,28 +14,26 @@ import java.util.ArrayList;
 public class EmployeeManagementFacade {
     private ArrayList<Employee> employees = new ArrayList<>();
 
-    public EmployeeManagementFacade() {
-        // Initialize if necessary
-    }
+    
 
     public Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, String position) {
         EmployeeFactory factory;
 
         switch (position) {
             case "Manager":
-                factory = new ManagerFactory();
+                factory = new Manager();
                 break;
             case "Sales Associate":
-                factory = new SalesAssociateFactory();
+                factory = new SalesAssociate();
                 break;
             case "Cashier":
-                factory = new CashierFactory();
+                factory = new Cashier();
                 break;
             case "Janitor":
-                factory = new JanitorFactory();
+                factory = new Janitor();
                 break;
             case "Merchandiser":
-                factory = new MerchandiserFactory();
+                factory = new Merchandiser();
                 break;
             default:
                 throw new IllegalArgumentException("Unknown position: " + position);

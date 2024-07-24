@@ -8,10 +8,10 @@ package MyLibs;
  *
  * @author Jomar Fellores
  */
-public class MerchandiserFactory implements EmployeeFactory {
+public class Manager implements EmployeeFactory{
     @Override
     public Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department) {
         return new Employee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, 
-                            new PartTimeSalaryStrategy(), new PerformanceClassificationStrategy(), "Merchandiser");
+                            new FullTimeSalaryStrategy(), new PerformanceClassificationStrategy(), "Manager");
     }
 }
