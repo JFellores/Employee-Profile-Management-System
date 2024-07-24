@@ -45,6 +45,13 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     public EPMSJAVAGUI() {
         initComponents();
         
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
         EmployeeTable.getTableHeader().setFont(new Font("Arial Narrow",Font.BOLD,12));
         EmployeeTable.getTableHeader().setOpaque(false);
         EmployeeTable.getTableHeader().setDefaultRenderer(new HeaderColor());
@@ -250,7 +257,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         UpdateButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         UpdateButton.setForeground(new java.awt.Color(255, 255, 255));
         UpdateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-cog-24.png"))); // NOI18N
-        UpdateButton.setText(" Update Data");
+        UpdateButton.setText("Check Details");
         UpdateButton.setBorderPainted(false);
         UpdateButton.setContentAreaFilled(false);
         UpdateButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -447,7 +454,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Employee ID", "Name ", "Department", "Position", "Salary", "Performance Rating"
+                "Employee ID", "Name ", "Department", "Position", "Salary / month", "Performance Rating"
             }
         ));
         EmployeeTable.setFocusable(false);
