@@ -12,6 +12,6 @@ public class Janitor implements EmployeeFactory {
     @Override
     public Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department) {
         return new Employee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, 
-                            new FullTimeSalaryStrategy(), new PerformanceClassificationStrategy(), "Janitor");
+                            new PartTimeSalaryStrategy(), new PerformanceClassificationStrategy(), "Janitor");
     }
 }

@@ -11,6 +11,6 @@ package MyLibs;
 public class PartTimeSalaryStrategy implements SalaryStrategy{
     @Override
     public double calculateSalary(double baseSalary, int hoursWorked) {
-        return (baseSalary/2) * hoursWorked; 
+        return (baseSalary/1.5) * hoursWorked; 
     }
 }

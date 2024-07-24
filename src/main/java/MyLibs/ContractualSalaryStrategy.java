@@ -13,10 +13,11 @@ public class ContractualSalaryStrategy implements SalaryStrategy{
 
     @Override
     public double calculateSalary(double baseSalary, int hoursWorked) {
+        //3 Month Contract
         if (hoursWorked < REQUIRED_HOURS) {
-            return baseSalary * (hoursWorked / (double) REQUIRED_HOURS);
+            return (REQUIRED_HOURS * baseSalary) - (baseSalary * hoursWorked);
         }
-        return baseSalary * hoursWorked;
+        return baseSalary * hoursWorked ;
     }
 }
 
