@@ -464,13 +464,13 @@ public class AddGUI extends javax.swing.JFrame {
         String base = TF_Base.getText();
         String department = TF_Depart.getText();
 
-        Set<String> validPositions = new HashSet<>(Arrays.asList("Manager", "Sales Associate", "Cashier", "Janitor", "Merchandiser"));
+        Set<String> validPositions = new HashSet<>(Arrays.asList("Manager", "Sales Associate", "Cashier", "Customer Service", "Merchandiser"));
         // Validate input fields
         if (firstName.isEmpty() || empId.isEmpty() || performance.isEmpty() || position.isEmpty() || lastName.isEmpty() || hours.isEmpty() || base.isEmpty() || department.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill up all fields", "Try again", JOptionPane.ERROR_MESSAGE);
         } else if (!validPositions.contains(position)) {
             // Validate the position
-            JOptionPane.showMessageDialog(this, "Invalid position. Please enter a valid position. \nManager | Sales Associate | Cashier | Janitor | Merchandiser", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid position. Please enter a valid position. \nManager | Sales Associate | Cashier | Customer Service | Merchandiser", "Error", JOptionPane.ERROR_MESSAGE);
         }  else{
             // Convert hours and base to their appropriate types
             int hoursWorked;
