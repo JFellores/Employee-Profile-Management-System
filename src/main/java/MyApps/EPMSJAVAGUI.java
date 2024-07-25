@@ -676,24 +676,32 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         }
     }
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
-          int row = EmployeeTable.getSelectedRow();
-    
-    if (row < 0) {
-        JOptionPane.showMessageDialog(this, "No row is selected", "Select row", JOptionPane.ERROR_MESSAGE);
-    } else {
-        // Get the employee ID from the selected row
-        String employeeID = (String) EmployeeTable.getValueAt(row, 0);
-        
-        // Remove the employee from the facade
-        facade.removeEmployee(employeeID);
-        
-        // Remove the row from the table model
-        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
-        model.removeRow(row);
-        
-        // Optional: Show a confirmation message
-        JOptionPane.showMessageDialog(this, "Employee removed successfully.");
-    }
+            int row = EmployeeTable.getSelectedRow();
+
+            if (row < 0) {
+                JOptionPane.showMessageDialog(this, "No row is selected", "Select row", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Get the filtered row index
+            int modelRow = EmployeeTable.convertRowIndexToModel(row);
+
+            // Get the employee ID from the selected row
+            DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+            String employeeID = (String) model.getValueAt(modelRow, 0); // Assuming ID is in the first column
+
+            // Confirm deletion
+            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this employee?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                // Remove the employee from the facade
+                facade.removeEmployee(employeeID);
+
+                // Remove the row from the table model
+                model.removeRow(modelRow);
+
+                // Optional: Show a confirmation message
+                JOptionPane.showMessageDialog(this, "Employee removed successfully.");
+            }
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
     private void AddButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddButtonMouseEntered
