@@ -58,12 +58,10 @@ public class AddGUI extends javax.swing.JFrame {
         javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
         TF_EmpID = new javax.swing.JTextField();
         TF_FirstName = new javax.swing.JTextField();
-        TF_Position = new javax.swing.JTextField();
         TF_PR = new javax.swing.JTextField();
         javax.swing.JButton BTNAdd = new javax.swing.JButton();
         javax.swing.JButton BTNClear = new javax.swing.JButton();
         TF_LastName = new javax.swing.JTextField();
-        TF_Depart = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -71,6 +69,8 @@ public class AddGUI extends javax.swing.JFrame {
         TF_Base = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         GoBack = new javax.swing.JToggleButton();
+        CB_Position = new javax.swing.JComboBox<>();
+        CB_Dept = new javax.swing.JComboBox<>();
         kGradientPanel3 = new keeptoo.KGradientPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
@@ -165,12 +165,6 @@ public class AddGUI extends javax.swing.JFrame {
             }
         });
 
-        TF_Position.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TF_PositionActionPerformed(evt);
-            }
-        });
-
         TF_PR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_PRActionPerformed(evt);
@@ -179,6 +173,7 @@ public class AddGUI extends javax.swing.JFrame {
 
         BTNAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/add.png"))); // NOI18N
         BTNAdd.setText("ADD");
+        BTNAdd.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTNAdd.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/add.png"))); // NOI18N
         BTNAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,6 +183,7 @@ public class AddGUI extends javax.swing.JFrame {
 
         BTNClear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/clean.png"))); // NOI18N
         BTNClear.setText("CLEAR");
+        BTNClear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         BTNClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTNClearActionPerformed(evt);
@@ -197,12 +193,6 @@ public class AddGUI extends javax.swing.JFrame {
         TF_LastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_LastNameActionPerformed(evt);
-            }
-        });
-
-        TF_Depart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TF_DepartActionPerformed(evt);
             }
         });
 
@@ -230,6 +220,10 @@ public class AddGUI extends javax.swing.JFrame {
             }
         });
 
+        CB_Position.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Merchandiser", "Sales Associate", "Customer Service", "Cashier" }));
+
+        CB_Dept.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Information Technology", "Human Resources", "Sales & Marketing" }));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -240,32 +234,34 @@ public class AddGUI extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(TF_FirstName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addGap(2, 2, 2)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(TF_Hours, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(TF_Position, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(TF_FirstName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TF_EmpID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CB_Position, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(45, 45, 45)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                     .addComponent(TF_PR, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(1, 1, 1)))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(TF_Depart)
-                                .addComponent(TF_Base)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(TF_LastName, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
+                                    .addGap(30, 30, 30)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(CB_Dept, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(TF_Base, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(TF_LastName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)))
+                                .addContainerGap())))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(GoBack)
                         .addGap(18, 18, 18))))
@@ -309,9 +305,9 @@ public class AddGUI extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TF_Position)
-                    .addComponent(TF_Depart, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(CB_Position, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(CB_Dept))
                 .addGap(29, 29, 29)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -331,7 +327,7 @@ public class AddGUI extends javax.swing.JFrame {
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {BTNAdd, BTNClear});
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {TF_EmpID, TF_FirstName, TF_PR, TF_Position});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {TF_EmpID, TF_FirstName, TF_PR});
 
         kGradientPanel3.setkEndColor(new java.awt.Color(255, 255, 255));
         kGradientPanel3.setkStartColor(new java.awt.Color(255, 255, 255));
@@ -435,10 +431,6 @@ public class AddGUI extends javax.swing.JFrame {
         close();
     }//GEN-LAST:event_GoBackActionPerformed
 
-    private void TF_DepartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_DepartActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TF_DepartActionPerformed
-
     private void TF_LastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_LastNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TF_LastNameActionPerformed
@@ -446,23 +438,21 @@ public class AddGUI extends javax.swing.JFrame {
     private void BTNClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNClearActionPerformed
         TF_EmpID.setText("");
         TF_FirstName.setText("");
-        TF_Position.setText("");
         TF_PR.setText("");
         TF_LastName.setText("");
         TF_Hours.setText("");
         TF_Base.setText("");
-        TF_Depart.setText("");
     }//GEN-LAST:event_BTNClearActionPerformed
 
     private void BTNAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNAddActionPerformed
         String empId = TF_EmpID.getText();
         String firstName = TF_FirstName.getText();
         String lastName = TF_LastName.getText();
-        String position = TF_Position.getText();
+        String position = CB_Position.getSelectedItem().toString();
         String performance = TF_PR.getText();
         String hours = TF_Hours.getText();
         String base = TF_Base.getText();
-        String department = TF_Depart.getText();
+        String department = CB_Dept.getSelectedItem().toString();
 
         Set<String> validPositions = new HashSet<>(Arrays.asList("Manager", "Sales Associate", "Cashier", "Customer Service", "Merchandiser"));
         // Validate input fields
@@ -504,23 +494,18 @@ public class AddGUI extends javax.swing.JFrame {
             
             // Clear text fields
             TF_EmpID.setText("");
-            TF_FirstName.setText("");
-            TF_Position.setText("");
+            TF_FirstName.setText("");          
             TF_PR.setText("");
             TF_LastName.setText("");
             TF_Hours.setText("");
             TF_Base.setText("");
-            TF_Depart.setText("");
+            
         }
     }//GEN-LAST:event_BTNAddActionPerformed
 
     private void TF_PRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_PRActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TF_PRActionPerformed
-
-    private void TF_PositionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_PositionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TF_PositionActionPerformed
 
     private void TF_FirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_FirstNameActionPerformed
         // TODO add your handling code here:
@@ -589,15 +574,15 @@ public class AddGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CB_Dept;
+    private javax.swing.JComboBox<String> CB_Position;
     private javax.swing.JToggleButton GoBack;
     private javax.swing.JTextField TF_Base;
-    private javax.swing.JTextField TF_Depart;
     private javax.swing.JTextField TF_EmpID;
     private javax.swing.JTextField TF_FirstName;
     private javax.swing.JTextField TF_Hours;
     private javax.swing.JTextField TF_LastName;
     private javax.swing.JTextField TF_PR;
-    private javax.swing.JTextField TF_Position;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
