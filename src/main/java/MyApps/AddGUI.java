@@ -430,7 +430,7 @@ public class AddGUI extends javax.swing.JFrame {
                 employee.getDepartment(),
                 employee.getPosition(),
                 df.format(employee.getSalaryStrategy().calculateSalary(baseSalary, hoursWorked)),
-                employee.getPerformanceStrategy().classifyPerformance(baseSalary),
+                employee.getPerformanceStrategy().classifyPerformance(employee.getPerformanceRating()),
                 
             });
             
