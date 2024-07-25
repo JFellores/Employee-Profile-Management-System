@@ -29,8 +29,8 @@ public class EmployeeManagementFacade {
             case "Cashier":
                 factory = new Cashier();
                 break;
-            case "Janitor":
-                factory = new Janitor();
+            case "Customer Service":
+                factory = new CustomerService();
                 break;
             case "Merchandiser":
                 factory = new Merchandiser();

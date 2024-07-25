@@ -20,10 +20,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 import javax.swing.JFileChooser;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
+import static org.apache.commons.math3.fitting.leastsquares.LeastSquaresFactory.model;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -39,6 +43,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     private boolean isHeaderWritten = false;
    int mousePx;
    int mousePy;
+   
     /**
      * Creates new form EPMSJAVAGUI
      */
@@ -60,6 +65,20 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         EmployeeTable.setRowHeight(25);
         
         changeTable(EmployeeTable, 5);
+    }
+    
+    private void filter(String query) {
+        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(model);
+        EmployeeTable.setRowSorter(tr);
+
+        if (query != null && !query.equals("None") && !query.trim().isEmpty()) {
+            // Apply the filter with the provided query
+            tr.setRowFilter(RowFilter.regexFilter(query));
+        } else {
+            // Reset the filter to show all rows
+            tr.setRowFilter(null);
+        }
     }
     
     public void changeTable(JTable table, int column_index) {
@@ -144,7 +163,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         EmployeeSearch = new javax.swing.JTextField();
         SearchButton = new javax.swing.JToggleButton();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        SortByComboBox = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
 
         javax.swing.GroupLayout kGradientPanel2Layout = new javax.swing.GroupLayout(kGradientPanel2);
@@ -486,6 +505,9 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 EmployeeSearchKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                EmployeeSearchKeyReleased(evt);
+            }
         });
 
         SearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-search-20.png"))); // NOI18N
@@ -501,10 +523,15 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 14)); // NOI18N
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-sort-26.png"))); // NOI18N
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EmployeeID", "Name", "Department", "Position", "Salary", "Performance" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        SortByComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "EE", "ME", "PIP" }));
+        SortByComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                SortByComboBoxItemStateChanged(evt);
+            }
+        });
+        SortByComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                SortByComboBoxActionPerformed(evt);
             }
         });
 
@@ -538,22 +565,24 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(SearchButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(EmployeeSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 923, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 34, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 932, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(SearchButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(EmployeeSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(SortByComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(22, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -564,7 +593,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SortByComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(EmployeeSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -672,53 +701,54 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_LoadButtonMouseExited
 
     private void LoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadButtonActionPerformed
-           JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setDialogTitle("Open file");
-    int userSelection = fileChooser.showOpenDialog(null);
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Open file");
+        int userSelection = fileChooser.showOpenDialog(null);
 
-    if (userSelection == JFileChooser.APPROVE_OPTION) {
-        File fileToOpen = fileChooser.getSelectedFile();
-        if (fileToOpen.exists()) {
-            if (fileToOpen.getName().endsWith(".xlsx")) {
-                // Load Excel file
-                try (FileInputStream fileIn = new FileInputStream(fileToOpen);
-                     Workbook workbook = new XSSFWorkbook(fileIn)) {
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToOpen = fileChooser.getSelectedFile();
+            if (fileToOpen.exists()) {
+                if (fileToOpen.getName().endsWith(".xlsx")) {
+                    // Load Excel file
+                    try (FileInputStream fileIn = new FileInputStream(fileToOpen);
+                         Workbook workbook = new XSSFWorkbook(fileIn)) {
 
-                    Sheet sheet = workbook.getSheetAt(0);
-                    DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
-                    model.setRowCount(0); // Clear existing data
-                    model.setColumnCount(0); // Clear existing columns
+                        Sheet sheet = workbook.getSheetAt(0);
+                        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+                        changeTable(EmployeeTable, 5);
+                        model.setRowCount(0); // Clear existing data
+                        model.setColumnCount(0); // Clear existing columns
 
-                    // Read header row
-                    Row headerRow = sheet.getRow(0);
-                    if (headerRow != null) {
-                        for (Cell cell : headerRow) {
-                            model.addColumn(cell.getStringCellValue());
-                        }
-                    }
-
-                    // Read data rows starting from row 2 (index 1)
-                    for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
-                        Row row = sheet.getRow(rowIndex);
-                        if (row != null) {
-                            Vector<Object> rowData = new Vector<>();
-                            for (Cell cell : row) {
-                                rowData.add(cell.toString());
+                        // Read header row
+                        Row headerRow = sheet.getRow(0);
+                        if (headerRow != null) {
+                            for (Cell cell : headerRow) {
+                                model.addColumn(cell.getStringCellValue());
                             }
-                            model.addRow(rowData);
                         }
-                    }
 
-                    System.out.println("File loaded from: " + fileToOpen.getAbsolutePath());
-                } catch (IOException e) {
-                    e.printStackTrace();
+                        // Read data rows starting from row 2 (index 1)
+                        for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
+                            Row row = sheet.getRow(rowIndex);
+                            if (row != null) {
+                                Vector<Object> rowData = new Vector<>();
+                                for (Cell cell : row) {
+                                    rowData.add(cell.toString());
+                                }
+                                model.addRow(rowData);
+                            }
+                        }
+
+                        System.out.println("File loaded from: " + fileToOpen.getAbsolutePath());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid file type. Only .xlsx files are supported for loading.");
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Invalid file type. Only .xlsx files are supported for loading.");
+                System.err.println("Error: The file does not exist.");
             }
-        } else {
-            System.err.println("Error: The file does not exist.");
-        }
       }
     }//GEN-LAST:event_LoadButtonActionPerformed
 
@@ -935,14 +965,14 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please specify a valid file extension (.xlsx)");
         }
     }
-
+    
     // Exit the application after the whole process
     System.exit(0);
     }//GEN-LAST:event_LogOutButtonActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void SortByComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByComboBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_SortByComboBoxActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
    // TODO add your handling code here:
@@ -959,6 +989,19 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
        mousePx = evt.getX();
        mousePy = evt.getY();
     }//GEN-LAST:event_jPanel2MousePressed
+
+    private void SortByComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_SortByComboBoxItemStateChanged
+        String query = SortByComboBox.getSelectedItem().toString();
+        filter(query);
+    }//GEN-LAST:event_SortByComboBoxItemStateChanged
+
+    private void EmployeeSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EmployeeSearchKeyReleased
+        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(model);
+        EmployeeTable.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(EmployeeSearch.getText()));
+        
+    }//GEN-LAST:event_EmployeeSearchKeyReleased
 
     /**
      * @param args the command line arguments
@@ -1006,8 +1049,8 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     private javax.swing.JButton LogOutButton;
     private javax.swing.JButton SaveButton;
     private javax.swing.JToggleButton SearchButton;
+    private javax.swing.JComboBox<String> SortByComboBox;
     private javax.swing.JButton UpdateButton;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
