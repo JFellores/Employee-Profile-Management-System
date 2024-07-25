@@ -20,6 +20,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -710,54 +712,71 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
     private void LoadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadButtonActionPerformed
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Open file");
+        fileChooser.setDialogTitle("Specify a file to load");
+
+        // Show the open dialog and get the user's selection
         int userSelection = fileChooser.showOpenDialog(null);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File fileToOpen = fileChooser.getSelectedFile();
-            if (fileToOpen.exists()) {
-                if (fileToOpen.getName().endsWith(".xlsx")) {
-                    // Load Excel file
-                    try (FileInputStream fileIn = new FileInputStream(fileToOpen);
-                         Workbook workbook = new XSSFWorkbook(fileIn)) {
+            File fileToLoad = fileChooser.getSelectedFile();
 
-                        Sheet sheet = workbook.getSheetAt(0);
-                        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
-                        changeTable(EmployeeTable, 5);
-                        model.setRowCount(0); // Clear existing data
-                        model.setColumnCount(0); // Clear existing columns
+            try (FileInputStream fileIn = new FileInputStream(fileToLoad);
+                 Workbook workbook = new XSSFWorkbook(fileIn)) {
 
-                        // Read header row
-                        Row headerRow = sheet.getRow(0);
-                        if (headerRow != null) {
-                            for (Cell cell : headerRow) {
-                                model.addColumn(cell.getStringCellValue());
-                            }
-                        }
+                Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 
-                        // Read data rows starting from row 2 (index 1)
-                        for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
-                            Row row = sheet.getRow(rowIndex);
-                            if (row != null) {
-                                Vector<Object> rowData = new Vector<>();
-                                for (Cell cell : row) {
-                                    rowData.add(cell.toString());
-                                }
-                                model.addRow(rowData);
-                            }
-                        }
-
-                        System.out.println("File loaded from: " + fileToOpen.getAbsolutePath());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Invalid file type. Only .xlsx files are supported for loading.");
+                // Get header row
+                Row headerRow = sheet.getRow(0);
+                int headerCount = headerRow.getPhysicalNumberOfCells();
+                String[] headers = new String[headerCount];
+                for (int i = 0; i < headerCount; i++) {
+                    headers[i] = headerRow.getCell(i).getStringCellValue();
                 }
-            } else {
-                System.err.println("Error: The file does not exist.");
+
+                // Assuming 'table' is your JTable instance
+                DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+
+                // Clear existing rows
+                model.setRowCount(0);
+
+                // Create a DecimalFormat instance for formatting salaries
+                DecimalFormat df = new DecimalFormat("#.00");
+
+                // Iterate over the rows and create employees
+                for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
+                    Row row = sheet.getRow(rowIndex);
+                    if (row == null) continue;
+
+                    String employeeID = row.getCell(0).getStringCellValue();
+                    String firstName = row.getCell(1).getStringCellValue();
+                    String lastName = row.getCell(2).getStringCellValue();
+                    double baseSalary = row.getCell(3).getNumericCellValue();
+                    int hoursWorked = (int) row.getCell(4).getNumericCellValue();
+                    String position = row.getCell(5).getStringCellValue();
+                    double performanceRating = row.getCell(6).getNumericCellValue();
+                    String department = row.getCell(7).getStringCellValue();
+
+                    // Create employee and add to facade
+                    Employee employee = facade.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position);
+
+                    // Add row to the table
+                    model.addRow(new Object[]{
+                        employee.getEmployeeID(),
+                        employee.getLastName() + ", " + employee.getFirstName(),
+                        employee.getDepartment(),
+                        employee.getPosition(),
+                        df.format(employee.getSalaryStrategy().calculateSalary(baseSalary, hoursWorked)),
+                        employee.getPerformanceStrategy().classifyPerformance(employee.getPerformanceRating())
+                    });
+                }
+
+                JOptionPane.showMessageDialog(null, "Data loaded and table updated successfully.");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "An error occurred while loading the Excel file.");
             }
-      }
+        }
     }//GEN-LAST:event_LoadButtonActionPerformed
 
     private void UpdateButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateButtonMouseEntered
@@ -784,99 +803,66 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_SaveButtonMouseExited
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-                                       
-    JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setDialogTitle("Specify a file to save");
-    int userSelection = fileChooser.showSaveDialog(null);
+       
+     JFileChooser fileChooser = new JFileChooser();
+     fileChooser.setDialogTitle("Specify a file to save");
 
-    if (userSelection == JFileChooser.APPROVE_OPTION) {
-        File fileToSave = fileChooser.getSelectedFile();
-        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+     // Show the save dialog and get the user's selection
+     int userSelection = fileChooser.showSaveDialog(null);
 
-        if (fileToSave.getName().endsWith(".xlsx")) {
-            Workbook workbook = null;
-            Sheet sheet;
+     if (userSelection == JFileChooser.APPROVE_OPTION) {
+         File fileToSave = fileChooser.getSelectedFile();
 
-            if (fileToSave.exists()) {
-                // Open existing workbook
-                try (FileInputStream fileIn = new FileInputStream(fileToSave)) {
-                    workbook = new XSSFWorkbook(fileIn);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
-                }
-            } else {
-                // Create a new workbook
-                workbook = new XSSFWorkbook();
-            }
+         // Ensure the file name ends with .xlsx
+         String filePath = fileToSave.getAbsolutePath();
+         if (!filePath.endsWith(".xlsx")) {
+             filePath += ".xlsx";
+             fileToSave = new File(filePath);
+         }
 
-            // Check if the sheet already exists
-            if (workbook.getSheet("Employee Data") != null) {
-                sheet = workbook.getSheet("Employee Data");
-            } else {
-                sheet = workbook.createSheet("Employee Data");
-            }
+         try (Workbook workbook = new XSSFWorkbook()) { // Create a new workbook
+             Sheet sheet = workbook.createSheet("Employee Data");
 
-            // Collect existing data from the sheet to avoid duplication
-            Set<String> existingData = new HashSet<>();
-            for (int i = 0; i <= sheet.getLastRowNum(); i++) {
-                Row row = sheet.getRow(i);
-                if (row != null) {
-                    StringBuilder rowData = new StringBuilder();
-                    for (int j = 0; j < row.getLastCellNum(); j++) {
-                        rowData.append(row.getCell(j).toString()).append(";");
-                    }
-                    existingData.add(rowData.toString());
-                }
-            }
+             // Create header row
+             Row headerRow = sheet.createRow(0);
+             String[] headers = {"Employee ID", "First Name", "Last Name", "Base Salary", "Hours Worked", "Position", "Performance Rating", "Department"};
+             for (int col = 0; col < headers.length; col++) {
+                 Cell cell = headerRow.createCell(col);
+                 cell.setCellValue(headers[col]);
+             }
 
-            // Create header row if the sheet is empty
-            if (sheet.getLastRowNum() == 0 && sheet.getRow(0) == null) {
-                Row headerRow = sheet.createRow(0);
-                for (int col = 0; col < model.getColumnCount(); col++) {
-                    Cell cell = headerRow.createCell(col);
-                    cell.setCellValue(model.getColumnName(col));
-                }
-            }
+             // Add data rows
+             ArrayList<Employee> employees = facade.getAllEmployees(); // Fetch employees from the facade
+             int rowIndex = 1; // Start from row 1 (row 0 is for headers)
 
-            // Append data rows without duplication
-            int lastRowNum = sheet.getLastRowNum() + 1; // Move to the next row for data
-            for (int row = 0; row < model.getRowCount(); row++) {
-                StringBuilder rowData = new StringBuilder();
-                for (int col = 0; col < model.getColumnCount(); col++) {
-                    rowData.append(model.getValueAt(row, col).toString()).append(";");
-                }
+             for (Employee employee : employees) {
+                 Row dataRow = sheet.createRow(rowIndex++);
+                 dataRow.createCell(0).setCellValue(employee.getEmployeeID());
+                 dataRow.createCell(1).setCellValue(employee.getFirstName());
+                 dataRow.createCell(2).setCellValue(employee.getLastName());
+                 dataRow.createCell(3).setCellValue(employee.getBaseSalary());
+                 dataRow.createCell(4).setCellValue(employee.getHoursWorked());
+                 dataRow.createCell(5).setCellValue(employee.getPosition());
+                 dataRow.createCell(6).setCellValue(employee.getPerformanceRating());
+                 dataRow.createCell(7).setCellValue(employee.getDepartment());
+             }
 
-                if (!existingData.contains(rowData.toString())) {
-                    Row dataRow = sheet.createRow(lastRowNum++);
-                    for (int col = 0; col < model.getColumnCount(); col++) {
-                        Cell cell = dataRow.createCell(col);
-                        Object value = model.getValueAt(row, col);
-                        if (value != null) {
-                            cell.setCellValue(value.toString());
-                        } else {
-                            cell.setCellValue("");
-                        }
-                    }
-                }
-            }
+             // Resize columns to fit the content
+             for (int col = 0; col < headers.length; col++) {
+                 sheet.autoSizeColumn(col);
+             }
 
-            // Resize columns to fit the content
-            for (int col = 0; col < model.getColumnCount(); col++) {
-                sheet.autoSizeColumn(col);
-            }
+             // Write the new workbook to the file
+             try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
+                 workbook.write(fileOut);
+                 JOptionPane.showMessageDialog(null, "Data saved to Excel file successfully.");
+             }
 
-            // Write the updated workbook to the file
-            try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
-                workbook.write(fileOut);
-                JOptionPane.showMessageDialog(null, "Data appended to Excel file successfully.");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Please specify a valid file extension (.xlsx)");
-        }
-    }
+         } catch (IOException e) {
+             e.printStackTrace();
+             JOptionPane.showMessageDialog(null, "An error occurred while saving the Excel file.");
+         }
+     }
 
     }//GEN-LAST:event_SaveButtonActionPerformed
 

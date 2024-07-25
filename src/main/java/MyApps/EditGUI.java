@@ -22,7 +22,7 @@ public class EditGUI extends javax.swing.JFrame {
         initComponents();
         this.facade = facade;
     }
-    ArrayList<Employee> employees = facade.getAllEmployees();
+    
     /**
      * Creates new form EditGUI
      */
@@ -89,7 +89,7 @@ public class EditGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void GoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoBackActionPerformed
-       
+        ArrayList<Employee> employees = facade.getAllEmployees();
         
         if (employees.isEmpty()) {
             System.out.println("No employees found.");
