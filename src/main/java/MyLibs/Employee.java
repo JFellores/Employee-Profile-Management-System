@@ -92,4 +92,32 @@ public class Employee {
         System.out.println("Calculated Salary: " + calculateSalary());
         System.out.println("Performance Status: " + classifyPerformance());
     }
+     
+     public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;   
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setHoursWorked(int hoursWorked) {
+        this.hoursWorked = hoursWorked;
+    }
+
+    public void setBaseSalary(double baseSalary) {
+        this.baseSalary = baseSalary;
+    }
+
+    public void setPerformanceRating(double performanceRating) {
+        this.performanceRating = performanceRating;
+    }
 }

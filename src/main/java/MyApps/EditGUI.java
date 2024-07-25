@@ -4,11 +4,14 @@
  */
 package MyApps;
 
+import MyApps.EPMSJAVAGUI;
 import MyLibs.*;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import MyLibs.EmployeeManagementFacade;
+import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,19 +19,58 @@ import MyLibs.EmployeeManagementFacade;
  */
 public class EditGUI extends javax.swing.JFrame {
     private EmployeeManagementFacade facade;
+    private Employee selectedEmployee;
+    private EPMSJAVAGUI mainGui;
     
     
-    public EditGUI(EmployeeManagementFacade facade) {
+    public EditGUI(EmployeeManagementFacade facade, Employee selectedEmployee, EPMSJAVAGUI mainGui) {
         initComponents();
         this.facade = facade;
+        this.selectedEmployee = selectedEmployee;
+        this.mainGui = mainGui;
+        populateFields();
     }
     
-    /**
-     * Creates new form EditGUI
-     */
-    public EditGUI() {
-        
+     private void populateFields() {
+        if (selectedEmployee != null) {
+            empField.setText(String.valueOf(selectedEmployee.getEmployeeID()));
+            fNameField.setText(selectedEmployee.getFirstName());
+            lNameField.setText(selectedEmployee.getLastName());
+            posField.setText(selectedEmployee.getPosition());
+            depField.setText(selectedEmployee.getDepartment());
+            hrWorkedField.setText(String.valueOf(selectedEmployee.getHoursWorked()));
+            bSalarField.setText(String.valueOf(selectedEmployee.getBaseSalary()));
+            perfRatingField.setText(String.valueOf(selectedEmployee.getPerformanceRating()));
+        }
     }
+    
+    
+    private void updateEmployee() {
+        if (selectedEmployee != null) {
+            try {
+                String employeeID = empField.getText();
+                String firstName = fNameField.getText();
+                String lastName = lNameField.getText();
+                double baseSalary = Double.parseDouble(bSalarField.getText());
+                int hoursWorked = Integer.parseInt(hrWorkedField.getText());
+                double performanceRating = Double.parseDouble(perfRatingField.getText());
+                String department = depField.getText();
+                String position = posField.getText();
+
+                facade.updateEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position);
+
+                if (mainGui != null) {
+                    mainGui.refreshEmployeeTable();
+                }
+
+                JOptionPane.showMessageDialog(this, "Employee data updated successfully.");
+                close();
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Please enter valid data.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
     public void close(){
         WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
@@ -44,7 +86,25 @@ public class EditGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         GoBack = new javax.swing.JToggleButton();
-        jTextField1 = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        empField = new javax.swing.JTextField();
+        perfRatingField = new javax.swing.JTextField();
+        fNameField = new javax.swing.JTextField();
+        lNameField = new javax.swing.JTextField();
+        posField = new javax.swing.JTextField();
+        depField = new javax.swing.JTextField();
+        hrWorkedField = new javax.swing.JTextField();
+        bSalarField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jButtonSave = new javax.swing.JButton();
+        jButtonCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -56,47 +116,166 @@ public class EditGUI extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Edit Employee"));
+
+        empField.setText("jTextField1");
+
+        perfRatingField.setText("jTextField2");
+
+        fNameField.setText("jTextField3");
+
+        lNameField.setText("jTextField4");
+
+        posField.setText("jTextField5");
+
+        depField.setText("jTextField6");
+
+        hrWorkedField.setText("jTextField7");
+
+        bSalarField.setText("jTextField8");
+
+        jLabel1.setText("Employee ID");
+
+        jLabel2.setText("Performance Rating");
+
+        jLabel3.setText("First Name");
+
+        jLabel4.setText("Last Name");
+
+        jLabel5.setText("Position");
+
+        jLabel6.setText("Department");
+
+        jLabel7.setText("Hours Worked");
+
+        jLabel8.setText("Base Salary");
+
+        jButtonSave.setText("Save");
+        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jButtonSaveActionPerformed(evt);
             }
         });
+
+        jButtonCancel.setText("Cancel");
+        jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(hrWorkedField, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                                .addComponent(posField)
+                                .addComponent(fNameField)
+                                .addComponent(empField))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(86, 86, 86)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(perfRatingField, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                                .addComponent(lNameField)
+                                .addComponent(depField)
+                                .addComponent(bSalarField)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(perfRatingField, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(empField))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(fNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(lNameField))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(posField, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addComponent(depField))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(hrWorkedField, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(bSalarField))
+                .addGap(66, 66, 66)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonSave)
+                    .addComponent(jButtonCancel))
+                .addContainerGap(72, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(265, Short.MAX_VALUE))
+                .addGap(17, 17, 17)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(GoBack)
-                .addGap(116, 116, 116))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(104, 104, 104)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(GoBack)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void GoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoBackActionPerformed
-        ArrayList<Employee> employees = facade.getAllEmployees();
-        
+       ArrayList<Employee> employees = facade.getAllEmployees();
+
         if (employees.isEmpty()) {
             System.out.println("No employees found.");
             return;
         }
 
-        // Print details of each employee
         for (Employee employee : employees) {
             System.out.println("Employee ID: " + employee.getEmployeeID());
             System.out.println("Name: " + employee.getFirstName() + " " + employee.getLastName());
@@ -106,51 +285,90 @@ public class EditGUI extends javax.swing.JFrame {
             System.out.println("Performance: " + employee.getPerformanceStrategy().classifyPerformance(employee.getPerformanceRating()));
             System.out.println();
         }
-        
+
         close();
     }//GEN-LAST:event_GoBackActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+        updateEmployee();
+        
+        if (mainGui  != null){
+            mainGui.refreshEmployeeTable();
+        }
+        JOptionPane.showMessageDialog(this, "Employee data is updated succesfully.");
+        this.dispose();
+    }//GEN-LAST:event_jButtonSaveActionPerformed
+
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+         close();
+    }//GEN-LAST:event_jButtonCancelActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+        public static void main(String args[]) {
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+             * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+             */
+            try {
+                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
                 }
+            } catch (ClassNotFoundException ex) {
+                java.util.logging.Logger.getLogger(EditGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                java.util.logging.Logger.getLogger(EditGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                java.util.logging.Logger.getLogger(EditGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+                java.util.logging.Logger.getLogger(EditGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+            //</editor-fold>
+            //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditGUI().setVisible(true);
-            }
-        });
-    }
+            /* Create and display the form */
+
+            java.awt.EventQueue.invokeLater(() -> {
+        // Create an instance of the facade
+        EmployeeManagementFacade facade = new EmployeeManagementFacade();
+        
+        // Retrieve a sample employee; replace with actual employee retrieval logic
+        Employee selectedEmployee = facade.getEmployeeById("1"); // Use actual logic to get employee
+        
+        // Create an instance of the main GUI
+        EPMSJAVAGUI mainGui = new EPMSJAVAGUI();
+        
+        // Create and display the EditGUI with the facade, selectedEmployee, and mainGui
+        new EditGUI(facade, selectedEmployee, mainGui).setVisible(true);
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton GoBack;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField bSalarField;
+    private javax.swing.JTextField depField;
+    private javax.swing.JTextField empField;
+    private javax.swing.JTextField fNameField;
+    private javax.swing.JTextField hrWorkedField;
+    private javax.swing.JButton jButtonCancel;
+    private javax.swing.JButton jButtonSave;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField lNameField;
+    private javax.swing.JTextField perfRatingField;
+    private javax.swing.JTextField posField;
     // End of variables declaration//GEN-END:variables
 }

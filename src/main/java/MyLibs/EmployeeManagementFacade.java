@@ -63,4 +63,20 @@ public class EmployeeManagementFacade {
     public void removeEmployee(String employeeID) {
         employees.removeIf(employee -> employee.getEmployeeID().equals(employeeID));
     }
+    
+    public void updateEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, String position) {
+        Employee employee = getEmployeeById(employeeID);
+
+        if (employee != null) {
+            employee.setFirstName(firstName);
+            employee.setLastName(lastName);
+            employee.setBaseSalary(baseSalary);
+            employee.setHoursWorked(hoursWorked);
+            employee.setPerformanceRating(performanceRating);
+            employee.setDepartment(department);
+            employee.setPosition(position);
+        } else {
+            throw new IllegalArgumentException("Employee with ID " + employeeID + " does not exist.");
+        }
+    }
 }

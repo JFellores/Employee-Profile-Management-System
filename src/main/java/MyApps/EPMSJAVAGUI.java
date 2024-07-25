@@ -633,27 +633,67 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
         
         AddGUI add = new AddGUI(facade);
+        add.setLocationRelativeTo(null);
+
         add.setVisible(true);
     }//GEN-LAST:event_AddButtonActionPerformed
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
-        EditGUI edit = new EditGUI(facade);
-        edit.setVisible(true);
+                
+         
+    int selectedRow = EmployeeTable.getSelectedRow();
+    if (selectedRow != -1) {
+        String employeeID = (String) EmployeeTable.getValueAt(selectedRow, 0);
+        Employee selectedEmployee = facade.getEmployeeById(employeeID);
+
+        if (selectedEmployee != null) {
+            EditGUI edit = new EditGUI(facade, selectedEmployee, this); // Pass 'this' as reference to the main GUI
+            edit.setLocationRelativeTo(null);
+            edit.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Employee not found.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Please select an employee to edit.", "Error", JOptionPane.WARNING_MESSAGE);
+    }
+
     }//GEN-LAST:event_EditButtonActionPerformed
 
+    public void refreshEmployeeTable() {
+      
+    DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+    model.setRowCount(0); // Clear existing rows
+    DecimalFormat df = new DecimalFormat("#.00");
+    for (Employee employee : facade.getAllEmployees()) {
+        model.addRow(new Object[]{
+            employee.getEmployeeID(),
+            employee.getLastName() + ", " + employee.getFirstName(),
+            employee.getDepartment(),
+            employee.getPosition(),
+            df.format(employee.getSalaryStrategy().calculateSalary(employee.getBaseSalary(), employee.getHoursWorked())),
+            employee.getPerformanceStrategy().classifyPerformance(employee.getPerformanceRating())
+        });
+        }
+    }
     private void DeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteButtonActionPerformed
-         int row = EmployeeTable.getSelectedRow();
-        
-        if (row < 0){
-       
+          int row = EmployeeTable.getSelectedRow();
+    
+    if (row < 0) {
         JOptionPane.showMessageDialog(this, "No row is selected", "Select row", JOptionPane.ERROR_MESSAGE);
+    } else {
+        // Get the employee ID from the selected row
+        String employeeID = (String) EmployeeTable.getValueAt(row, 0);
         
-        }else{
-            DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
-            model.removeRow(row);
-            
-            //tableManager.deleteSelectedEmployee(row);
-        } 
+        // Remove the employee from the facade
+        facade.removeEmployee(employeeID);
+        
+        // Remove the row from the table model
+        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+        model.removeRow(row);
+        
+        // Optional: Show a confirmation message
+        JOptionPane.showMessageDialog(this, "Employee removed successfully.");
+    }
     }//GEN-LAST:event_DeleteButtonActionPerformed
 
     private void AddButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddButtonMouseEntered
