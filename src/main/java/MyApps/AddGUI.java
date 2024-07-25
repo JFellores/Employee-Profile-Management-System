@@ -27,11 +27,12 @@ import javax.swing.table.TableModel;
 public class AddGUI extends javax.swing.JFrame {
    int mousePx;
    int mousePy;
-    /**
-     * Creates new form AddGUI
-     */
-    public AddGUI() {
+   
+    private EmployeeManagementFacade facade;
+    
+    public AddGUI(EmployeeManagementFacade facade) {
         initComponents();
+        this.facade = facade;
     }
     public void close(){
         WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
@@ -475,9 +476,6 @@ public class AddGUI extends javax.swing.JFrame {
                 return;
             }
 
-            // Create facade instance
-            EmployeeManagementFacade facade = new EmployeeManagementFacade();
-
             // Create an employee based on the position
             Employee employee = facade.createEmployee(empId, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position);
 
@@ -568,7 +566,8 @@ public class AddGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            new AddGUI().setVisible(true);
+                EmployeeManagementFacade facade = null;
+                new AddGUI(facade).setVisible(true);
             }
         });
     }

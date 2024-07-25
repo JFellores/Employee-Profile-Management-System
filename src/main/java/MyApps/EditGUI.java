@@ -4,20 +4,30 @@
  */
 package MyApps;
 
+import MyLibs.*;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import MyLibs.EmployeeManagementFacade;
 
 /**
  *
  * @author Jomar Fellores
  */
 public class EditGUI extends javax.swing.JFrame {
-
+    private EmployeeManagementFacade facade;
+    
+    
+    public EditGUI(EmployeeManagementFacade facade) {
+        initComponents();
+        this.facade = facade;
+    }
+    ArrayList<Employee> employees = facade.getAllEmployees();
     /**
      * Creates new form EditGUI
      */
     public EditGUI() {
-        initComponents();
+        
     }
     public void close(){
         WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
@@ -34,6 +44,7 @@ public class EditGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         GoBack = new javax.swing.JToggleButton();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -45,29 +56,63 @@ public class EditGUI extends javax.swing.JFrame {
             }
         });
 
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(265, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(321, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(GoBack)
-                .addContainerGap())
+                .addGap(116, 116, 116))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(271, Short.MAX_VALUE)
+                .addGap(62, 62, 62)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(104, 104, 104)
                 .addComponent(GoBack)
-                .addContainerGap())
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void GoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoBackActionPerformed
+       
+        
+        if (employees.isEmpty()) {
+            System.out.println("No employees found.");
+            return;
+        }
+
+        // Print details of each employee
+        for (Employee employee : employees) {
+            System.out.println("Employee ID: " + employee.getEmployeeID());
+            System.out.println("Name: " + employee.getFirstName() + " " + employee.getLastName());
+            System.out.println("Department: " + employee.getDepartment());
+            System.out.println("Position: " + employee.getPosition());
+            System.out.println("Base Salary: " + employee.getSalaryStrategy().calculateSalary(employee.getBaseSalary(), employee.getHoursWorked()));
+            System.out.println("Performance: " + employee.getPerformanceStrategy().classifyPerformance(employee.getPerformanceRating()));
+            System.out.println();
+        }
+        
         close();
     }//GEN-LAST:event_GoBackActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -106,5 +151,6 @@ public class EditGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton GoBack;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

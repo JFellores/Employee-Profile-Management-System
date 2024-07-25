@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.RowFilter;
 import javax.swing.table.TableRowSorter;
 import static org.apache.commons.math3.fitting.leastsquares.LeastSquaresFactory.model;
@@ -40,7 +41,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author Jomar Fellores
  */
 public class EPMSJAVAGUI extends javax.swing.JFrame {
-    private boolean isHeaderWritten = false;
+   EmployeeManagementFacade facade = new EmployeeManagementFacade(); 
+   private boolean isHeaderWritten = false;
    int mousePx;
    int mousePy;
    
@@ -63,6 +65,8 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         EmployeeTable.getTableHeader().setDefaultRenderer(new HeaderColor());
         EmployeeTable.getTableHeader().setForeground(new Color(255, 255, 255));
         EmployeeTable.setRowHeight(25);
+        
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         
         changeTable(EmployeeTable, 5);
     }
@@ -179,7 +183,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Employee Profile Management System");
-        setUndecorated(true);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -573,16 +577,17 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 932, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator3)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(SearchButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(EmployeeSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(EmployeeSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(SortByComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(22, Short.MAX_VALUE))))
+                                .addComponent(SortByComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9)))
+                        .addGap(22, 22, 22))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -624,12 +629,13 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
     }
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
-        AddGUI add = new AddGUI();
+        
+        AddGUI add = new AddGUI(facade);
         add.setVisible(true);
     }//GEN-LAST:event_AddButtonActionPerformed
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
-        EditGUI edit = new EditGUI();
+        EditGUI edit = new EditGUI(facade);
         edit.setVisible(true);
     }//GEN-LAST:event_EditButtonActionPerformed
 
@@ -643,6 +649,8 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         }else{
             DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
             model.removeRow(row);
+            
+            //tableManager.deleteSelectedEmployee(row);
         } 
     }//GEN-LAST:event_DeleteButtonActionPerformed
 

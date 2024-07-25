@@ -13,6 +13,9 @@ import java.util.ArrayList;
  */
 public class EmployeeManagementFacade {
     private ArrayList<Employee> employees = new ArrayList<>();
+    
+    public EmployeeManagementFacade() {
+    }
 
     
 
