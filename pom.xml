@@ -34,6 +34,11 @@
             <artifactId>log4j-api</artifactId>
             <version>2.17.2</version>
         </dependency>
+        <dependency>
+            <groupId>unknown.binary</groupId>
+            <artifactId>TimingFramework-0.55</artifactId>
+            <version>SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -48,5 +53,5 @@
         </resource>
      </resources>
     </build>
-    <name>PROJECT-EPMS333</name>
+    <name>PROJECT-EPMS444</name>
 </project>
