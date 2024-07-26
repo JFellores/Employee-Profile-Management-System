@@ -14,11 +14,11 @@ import java.util.ArrayList;
 public class EmployeeManagementFacade {
     private ArrayList<Employee> employees = new ArrayList<>();
 
-    public EmployeeManagementFacade() {
-    }
+    public EmployeeManagementFacade() {}
 
-    public Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, String position,int age, int contactNumber, String address, String gender) {
+    public Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, String position, int age, int contactNumber, String address, String gender) {
         EmployeeFactory factory;
+        EmployeeDetails details = new EmployeeDetails(age, contactNumber, address, gender);
 
         switch (position) {
             case "Manager":
@@ -40,7 +40,7 @@ public class EmployeeManagementFacade {
                 throw new IllegalArgumentException("Unknown position: " + position);
         }
 
-        Employee employee = factory.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, age, contactNumber, address, gender);
+        Employee employee = factory.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, details);
         employees.add(employee);
         return employee;
     }

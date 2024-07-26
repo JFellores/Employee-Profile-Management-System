@@ -803,13 +803,14 @@ public class AdminView extends javax.swing.JFrame {
             try (FileInputStream fileIn = new FileInputStream(fileToLoad); Workbook workbook = new XSSFWorkbook(fileIn)) {
                 Sheet sheet = workbook.getSheetAt(0);
                 int rowCount = sheet.getPhysicalNumberOfRows();
-                
+
                 DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
                 // Clear existing rows
                 model.setRowCount(0);
 
                 for (int i = 1; i < rowCount; i++) { // Skip header row (i = 0)
                     Row row = sheet.getRow(i);
+                    if (row == null) continue; // Skip empty rows
 
                     String employeeID = row.getCell(0).getStringCellValue();
                     String firstName = row.getCell(1).getStringCellValue();
@@ -824,20 +825,18 @@ public class AdminView extends javax.swing.JFrame {
                     String address = row.getCell(10).getStringCellValue();
                     String gender = row.getCell(11).getStringCellValue();
 
+                    // Create the Employee instance
                     Employee employee = facade.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position, age, contactNumber, address, gender);
 
+                    // Add row to JTable
                     DecimalFormat df = new DecimalFormat("#.00");
-                    AdminView.AddRow(new Object[]{
+                    model.addRow(new Object[]{
                         employee.getEmployeeID(),
                         employee.getLastName() + ", " + employee.getFirstName(),
                         employee.getDepartment(),
                         employee.getPosition(),
                         df.format(employee.calculateSalary()),
                         employee.classifyPerformance(),
-                        employee.getAge(),
-                        employee.getContactNumber(),
-                        employee.getAddress(),
-                        employee.getGender()
                     });
                 }
 
@@ -895,8 +894,7 @@ public class AdminView extends javax.swing.JFrame {
     }//GEN-LAST:event_SaveButtonMouseExited
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
-       
-       JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Specify a file to save");
 
         // Show the save dialog and get the user's selection
@@ -937,10 +935,21 @@ public class AdminView extends javax.swing.JFrame {
                     dataRow.createCell(5).setCellValue(employee.getPosition());
                     dataRow.createCell(6).setCellValue(employee.getPerformanceRating());
                     dataRow.createCell(7).setCellValue(employee.getDepartment());
-                    dataRow.createCell(8).setCellValue(employee.getAge());
-                    dataRow.createCell(9).setCellValue(employee.getContactNumber());
-                    dataRow.createCell(10).setCellValue(employee.getAddress());
-                    dataRow.createCell(11).setCellValue(employee.getGender());
+
+                    // Access EmployeeDetails
+                    EmployeeDetails details = employee.getDetails();
+                    if (details != null) {
+                        dataRow.createCell(8).setCellValue(details.getAge());
+                        dataRow.createCell(9).setCellValue(details.getContactNumber());
+                        dataRow.createCell(10).setCellValue(details.getAddress());
+                        dataRow.createCell(11).setCellValue(details.getGender());
+                    } else {
+                        // Handle case where EmployeeDetails might be null
+                        dataRow.createCell(8).setCellValue("N/A");
+                        dataRow.createCell(9).setCellValue("N/A");
+                        dataRow.createCell(10).setCellValue("N/A");
+                        dataRow.createCell(11).setCellValue("N/A");
+                    }
                 }
 
                 // Resize columns to fit the content
@@ -959,7 +968,6 @@ public class AdminView extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "An error occurred while saving the Excel file.");
             }
         }
-     
 
     }//GEN-LAST:event_SaveButtonActionPerformed
 
@@ -1077,6 +1085,8 @@ public class AdminView extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AdminView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

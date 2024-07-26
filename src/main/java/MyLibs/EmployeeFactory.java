@@ -9,5 +9,5 @@ package MyLibs;
  * @author Jomar Fellores
  */
 public interface EmployeeFactory {
-    Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, int age, int contactNumber, String address, String gender);
+    Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, EmployeeDetails details);
 }
