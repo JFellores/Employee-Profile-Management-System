@@ -10,8 +10,8 @@ package MyLibs;
  */
 public class CustomerService implements EmployeeFactory {
     @Override
-    public Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department) {
+    public Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, int age, int contactNumber, String address, String gender) {
         return new Employee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, 
-                            new ContractualSalaryStrategy(), new PerformanceClassificationStrategy(), "Customer Service");
+                            new ContractualSalaryStrategy(), new PerformanceClassificationStrategy(), "Customer Service", age, contactNumber, address, gender);
     }
 }

@@ -17,11 +17,15 @@ public class Employee {
     private String position;
     private double performanceRating;
     private String department;
+    private int age;
+    private int contactNumber;
+    private String address;
+    private String gender;
     private SalaryStrategy salaryStrategy;
     private PerformanceStrategy performanceStrategy;
     
 
-    public Employee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, SalaryStrategy salaryStrategy, PerformanceStrategy performanceStrategy, String position) {
+    public Employee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, SalaryStrategy salaryStrategy, PerformanceStrategy performanceStrategy, String position, int age, int contactNumber, String Address, String gender) {
         this.employeeID = employeeID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,8 +36,58 @@ public class Employee {
         this.salaryStrategy = salaryStrategy;
         this.performanceStrategy = performanceStrategy;
         this.position = position;
+        this.age = age;
+        this.contactNumber = contactNumber;
+        this.address = address;
+        this.gender = gender;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(int contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setSalaryStrategy(SalaryStrategy salaryStrategy) {
+        this.salaryStrategy = salaryStrategy;
+    }
+
+    public void setPerformanceStrategy(PerformanceStrategy performanceStrategy) {
+        this.performanceStrategy = performanceStrategy;
+    }
+
+    
+    
     public String getEmployeeID() {
         return employeeID;
     }

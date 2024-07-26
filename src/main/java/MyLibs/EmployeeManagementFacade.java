@@ -13,13 +13,11 @@ import java.util.ArrayList;
  */
 public class EmployeeManagementFacade {
     private ArrayList<Employee> employees = new ArrayList<>();
-    
+
     public EmployeeManagementFacade() {
     }
 
-    
-
-    public Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, String position) {
+    public Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, String position,int age, int contactNumber, String address, String gender) {
         EmployeeFactory factory;
 
         switch (position) {
@@ -42,7 +40,7 @@ public class EmployeeManagementFacade {
                 throw new IllegalArgumentException("Unknown position: " + position);
         }
 
-        Employee employee = factory.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department);
+        Employee employee = factory.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, age, contactNumber, address, gender);
         employees.add(employee);
         return employee;
     }
@@ -63,7 +61,7 @@ public class EmployeeManagementFacade {
     public void removeEmployee(String employeeID) {
         employees.removeIf(employee -> employee.getEmployeeID().equals(employeeID));
     }
-    
+
     public void updateEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, String position) {
         Employee employee = getEmployeeById(employeeID);
 

@@ -215,7 +215,7 @@
                                               <Component id="CB_Dept" alignment="0" max="32767" attributes="0"/>
                                               <Component id="TF_Base" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="TF_LastName" alignment="0" pref="177" max="32767" attributes="0"/>
+                                              <Component id="TF_LastName" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>

@@ -800,32 +800,16 @@ public class AdminView extends javax.swing.JFrame {
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File fileToLoad = fileChooser.getSelectedFile();
 
-            try (FileInputStream fileIn = new FileInputStream(fileToLoad);
-                 Workbook workbook = new XSSFWorkbook(fileIn)) {
-
-                Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
-
-                // Get header row
-                Row headerRow = sheet.getRow(0);
-                int headerCount = headerRow.getPhysicalNumberOfCells();
-                String[] headers = new String[headerCount];
-                for (int i = 0; i < headerCount; i++) {
-                    headers[i] = headerRow.getCell(i).getStringCellValue();
-                }
-
-                // Assuming 'table' is your JTable instance
+            try (FileInputStream fileIn = new FileInputStream(fileToLoad); Workbook workbook = new XSSFWorkbook(fileIn)) {
+                Sheet sheet = workbook.getSheetAt(0);
+                int rowCount = sheet.getPhysicalNumberOfRows();
+                
                 DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
-
                 // Clear existing rows
                 model.setRowCount(0);
 
-                // Create a DecimalFormat instance for formatting salaries
-                DecimalFormat df = new DecimalFormat("#.00");
-
-                // Iterate over the rows and create employees
-                for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
-                    Row row = sheet.getRow(rowIndex);
-                    if (row == null) continue;
+                for (int i = 1; i < rowCount; i++) { // Skip header row (i = 0)
+                    Row row = sheet.getRow(i);
 
                     String employeeID = row.getCell(0).getStringCellValue();
                     String firstName = row.getCell(1).getStringCellValue();
@@ -835,22 +819,29 @@ public class AdminView extends javax.swing.JFrame {
                     String position = row.getCell(5).getStringCellValue();
                     double performanceRating = row.getCell(6).getNumericCellValue();
                     String department = row.getCell(7).getStringCellValue();
+                    int age = (int) row.getCell(8).getNumericCellValue();
+                    int contactNumber = (int) row.getCell(9).getNumericCellValue();
+                    String address = row.getCell(10).getStringCellValue();
+                    String gender = row.getCell(11).getStringCellValue();
 
-                    // Create employee and add to facade
-                    Employee employee = facade.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position);
+                    Employee employee = facade.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position, age, contactNumber, address, gender);
 
-                    // Add row to the table
-                    model.addRow(new Object[]{
+                    DecimalFormat df = new DecimalFormat("#.00");
+                    AdminView.AddRow(new Object[]{
                         employee.getEmployeeID(),
                         employee.getLastName() + ", " + employee.getFirstName(),
                         employee.getDepartment(),
                         employee.getPosition(),
-                        df.format(employee.getSalaryStrategy().calculateSalary(baseSalary, hoursWorked)),
-                        employee.getPerformanceStrategy().classifyPerformance(employee.getPerformanceRating())
+                        df.format(employee.calculateSalary()),
+                        employee.classifyPerformance(),
+                        employee.getAge(),
+                        employee.getContactNumber(),
+                        employee.getAddress(),
+                        employee.getGender()
                     });
                 }
 
-                JOptionPane.showMessageDialog(null, "Data loaded and table updated successfully.");
+                JOptionPane.showMessageDialog(null, "Data loaded from Excel file successfully.");
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -905,80 +896,7 @@ public class AdminView extends javax.swing.JFrame {
 
     private void SaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButtonActionPerformed
        
-     JFileChooser fileChooser = new JFileChooser();
-     fileChooser.setDialogTitle("Specify a file to save");
-
-     // Show the save dialog and get the user's selection
-     int userSelection = fileChooser.showSaveDialog(null);
-
-     if (userSelection == JFileChooser.APPROVE_OPTION) {
-         File fileToSave = fileChooser.getSelectedFile();
-
-         // Ensure the file name ends with .xlsx
-         String filePath = fileToSave.getAbsolutePath();
-         if (!filePath.endsWith(".xlsx")) {
-             filePath += ".xlsx";
-             fileToSave = new File(filePath);
-         }
-
-         try (Workbook workbook = new XSSFWorkbook()) { // Create a new workbook
-             Sheet sheet = workbook.createSheet("Employee Data");
-
-             // Create header row
-             Row headerRow = sheet.createRow(0);
-             String[] headers = {"Employee ID", "First Name", "Last Name", "Base Salary", "Hours Worked", "Position", "Performance Rating", "Department"};
-             for (int col = 0; col < headers.length; col++) {
-                 Cell cell = headerRow.createCell(col);
-                 cell.setCellValue(headers[col]);
-             }
-
-             // Add data rows
-             ArrayList<Employee> employees = facade.getAllEmployees(); // Fetch employees from the facade
-             int rowIndex = 1; // Start from row 1 (row 0 is for headers)
-
-             for (Employee employee : employees) {
-                 Row dataRow = sheet.createRow(rowIndex++);
-                 dataRow.createCell(0).setCellValue(employee.getEmployeeID());
-                 dataRow.createCell(1).setCellValue(employee.getFirstName());
-                 dataRow.createCell(2).setCellValue(employee.getLastName());
-                 dataRow.createCell(3).setCellValue(employee.getBaseSalary());
-                 dataRow.createCell(4).setCellValue(employee.getHoursWorked());
-                 dataRow.createCell(5).setCellValue(employee.getPosition());
-                 dataRow.createCell(6).setCellValue(employee.getPerformanceRating());
-                 dataRow.createCell(7).setCellValue(employee.getDepartment());
-             }
-
-             // Resize columns to fit the content
-             for (int col = 0; col < headers.length; col++) {
-                 sheet.autoSizeColumn(col);
-             }
-
-             // Write the new workbook to the file
-             try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
-                 workbook.write(fileOut);
-                 JOptionPane.showMessageDialog(null, "Data saved to Excel file successfully.");
-             }
-
-         } catch (IOException e) {
-             e.printStackTrace();
-             JOptionPane.showMessageDialog(null, "An error occurred while saving the Excel file.");
-         }
-     }
-
-    }//GEN-LAST:event_SaveButtonActionPerformed
-
-    private void LogOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutButtonActionPerformed
-     // Prompt the user with options
-    int response = JOptionPane.showConfirmDialog(null, "Do you want to save your work before logging out?", "Confirm",
-        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-
-    if (response == JOptionPane.CANCEL_OPTION) {
-        // User canceled the logout, do nothing
-        return;
-    }
-
-    if (response == JOptionPane.YES_OPTION) {
-        JFileChooser fileChooser = new JFileChooser();
+       JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Specify a file to save");
 
         // Show the save dialog and get the user's selection
@@ -999,7 +917,7 @@ public class AdminView extends javax.swing.JFrame {
 
                 // Create header row
                 Row headerRow = sheet.createRow(0);
-                String[] headers = {"Employee ID", "First Name", "Last Name", "Base Salary", "Hours Worked", "Position", "Performance Rating", "Department"};
+                String[] headers = {"Employee ID", "First Name", "Last Name", "Base Salary", "Hours Worked", "Position", "Performance Rating", "Department", "Age", "Contact Number", "Address", "Gender"};
                 for (int col = 0; col < headers.length; col++) {
                     Cell cell = headerRow.createCell(col);
                     cell.setCellValue(headers[col]);
@@ -1019,6 +937,10 @@ public class AdminView extends javax.swing.JFrame {
                     dataRow.createCell(5).setCellValue(employee.getPosition());
                     dataRow.createCell(6).setCellValue(employee.getPerformanceRating());
                     dataRow.createCell(7).setCellValue(employee.getDepartment());
+                    dataRow.createCell(8).setCellValue(employee.getAge());
+                    dataRow.createCell(9).setCellValue(employee.getContactNumber());
+                    dataRow.createCell(10).setCellValue(employee.getAddress());
+                    dataRow.createCell(11).setCellValue(employee.getGender());
                 }
 
                 // Resize columns to fit the content
@@ -1037,10 +959,21 @@ public class AdminView extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "An error occurred while saving the Excel file.");
             }
         }
-    }
+     
 
-    // Exit the application after the whole process
-    System.exit(0);
+    }//GEN-LAST:event_SaveButtonActionPerformed
+
+    private void LogOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutButtonActionPerformed
+        int userResponse = JOptionPane.showConfirmDialog(null, "Do you want to save your data before logging out?", "Confirm Logout", JOptionPane.YES_NO_OPTION);
+
+        if (userResponse == JOptionPane.YES_OPTION) {
+            SaveButtonActionPerformed(evt); // Save the data
+        } 
+
+        if (userResponse != JOptionPane.NO_OPTION) {
+            // Exit the application
+            System.exit(0);
+        }
     }//GEN-LAST:event_LogOutButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -1095,7 +1028,7 @@ public class AdminView extends javax.swing.JFrame {
             break;
         }
     }
-
+    
     if (columnIndex != -1) {
         // Determine if the column is numeric or alphabetical
         boolean isNumeric = true;

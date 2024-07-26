@@ -484,7 +484,11 @@ public class AddGUI extends javax.swing.JFrame {
         String hours = TF_Hours.getText();
         String base = TF_Base.getText();
         String department = CB_Dept.getSelectedItem().toString();
-
+        int age = 0;
+        int contactNumber = 0;
+        String address = "";
+        String gender = "";
+        
         Set<String> validPositions = new HashSet<>(Arrays.asList("Manager", "Sales Associate", "Cashier", "Customer Service", "Merchandiser"));
 
         // Validate input fields
@@ -514,7 +518,7 @@ public class AddGUI extends javax.swing.JFrame {
             }
 
             // Create an employee based on the position
-            Employee employee = facade.createEmployee(empId, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position);
+            Employee employee = facade.createEmployee(empId, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position, age, contactNumber, address, gender);
 
             // Add employee details to JTable
             DecimalFormat df = new DecimalFormat("#.00");
