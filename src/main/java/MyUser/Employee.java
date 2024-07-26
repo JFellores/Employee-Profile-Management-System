@@ -4,6 +4,7 @@
  */
 package MyUser;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +27,18 @@ public class Employee extends User {
 
     @Override
     public boolean isValid() {
-            try (InputStream is = getClass().getResourceAsStream(EXCEL_FILE_PATH);
+    // Get the user's Documents folder path
+        String userHome = System.getProperty("user.home");
+        File documentsFolder = new File(userHome, "Documents");
+        File fileToLoad = new File(documentsFolder, "DATABASE.xlsx");
+
+        // Check if the file exists
+        if (!fileToLoad.exists()) {
+            System.err.println("The file DATABASE.xlsx does not exist in the Documents folder.");
+            return false;
+        }
+
+        try (InputStream is = new FileInputStream(fileToLoad);
              Workbook workbook = WorkbookFactory.create(is)) {
 
             Sheet sheet = workbook.getSheetAt(0); // Assuming the data is in the first sheet

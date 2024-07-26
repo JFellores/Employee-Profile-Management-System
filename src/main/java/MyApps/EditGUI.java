@@ -340,6 +340,8 @@ public class EditGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_GoBackActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+        
+        
         updateEmployee();
         
         if (mainGui  != null){

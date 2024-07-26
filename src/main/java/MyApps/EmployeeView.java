@@ -4,6 +4,9 @@
  */
 package MyApps;
 
+import MyLogins.AdminLoginForm;
+import MyLogins.EmployeeLoginForm;
+
 /**
  *
  * @author luisr
@@ -35,7 +38,7 @@ public class EmployeeView extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        LogOut = new javax.swing.JButton();
         kGradientPanel1 = new keeptoo.KGradientPanel();
         jButton1 = new javax.swing.JButton();
         TF_empID = new javax.swing.JTextField();
@@ -85,10 +88,10 @@ public class EmployeeView extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("LOG OUT");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        LogOut.setText("LOG OUT");
+        LogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                LogOutActionPerformed(evt);
             }
         });
 
@@ -105,7 +108,7 @@ public class EmployeeView extends javax.swing.JFrame {
                         .addComponent(jLabel4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
-                        .addComponent(jButton3))
+                        .addComponent(LogOut))
                     .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 97, Short.MAX_VALUE))
         );
@@ -119,7 +122,7 @@ public class EmployeeView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addComponent(LogOut)
                 .addGap(35, 35, 35))
         );
 
@@ -238,10 +241,6 @@ public class EmployeeView extends javax.swing.JFrame {
         kGradientPanel1Layout.setHorizontalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(54, 54, 54))
-            .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
@@ -292,13 +291,15 @@ public class EmployeeView extends javax.swing.JFrame {
                             .addComponent(TF_sex, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel17))))
                 .addContainerGap(53, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(268, 268, 268))
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jButton1)
-                .addGap(39, 39, 39)
+                .addGap(104, 104, 104)
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
@@ -356,7 +357,9 @@ public class EmployeeView extends javax.swing.JFrame {
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TF_sex, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(79, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -404,12 +407,18 @@ public class EmployeeView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TF_HWActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
+    private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
+        showLoginForm();
 
-    }//GEN-LAST:event_jButton3ActionPerformed
-
+    }//GEN-LAST:event_LogOutActionPerformed
+    private void showLoginForm() {
+        // Show the login form
+        EmployeeLoginForm employee = new EmployeeLoginForm();
+        employee.setVisible(true);
+        employee.setLocationRelativeTo(null);
+        // Dispose of the current form
+        this.dispose();
+    }
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
         // TODO add your handling code here:
        
@@ -452,6 +461,7 @@ public class EmployeeView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton LogOut;
     private javax.swing.JTextField TF_Dep;
     private javax.swing.JTextField TF_Fname;
     private javax.swing.JTextField TF_HW;
@@ -466,7 +476,6 @@ public class EmployeeView extends javax.swing.JFrame {
     private javax.swing.JTextField TF_sex;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
