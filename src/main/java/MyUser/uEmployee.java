@@ -20,9 +20,29 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  */
 public class uEmployee extends User {
     private static final String EXCEL_FILE_PATH = "/Database/TESTING.xlsx"; // Ensure this path is correct
-
+    private String employeeID;
+    private String lastName;
+    
     public uEmployee(String username, String password) {
         super(username, password);
+        this.employeeID = password;
+        this.lastName = username;
+    }
+
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @Override

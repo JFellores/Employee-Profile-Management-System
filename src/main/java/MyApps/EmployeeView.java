@@ -8,6 +8,18 @@ import MyLogins.AdminLoginForm;
 import MyLogins.EmployeeLoginForm;
 import MyLibs.*;
 import MyUser.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 /**
  *
  * @author luisr
@@ -18,14 +30,69 @@ public class EmployeeView extends javax.swing.JFrame {
     int mousePx;
     int mousePy;
     private static EmployeeManagementFacade facade;
-
+    private static uEmployee employee;
+    private List<Employee> employeeList = new ArrayList<>();
+    
     /**
      * Creates new form EmployeeView
      */
-    public EmployeeView(EmployeeManagementFacade facade) {
+    public EmployeeView(EmployeeManagementFacade facade, uEmployee employee) {
         this.facade = facade;
+        this.employee = employee;
         initComponents();
+        LoadEmployees();
     }
+    
+    private void LoadEmployees() {                                           
+        String userHome = System.getProperty("user.home");
+        File documentsFolder = new File(userHome, "Documents");
+        File fileToLoad = new File(documentsFolder, "DATABASE.xlsx");
+        facade = new EmployeeManagementFacade();
+        if (!fileToLoad.exists()) {
+            JOptionPane.showMessageDialog(null, "The file DATABASE.xlsx does not exist in the Documents folder.");
+            return;
+        }
+
+        try (FileInputStream fileIn = new FileInputStream(fileToLoad); 
+             Workbook workbook = new XSSFWorkbook(fileIn)) {
+            Sheet sheet = workbook.getSheetAt(0);
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for (int i = 1; i < rowCount; i++) { // Skip header row (i = 0)
+                Row row = sheet.getRow(i);
+                if (row == null) continue; // Skip empty rows
+
+                try {
+                    String employeeID = row.getCell(0).getStringCellValue();
+                    String firstName = row.getCell(1).getStringCellValue();
+                    String lastName = row.getCell(2).getStringCellValue();
+                    double baseSalary = row.getCell(3).getNumericCellValue();
+                    int hoursWorked = (int) row.getCell(4).getNumericCellValue();
+                    String position = row.getCell(5).getStringCellValue();
+                    double performanceRating = row.getCell(6).getNumericCellValue();
+                    String department = row.getCell(7).getStringCellValue();
+                    int age = (int) row.getCell(8).getNumericCellValue();
+                    int contactNumber = (int) row.getCell(9).getNumericCellValue();
+                    String address = row.getCell(10).getStringCellValue();
+                    String gender = row.getCell(11).getStringCellValue();
+
+                    // Create the Employee instance
+                    Employee emp = facade.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position, age, contactNumber, address, gender);
+                    
+                    // Add the Employee to the list
+                    employeeList.add(emp);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // Log or handle individual row errors
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "An error occurred while loading the Excel file.");
+        }
+    }                 
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,7 +110,7 @@ public class EmployeeView extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         LogOut = new javax.swing.JButton();
         kGradientPanel1 = new keeptoo.KGradientPanel();
-        jButton1 = new javax.swing.JButton();
+        EditButton = new javax.swing.JButton();
         TF_empID = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -151,12 +218,12 @@ public class EmployeeView extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jButton1.setText("EDIT PERSONAL INFO");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        EditButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        EditButton.setText("EDIT PERSONAL INFO");
+        EditButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        EditButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                EditButtonActionPerformed(evt);
             }
         });
 
@@ -305,7 +372,7 @@ public class EmployeeView extends javax.swing.JFrame {
                         .addGap(0, 59, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(EditButton)
                 .addGap(201, 201, 201))
         );
         kGradientPanel1Layout.setVerticalGroup(
@@ -366,7 +433,7 @@ public class EmployeeView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TF_sex, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(EditButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -404,9 +471,24 @@ public class EmployeeView extends javax.swing.JFrame {
         mousePy = evt.getY();
     }//GEN-LAST:event_kGradientPanel1MousePressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
+        System.out.println(employee.getEmployeeID() + " " + employee.getLastName());
+        for (Employee emp : employeeList) {
+        System.out.println("Employee ID: " + emp.getEmployeeID());
+        System.out.println("First Name: " + emp.getFirstName());
+        System.out.println("Last Name: " + emp.getLastName());
+        System.out.println("Base Salary: " + emp.getBaseSalary());
+        System.out.println("Hours Worked: " + emp.getHoursWorked());
+        System.out.println("Position: " + emp.getPosition());
+        System.out.println("Performance Rating: " + emp.getPerformanceRating());
+        System.out.println("Department: " + emp.getDepartment());
+        System.out.println("Age: " + emp.getDetails().getAge());
+        System.out.println("Contact Number: " + emp.getDetails().getContactNumber());
+        System.out.println("Address: " + emp.getDetails().getAddress());
+        System.out.println("Gender: " + emp.getDetails().getGender());
+        System.out.println(); // Empty line for better readability
+    }
+    }//GEN-LAST:event_EditButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -472,12 +554,13 @@ public class EmployeeView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EmployeeView(facade).setVisible(true);
+                new EmployeeView(facade, employee).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton EditButton;
     private javax.swing.JButton LogOut;
     private javax.swing.JTextField TF_Dep;
     private javax.swing.JTextField TF_HW;
@@ -491,7 +574,6 @@ public class EmployeeView extends javax.swing.JFrame {
     private javax.swing.JTextField TF_empID2;
     private javax.swing.JTextField TF_pos;
     private javax.swing.JTextField TF_sex;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

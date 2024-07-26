@@ -16,7 +16,7 @@ import MyLibs.*;
 public class EmployeeLoginForm extends javax.swing.JFrame {
    int mousePx;
    int mousePy;
-   private static EmployeeManagementFacade facade;
+   private static EmployeeManagementFacade facade = new EmployeeManagementFacade();
     /**
      * Creates new form EmployeeLoginForm
      */
@@ -261,10 +261,10 @@ public class EmployeeLoginForm extends javax.swing.JFrame {
         String username = TF_ID.getText();
         String password = jPassF.getText();
 
-        User employee = new uEmployee(username, password);
-
+        uEmployee employee = new uEmployee(username, password);
+        
         if (employee.isValid()) {                
-            EmployeeView employeeView = new EmployeeView(facade);
+            EmployeeView employeeView = new EmployeeView(facade, employee);
             employeeView.setVisible(true);
             employeeView.pack();
             employeeView.setLocationRelativeTo(null);
@@ -272,8 +272,7 @@ public class EmployeeLoginForm extends javax.swing.JFrame {
             this.dispose();
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        }        
-    
+        }    
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
     private void jLabelRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegisterMouseClicked
