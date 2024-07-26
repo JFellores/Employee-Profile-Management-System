@@ -6,7 +6,8 @@ package MyApps;
 
 import MyLogins.AdminLoginForm;
 import MyLogins.EmployeeLoginForm;
-
+import MyLibs.*;
+import MyUser.*;
 /**
  *
  * @author luisr
@@ -16,11 +17,13 @@ import MyLogins.EmployeeLoginForm;
 public class EmployeeView extends javax.swing.JFrame {
     int mousePx;
     int mousePy;
+    private static EmployeeManagementFacade facade;
 
     /**
      * Creates new form EmployeeView
      */
-    public EmployeeView() {
+    public EmployeeView(EmployeeManagementFacade facade) {
+        this.facade = facade;
         initComponents();
     }
 
@@ -84,6 +87,7 @@ public class EmployeeView extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         jButton2.setForeground(new java.awt.Color(15, 137, 15));
         jButton2.setText("CHECK IN");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -92,6 +96,7 @@ public class EmployeeView extends javax.swing.JFrame {
 
         LogOut.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         LogOut.setText("LOG OUT");
+        LogOut.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LogOut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LogOutActionPerformed(evt);
@@ -110,8 +115,7 @@ public class EmployeeView extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(50, 50, 50)
-                                .addComponent(jLabel5)
-                                .addGap(41, 41, 41))))
+                                .addComponent(jLabel5))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(75, 75, 75)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,6 +153,7 @@ public class EmployeeView extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton1.setText("EDIT PERSONAL INFO");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -380,9 +385,7 @@ public class EmployeeView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(kGradientPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(0, 0, 0))
+                    .addComponent(kGradientPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
@@ -419,7 +422,7 @@ public class EmployeeView extends javax.swing.JFrame {
     }//GEN-LAST:event_LogOutActionPerformed
     private void showLoginForm() {
         // Show the login form
-        EmployeeLoginForm employee = new EmployeeLoginForm();
+        EmployeeLoginForm employee = new EmployeeLoginForm(facade);
         employee.setVisible(true);
         employee.setLocationRelativeTo(null);
         // Dispose of the current form
@@ -469,7 +472,7 @@ public class EmployeeView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EmployeeView().setVisible(true);
+                new EmployeeView(facade).setVisible(true);
             }
         });
     }

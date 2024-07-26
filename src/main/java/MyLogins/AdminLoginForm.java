@@ -7,6 +7,7 @@ package MyLogins;
 import MyApps.AdminView;
 import javax.swing.JFrame;
 import MyUser.*;
+import MyLibs.*;
 
 /**
  *
@@ -15,11 +16,14 @@ import MyUser.*;
 public class AdminLoginForm extends javax.swing.JFrame {
    int mousePx;
    int mousePy;
+   private static EmployeeManagementFacade facade;
     /**
      * Creates new form Login
+     * @param facade
      */
-    public AdminLoginForm() {
+    public AdminLoginForm(EmployeeManagementFacade facade) {
         initComponents();
+        this.facade = facade;
         this.setLocationRelativeTo(null); // center form in the screen
     }
 
@@ -278,7 +282,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
     
     private void jLabelRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegisterMouseClicked
         
-        EmployeeLoginForm egf = new EmployeeLoginForm();
+        EmployeeLoginForm egf = new EmployeeLoginForm(facade);
         egf.setVisible(true);
         egf.pack();
         egf.setLocationRelativeTo(null);
@@ -332,7 +336,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminLoginForm().setVisible(true);
+                new AdminLoginForm(facade).setVisible(true);
             }
         });
     }

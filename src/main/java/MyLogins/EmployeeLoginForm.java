@@ -8,7 +8,7 @@ import MyLogins.AdminLoginForm;
 import MyApps.EmployeeView;
 import javax.swing.JFrame;
 import MyUser.*;
-
+import MyLibs.*;
 /**
  *
  * @author LG
@@ -16,12 +16,14 @@ import MyUser.*;
 public class EmployeeLoginForm extends javax.swing.JFrame {
    int mousePx;
    int mousePy;
+   private static EmployeeManagementFacade facade;
     /**
      * Creates new form EmployeeLoginForm
      */
-    public EmployeeLoginForm() {
+    public EmployeeLoginForm(EmployeeManagementFacade facade) {
         initComponents();
         this.setLocationRelativeTo(null); 
+        this.facade = facade;
     }
 
     /**
@@ -259,10 +261,10 @@ public class EmployeeLoginForm extends javax.swing.JFrame {
         String username = TF_ID.getText();
         String password = jPassF.getText();
 
-        User employee = new Employee(username, password);
+        User employee = new uEmployee(username, password);
 
         if (employee.isValid()) {                
-            EmployeeView employeeView = new EmployeeView();
+            EmployeeView employeeView = new EmployeeView(facade);
             employeeView.setVisible(true);
             employeeView.pack();
             employeeView.setLocationRelativeTo(null);
@@ -276,7 +278,7 @@ public class EmployeeLoginForm extends javax.swing.JFrame {
 
     private void jLabelRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegisterMouseClicked
 
-        AdminLoginForm lgf = new AdminLoginForm();
+        AdminLoginForm lgf = new AdminLoginForm(facade);
         lgf.setVisible(true);
         lgf.pack();
         lgf.setLocationRelativeTo(null);
@@ -327,7 +329,7 @@ public class EmployeeLoginForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EmployeeLoginForm().setVisible(true);
+                new EmployeeLoginForm(facade).setVisible(true);
             }
         });
     }

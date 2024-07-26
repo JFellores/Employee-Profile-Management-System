@@ -18,10 +18,10 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  *
  * @author Jomar Fellores
  */
-public class Employee extends User {
+public class uEmployee extends User {
     private static final String EXCEL_FILE_PATH = "/Database/TESTING.xlsx"; // Ensure this path is correct
 
-    public Employee(String username, String password) {
+    public uEmployee(String username, String password) {
         super(username, password);
     }
 

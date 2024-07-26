@@ -975,7 +975,7 @@ public class AdminView extends javax.swing.JFrame {
     }//GEN-LAST:event_LogOutButtonActionPerformed
     private void showLoginForm() {
         // Show the login form
-        AdminLoginForm admin = new AdminLoginForm();
+        AdminLoginForm admin = new AdminLoginForm(facade);
         admin.setVisible(true);
         admin.setLocationRelativeTo(null);
         // Dispose of the current form
