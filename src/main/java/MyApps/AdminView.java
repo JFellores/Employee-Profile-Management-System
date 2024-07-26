@@ -45,7 +45,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author Jomar Fellores
  */
-public class EPMSJAVAGUI extends javax.swing.JFrame {
+public class AdminView extends javax.swing.JFrame {
    EmployeeManagementFacade facade = new EmployeeManagementFacade();
    private TableRowSorter<DefaultTableModel> rowSorter;
    private boolean isHeaderWritten = false;
@@ -55,7 +55,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     /**
      * Creates new form EPMSJAVAGUI
      */
-    public EPMSJAVAGUI() {
+    public AdminView() {
         initComponents();
         
         try {
@@ -68,6 +68,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         rowSorter = new TableRowSorter<>(model);
         EmployeeTable.setRowSorter(rowSorter);
         
+        /*
         EmployeeTable.setDefaultEditor(Object.class, null);
         
         EmployeeTable.getTableHeader().setFont(new Font("Arial Narrow",Font.BOLD,12));
@@ -78,6 +79,15 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         
+        changeTable(EmployeeTable, 5);
+        */
+        EmployeeTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD,17));
+        EmployeeTable.getTableHeader().setOpaque(false);
+        EmployeeTable.getTableHeader().setBackground(new Color(88,74,169));
+        EmployeeTable.getTableHeader().setForeground(new Color(255,255,255));
+        EmployeeTable.setRowHeight(25);
+        
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         changeTable(EmployeeTable, 5);
     }
     
@@ -164,7 +174,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         EditButton = new javax.swing.JButton();
         DeleteButton = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        UpdateButton = new javax.swing.JButton();
+        CheckDetails = new javax.swing.JButton();
         SaveButton = new javax.swing.JButton();
         LoadButton = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
@@ -200,14 +210,13 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             }
         });
 
-        kGradientPanel1.setkEndColor(new java.awt.Color(153, 204, 255));
-        kGradientPanel1.setkStartColor(new java.awt.Color(102, 102, 255));
+        kGradientPanel1.setkEndColor(new java.awt.Color(37, 24, 135));
+        kGradientPanel1.setkStartColor(new java.awt.Color(102, 105, 218));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-user-96.png"))); // NOI18N
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/admin_icon (2).png"))); // NOI18N
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jLabel2.setFont(new java.awt.Font("Arial Narrow", 0, 20)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 21)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Welcome");
         jLabel2.setPreferredSize(new java.awt.Dimension(40, 23));
@@ -219,11 +228,11 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setOpaque(false);
 
-        AddButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        AddButton.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 14)); // NOI18N
         AddButton.setForeground(new java.awt.Color(255, 255, 255));
         AddButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-add-64.png"))); // NOI18N
         AddButton.setText(" Add Employee");
-        AddButton.setBorderPainted(false);
+        AddButton.setBorder(null);
         AddButton.setContentAreaFilled(false);
         AddButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         AddButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -242,7 +251,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             }
         });
 
-        EditButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        EditButton.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 14)); // NOI18N
         EditButton.setForeground(new java.awt.Color(255, 255, 255));
         EditButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-edit-120.png"))); // NOI18N
         EditButton.setText(" Edit Employee");
@@ -265,7 +274,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             }
         });
 
-        DeleteButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        DeleteButton.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 14)); // NOI18N
         DeleteButton.setForeground(new java.awt.Color(255, 255, 255));
         DeleteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-delete-120.png"))); // NOI18N
         DeleteButton.setText(" Delete Employee");
@@ -288,30 +297,30 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             }
         });
 
-        UpdateButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
-        UpdateButton.setForeground(new java.awt.Color(255, 255, 255));
-        UpdateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-cog-24.png"))); // NOI18N
-        UpdateButton.setText("Check Details");
-        UpdateButton.setBorderPainted(false);
-        UpdateButton.setContentAreaFilled(false);
-        UpdateButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        UpdateButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        UpdateButton.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-cog-unscreen.gif"))); // NOI18N
-        UpdateButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        CheckDetails.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 14)); // NOI18N
+        CheckDetails.setForeground(new java.awt.Color(255, 255, 255));
+        CheckDetails.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-cog-24.png"))); // NOI18N
+        CheckDetails.setText("Check Details");
+        CheckDetails.setBorderPainted(false);
+        CheckDetails.setContentAreaFilled(false);
+        CheckDetails.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        CheckDetails.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        CheckDetails.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-cog-unscreen.gif"))); // NOI18N
+        CheckDetails.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                UpdateButtonMouseEntered(evt);
+                CheckDetailsMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                UpdateButtonMouseExited(evt);
+                CheckDetailsMouseExited(evt);
             }
         });
-        UpdateButton.addActionListener(new java.awt.event.ActionListener() {
+        CheckDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UpdateButtonActionPerformed(evt);
+                CheckDetailsActionPerformed(evt);
             }
         });
 
-        SaveButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        SaveButton.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 14)); // NOI18N
         SaveButton.setForeground(new java.awt.Color(255, 255, 255));
         SaveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-save-23.png"))); // NOI18N
         SaveButton.setText(" Save Data");
@@ -334,7 +343,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             }
         });
 
-        LoadButton.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        LoadButton.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 14)); // NOI18N
         LoadButton.setForeground(new java.awt.Color(255, 255, 255));
         LoadButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-up-23.png"))); // NOI18N
         LoadButton.setText("Load Data");
@@ -361,14 +370,16 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(AddButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(EditButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(DeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+            .addComponent(DeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jSeparator2)
-            .addComponent(UpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(CheckDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(SaveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(LoadButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(AddButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,7 +392,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CheckDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -390,11 +401,11 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jLabel4.setFont(new java.awt.Font("Arial Narrow", 1, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Manage Employees");
+        jLabel4.setText("MANAGE EMPLOYEES");
 
-        LogOutButton.setFont(new java.awt.Font("Arial Narrow", 1, 12)); // NOI18N
+        LogOutButton.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 18)); // NOI18N
         LogOutButton.setForeground(new java.awt.Color(255, 255, 255));
         LogOutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-logout-21_1.png"))); // NOI18N
         LogOutButton.setText("Log out");
@@ -423,48 +434,49 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             .addGroup(kGradientPanel1Layout.createSequentialGroup()
                 .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(jLabel3))
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addContainerGap()
                         .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(6, 6, 6)
+                                .addComponent(LogOutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(LogOutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 6, Short.MAX_VALUE))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabel4))
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addGap(82, 82, 82)
+                                .addComponent(jLabel3))
+                            .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                .addGap(52, 52, 52)
+                                .addGroup(kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(kGradientPanel1Layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel1))))
+                        .addGap(0, 15, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         kGradientPanel1Layout.setVerticalGroup(
             kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(22, 22, 22)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(LogOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
@@ -475,14 +487,14 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(kGradientPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        EmployeeTable.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
+        EmployeeTable.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 14)); // NOI18N
         EmployeeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -507,9 +519,18 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
         jSeparator3.setForeground(new java.awt.Color(0, 0, 0));
 
-        EmployeeSearch.setBorder(null);
+        EmployeeSearch.setBackground(new java.awt.Color(127, 100, 217));
+        EmployeeSearch.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 14)); // NOI18N
+        EmployeeSearch.setForeground(new java.awt.Color(255, 255, 255));
+        EmployeeSearch.setText("Search...");
+        EmployeeSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
         EmployeeSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         EmployeeSearch.setOpaque(true);
+        EmployeeSearch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                EmployeeSearchFocusGained(evt);
+            }
+        });
         EmployeeSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EmployeeSearchActionPerformed(evt);
@@ -524,7 +545,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
             }
         });
 
-        SearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-search-20.png"))); // NOI18N
+        SearchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/search.png"))); // NOI18N
         SearchButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         SearchButton.setBorderPainted(false);
         SearchButton.setContentAreaFilled(false);
@@ -537,7 +558,9 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 14)); // NOI18N
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-sort-26.png"))); // NOI18N
 
+        SortByComboBox.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 14)); // NOI18N
         SortByComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Employee ID", "Name", "Department", "Position", "Salary", "Performance Rating" }));
+        SortByComboBox.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         SortByComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 SortByComboBoxItemStateChanged(evt);
@@ -591,7 +614,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(SearchButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(EmployeeSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+                                .addComponent(EmployeeSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -606,11 +629,11 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(SortByComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(EmployeeSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(EmployeeSearch)
+                    .addComponent(SearchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(SortByComboBox))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -640,7 +663,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     }
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
         
-        AddGUI add = new AddGUI(facade);
+        AddGUI add = new AddGUI(facade,EmployeeTable);
         add.setLocationRelativeTo(null);
 
         add.setVisible(true);
@@ -714,7 +737,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
     private void AddButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddButtonMouseEntered
         AddButton.setOpaque(true);
-        AddButton.setBackground(new Color(0, 200, 255, 100));
+        AddButton.setBackground(new Color(192, 211, 255, 100));
     }//GEN-LAST:event_AddButtonMouseEntered
 
     private void AddButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddButtonMouseExited
@@ -724,7 +747,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
     private void EditButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditButtonMouseEntered
         EditButton.setOpaque(true);
-        EditButton.setBackground(new Color(0, 200, 255, 100));
+        EditButton.setBackground(new Color(192, 211, 255, 100));
     }//GEN-LAST:event_EditButtonMouseEntered
 
     private void EditButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditButtonMouseExited
@@ -733,7 +756,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
     private void DeleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteButtonMouseEntered
         DeleteButton.setOpaque(true);
-        DeleteButton.setBackground(new Color(0, 200, 255, 100));
+        DeleteButton.setBackground(new Color(192, 211, 255, 100));
     }//GEN-LAST:event_DeleteButtonMouseEntered
 
     private void DeleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DeleteButtonMouseExited
@@ -746,7 +769,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
     private void LogOutButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogOutButtonMouseEntered
         LogOutButton.setOpaque(true);
-        LogOutButton.setBackground(new Color(100, 0, 240, 100));
+        LogOutButton.setBackground(new Color(192, 211, 255, 100));
     }//GEN-LAST:event_LogOutButtonMouseEntered
 
     private void EmployeeSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmployeeSearchActionPerformed
@@ -759,7 +782,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
     private void LoadButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadButtonMouseEntered
         LoadButton.setOpaque(true);
-        LoadButton.setBackground(new Color(0, 200, 255, 100));
+        LoadButton.setBackground(new Color(192, 211, 255, 100));
     }//GEN-LAST:event_LoadButtonMouseEntered
 
     private void LoadButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoadButtonMouseExited
@@ -835,23 +858,44 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_LoadButtonActionPerformed
 
-    private void UpdateButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateButtonMouseEntered
-        UpdateButton.setOpaque(true);
-        UpdateButton.setBackground(new Color(0, 200, 255, 100));
-    }//GEN-LAST:event_UpdateButtonMouseEntered
+    private void CheckDetailsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckDetailsMouseEntered
+        CheckDetails.setOpaque(true);
+        CheckDetails.setBackground(new Color(192, 211, 255, 100));
+    }//GEN-LAST:event_CheckDetailsMouseEntered
 
-    private void UpdateButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UpdateButtonMouseExited
-        UpdateButton.setOpaque(false);
-    }//GEN-LAST:event_UpdateButtonMouseExited
+    private void CheckDetailsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CheckDetailsMouseExited
+        CheckDetails.setOpaque(false);
+    }//GEN-LAST:event_CheckDetailsMouseExited
 
-    private void UpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateButtonActionPerformed
+    private void CheckDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckDetailsActionPerformed
+    int selectedRow = EmployeeTable.getSelectedRow();
+        if (selectedRow != -1) {
+            String employeeID = (String) EmployeeTable.getValueAt(selectedRow, 0);
+            Employee selectedEmployee = facade.getEmployeeById(employeeID);
+
+            if (selectedEmployee != null) {
+                // Create a message with employee details
+                String employeeDetails = "Employee ID: " + selectedEmployee.getEmployeeID() + "\n" +
+                                         "Name: " + selectedEmployee.getFirstName() + " " + selectedEmployee.getLastName() + "\n" +
+                                         "Department: " + selectedEmployee.getDepartment() + "\n" +
+                                         "Position: " + selectedEmployee.getPosition() + "\n" +
+                                         "Base Salary: " + selectedEmployee.getBaseSalary() + "\n" +
+                                         "Hours Worked: " + selectedEmployee.getHoursWorked() + "\n" +
+                                         "Performance Rating: " + selectedEmployee.getPerformanceRating();
+                // Show the message in a JOptionPane
+                JOptionPane.showMessageDialog(this, employeeDetails, "Employee Details", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Employee not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select an employee to view details.", "Error", JOptionPane.WARNING_MESSAGE);
+        }
         
-        
-    }//GEN-LAST:event_UpdateButtonActionPerformed
+    }//GEN-LAST:event_CheckDetailsActionPerformed
 
     private void SaveButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveButtonMouseEntered
         SaveButton.setOpaque(true);
-        SaveButton.setBackground(new Color(0, 200, 255, 100));
+        SaveButton.setBackground(new Color(192, 211, 255, 100));
     }//GEN-LAST:event_SaveButtonMouseEntered
 
     private void SaveButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SaveButtonMouseExited
@@ -998,10 +1042,6 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     System.exit(0);
     }//GEN-LAST:event_LogOutButtonActionPerformed
 
-    private void SortByComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByComboBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SortByComboBoxActionPerformed
-
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
    // TODO add your handling code here:
     }//GEN-LAST:event_formWindowClosing
@@ -1018,16 +1058,25 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
        mousePy = evt.getY();
     }//GEN-LAST:event_jPanel2MousePressed
 
-    private void SortByComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_SortByComboBoxItemStateChanged
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
-        String columnName = SortByComboBox.getSelectedItem().toString();
-        sort(columnName);
-    }
-    }//GEN-LAST:event_SortByComboBoxItemStateChanged
-
     private void EmployeeSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EmployeeSearchKeyReleased
         rowSorter.setRowFilter(RowFilter.regexFilter(EmployeeSearch.getText()));
     }//GEN-LAST:event_EmployeeSearchKeyReleased
+
+    private void EmployeeSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_EmployeeSearchFocusGained
+        // TODO add your handling code here:
+        EmployeeSearch.setText("");
+    }//GEN-LAST:event_EmployeeSearchFocusGained
+
+    private void SortByComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SortByComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SortByComboBoxActionPerformed
+
+    private void SortByComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_SortByComboBoxItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            String columnName = SortByComboBox.getSelectedItem().toString();
+            sort(columnName);
+        }
+    }//GEN-LAST:event_SortByComboBoxItemStateChanged
     private void sort(String columnName) {
         DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
     
@@ -1080,32 +1129,34 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EPMSJAVAGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EPMSJAVAGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EPMSJAVAGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EPMSJAVAGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            new EPMSJAVAGUI().setVisible(true);
+            new AdminView().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
+    private javax.swing.JButton CheckDetails;
     private javax.swing.JButton DeleteButton;
     private javax.swing.JButton EditButton;
     private javax.swing.JTextField EmployeeSearch;
@@ -1115,7 +1166,6 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     private javax.swing.JButton SaveButton;
     private javax.swing.JToggleButton SearchButton;
     private javax.swing.JComboBox<String> SortByComboBox;
-    private javax.swing.JButton UpdateButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

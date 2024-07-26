@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package MyApps;
-import MyApps.EPMSJAVAGUI;
+import MyApps.AdminView;
 import MyLibs.*;
 import java.awt.Color;
 
@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -25,18 +26,37 @@ import javax.swing.table.TableModel;
  * @author Jomar Fellores
  */
 public class AddGUI extends javax.swing.JFrame {
+   private static JTable EmployeeTable;
    int mousePx;
    int mousePy;
    
     private EmployeeManagementFacade facade;
     
-    public AddGUI(EmployeeManagementFacade facade) {
+    public AddGUI(EmployeeManagementFacade facade, JTable EmployeeTable) {
+        
         initComponents();
         this.facade = facade;
+        this.EmployeeTable = EmployeeTable;
     }
     public void close(){
         WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
+    }
+    
+    private boolean isEmployeeIdValid(String empId) {
+    // Check if ID is exactly 6 digits long and numeric
+    return empId.matches("\\d{6}");
+    }
+
+    // Method to check for duplicate employee ID
+    private boolean isEmployeeIdDuplicate(String empId) {
+        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+        for (int row = 0; row < model.getRowCount(); row++) {
+            if (empId.equals(model.getValueAt(row, 0))) { // Assumes employee ID is in the first column
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -120,8 +140,8 @@ public class AddGUI extends javax.swing.JFrame {
             }
         });
 
-        kGradientPanel1.setkEndColor(new java.awt.Color(0, 59, 105));
-        kGradientPanel1.setkStartColor(new java.awt.Color(9, 9, 84));
+        kGradientPanel1.setkEndColor(new java.awt.Color(43, 18, 129));
+        kGradientPanel1.setkStartColor(new java.awt.Color(85, 47, 176));
         kGradientPanel1.setkTransparentControls(false);
         kGradientPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -134,7 +154,7 @@ public class AddGUI extends javax.swing.JFrame {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 4));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
         jPanel2.setOpaque(false);
 
@@ -154,18 +174,21 @@ public class AddGUI extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Performance Rating");
 
+        TF_EmpID.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 14)); // NOI18N
         TF_EmpID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_EmpIDActionPerformed(evt);
             }
         });
 
+        TF_FirstName.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 14)); // NOI18N
         TF_FirstName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_FirstNameActionPerformed(evt);
             }
         });
 
+        TF_PR.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 14)); // NOI18N
         TF_PR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_PRActionPerformed(evt);
@@ -191,6 +214,7 @@ public class AddGUI extends javax.swing.JFrame {
             }
         });
 
+        TF_LastName.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 14)); // NOI18N
         TF_LastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_LastNameActionPerformed(evt);
@@ -209,20 +233,28 @@ public class AddGUI extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Hours Worked");
 
+        TF_Hours.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 14)); // NOI18N
+
+        TF_Base.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 14)); // NOI18N
+
         jLabel1.setFont(new java.awt.Font("Franklin Gothic Medium", 1, 17)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Base Salary");
 
-        GoBack.setText("Go Back");
+        GoBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/back static.jpg"))); // NOI18N
+        GoBack.setBorder(null);
         GoBack.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        GoBack.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/back-moving.gif"))); // NOI18N
         GoBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GoBackActionPerformed(evt);
             }
         });
 
+        CB_Position.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 14)); // NOI18N
         CB_Position.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Manager", "Merchandiser", "Sales Associate", "Customer Service", "Cashier" }));
 
+        CB_Dept.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 14)); // NOI18N
         CB_Dept.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Information Technology", "Human Resources", "Sales & Marketing" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -230,8 +262,17 @@ public class AddGUI extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(174, 174, 174)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(BTNAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BTNClear))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(21, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(GoBack)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,20 +303,8 @@ public class AddGUI extends javax.swing.JFrame {
                                         .addComponent(TF_Base, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(TF_LastName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)))
-                                .addContainerGap())))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(GoBack)
-                        .addGap(18, 18, 18))))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(113, 113, 113)
-                .addComponent(BTNAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(BTNClear)
-                .addGap(0, 0, Short.MAX_VALUE))
+                                .addContainerGap())))))
         );
-
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {BTNAdd, BTNClear});
-
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -317,13 +346,13 @@ public class AddGUI extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TF_Hours, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TF_Base, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BTNAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTNClear))
-                .addGap(12, 12, 12)
+                .addGap(26, 26, 26)
+                .addComponent(BTNAdd)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BTNClear)
+                .addGap(7, 7, 7)
                 .addComponent(GoBack)
-                .addGap(22, 22, 22))
+                .addGap(7, 7, 7))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {BTNAdd, BTNClear});
@@ -354,18 +383,19 @@ public class AddGUI extends javax.swing.JFrame {
         kGradientPanel3Layout.setHorizontalGroup(
             kGradientPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel3Layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
-                .addComponent(jLabel12)
-                .addGap(40, 40, 40))
-            .addGroup(kGradientPanel3Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addComponent(jLabel10)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addGroup(kGradientPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(kGradientPanel3Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(42, 42, 42))
         );
         kGradientPanel3Layout.setVerticalGroup(
             kGradientPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel3Layout.createSequentialGroup()
-                .addGap(239, 239, 239)
+                .addGap(195, 195, 195)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel12)
@@ -456,13 +486,20 @@ public class AddGUI extends javax.swing.JFrame {
         String department = CB_Dept.getSelectedItem().toString();
 
         Set<String> validPositions = new HashSet<>(Arrays.asList("Manager", "Sales Associate", "Cashier", "Customer Service", "Merchandiser"));
+
         // Validate input fields
         if (firstName.isEmpty() || empId.isEmpty() || performance.isEmpty() || position.isEmpty() || lastName.isEmpty() || hours.isEmpty() || base.isEmpty() || department.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill up all fields", "Try again", JOptionPane.ERROR_MESSAGE);
         } else if (!validPositions.contains(position)) {
             // Validate the position
             JOptionPane.showMessageDialog(this, "Invalid position. Please enter a valid position. \nManager | Sales Associate | Cashier | Customer Service | Merchandiser", "Error", JOptionPane.ERROR_MESSAGE);
-        }  else{
+        } else if (!isEmployeeIdValid(empId)) {
+            // Validate the employee ID length and format
+            JOptionPane.showMessageDialog(this, "Employee ID must be exactly 6 digits long.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (isEmployeeIdDuplicate(empId)) {
+            // Check for duplicate employee ID
+            JOptionPane.showMessageDialog(this, "Employee ID must be unique. The provided ID already exists.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
             // Convert hours and base to their appropriate types
             int hoursWorked;
             double baseSalary, performanceRating;
@@ -481,7 +518,7 @@ public class AddGUI extends javax.swing.JFrame {
 
             // Add employee details to JTable
             DecimalFormat df = new DecimalFormat("#.00");
-            EPMSJAVAGUI.AddRow(new Object[]{
+            AdminView.AddRow(new Object[]{
                 employee.getEmployeeID(),
                 employee.getLastName() + ", " + employee.getFirstName(),
                 employee.getDepartment(),
@@ -489,7 +526,7 @@ public class AddGUI extends javax.swing.JFrame {
                 df.format(employee.getSalaryStrategy().calculateSalary(baseSalary, hoursWorked)),
                 employee.getPerformanceStrategy().classifyPerformance(employee.getPerformanceRating()),
             });
-            
+
             // Clear text fields
             TF_EmpID.setText("");
             TF_FirstName.setText("");          
@@ -497,7 +534,6 @@ public class AddGUI extends javax.swing.JFrame {
             TF_LastName.setText("");
             TF_Hours.setText("");
             TF_Base.setText("");
-            
         }
     }//GEN-LAST:event_BTNAddActionPerformed
 
@@ -567,7 +603,7 @@ public class AddGUI extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 EmployeeManagementFacade facade = null;
-                new AddGUI(facade).setVisible(true);
+                new AddGUI(facade, EmployeeTable).setVisible(true);
             }
         });
     }
