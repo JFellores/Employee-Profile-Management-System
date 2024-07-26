@@ -231,7 +231,7 @@ public class EmployeeView extends javax.swing.JFrame {
 
         jLabel17.setFont(new java.awt.Font("Franklin Gothic Medium", 0, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("SEX");
+        jLabel17.setText("GENDER");
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);

@@ -6,13 +6,15 @@ package Logins;
 
 import MyApps.AdminView;
 import javax.swing.JFrame;
+import MyUser.*;
 
 /**
  *
  * @author LG
  */
 public class AdminLoginForm extends javax.swing.JFrame {
-
+   int mousePx;
+   int mousePy;
     /**
      * Creates new form Login
      */
@@ -35,7 +37,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        TF_User = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
         jButtonLogin = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -53,7 +55,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(44, 62, 80));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(42, 62, 80));
-        jLabel1.setText("Welcome");
+        jLabel1.setText("Admin");
 
         jLabelClose.setBackground(new java.awt.Color(44, 62, 80));
         jLabelClose.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
@@ -102,6 +104,16 @@ public class AdminLoginForm extends javax.swing.JFrame {
         );
 
         jPanel2.setBackground(new java.awt.Color(44, 62, 80));
+        jPanel2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel2MouseDragged(evt);
+            }
+        });
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel2MousePressed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setForeground(java.awt.Color.white);
@@ -111,10 +123,10 @@ public class AdminLoginForm extends javax.swing.JFrame {
         jLabel5.setForeground(java.awt.Color.white);
         jLabel5.setText("Password:");
 
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        TF_User.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        TF_User.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                TF_UserActionPerformed(evt);
             }
         });
 
@@ -124,6 +136,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
         jButtonLogin.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButtonLogin.setForeground(java.awt.Color.white);
         jButtonLogin.setText("Sign in");
+        jButtonLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLoginActionPerformed(evt);
@@ -134,6 +147,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton2.setForeground(java.awt.Color.white);
         jButton2.setText("Cancel");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -161,7 +175,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TF_User, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
@@ -179,7 +193,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
                 .addGap(73, 73, 73)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TF_User, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
@@ -223,36 +237,32 @@ public class AdminLoginForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jLabelMinMouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void TF_UserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_UserActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_TF_UserActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
-        String username = jTextField1.getText();
+        String username = TF_User.getText();
         String password = new String(jPasswordField1.getPassword());
-    if (isValidLogin(username, password)) {                
-        AdminView mainApp = new AdminView();
-        mainApp.setVisible(true);
-        mainApp.pack();
-        mainApp.setLocationRelativeTo(null);
-        mainApp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        User admin = new Admin(username, password);
+
+        if (admin.isValid()) {                
+            AdminView mainApp = new AdminView();
+            mainApp.setVisible(true);
+            mainApp.setLocationRelativeTo(null);
+            this.dispose();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Invalid username or password", "Login Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         }        
+        
+         
     }//GEN-LAST:event_jButtonLoginActionPerformed
 
-    private boolean isValidLogin(String username, String password) {
-        // Example predefined credentials
-        String validUsername = "admin";
-        String validPassword = "password";
-
-        return username.equals(validUsername) && password.equals(validPassword);
-    }
     
     private void jLabelRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegisterMouseClicked
         
@@ -265,6 +275,18 @@ public class AdminLoginForm extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jLabelRegisterMouseClicked
 
+    private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed
+        mousePx = evt.getX();
+        mousePy = evt.getY();
+    }//GEN-LAST:event_jPanel2MousePressed
+
+    private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
+        int corX = evt.getXOnScreen();
+        int corY = evt.getYOnScreen();
+
+        setLocation(corX - mousePx, corY - mousePy);
+    }//GEN-LAST:event_jPanel2MouseDragged
+
     /**
      * @param args the command line arguments
      */
@@ -276,7 +298,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -304,6 +326,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField TF_User;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonLogin;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -316,7 +339,6 @@ public class AdminLoginForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

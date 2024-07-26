@@ -68,19 +68,7 @@ public class AdminView extends javax.swing.JFrame {
         rowSorter = new TableRowSorter<>(model);
         EmployeeTable.setRowSorter(rowSorter);
         
-        /*
-        EmployeeTable.setDefaultEditor(Object.class, null);
         
-        EmployeeTable.getTableHeader().setFont(new Font("Arial Narrow",Font.BOLD,12));
-        EmployeeTable.getTableHeader().setOpaque(false);
-        EmployeeTable.getTableHeader().setDefaultRenderer(new HeaderColor());
-        EmployeeTable.getTableHeader().setForeground(new Color(255, 255, 255));
-        EmployeeTable.setRowHeight(25);
-        
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
-        changeTable(EmployeeTable, 5);
-        */
         EmployeeTable.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD,17));
         EmployeeTable.getTableHeader().setOpaque(false);
         EmployeeTable.getTableHeader().setBackground(new Color(88,74,169));
