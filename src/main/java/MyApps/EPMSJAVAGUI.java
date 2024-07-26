@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import MyLibs.*;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -29,6 +30,8 @@ import java.util.Vector;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.TableRowSorter;
 import static org.apache.commons.math3.fitting.leastsquares.LeastSquaresFactory.model;
 import org.apache.poi.ss.usermodel.Cell;
@@ -43,7 +46,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author Jomar Fellores
  */
 public class EPMSJAVAGUI extends javax.swing.JFrame {
-   EmployeeManagementFacade facade = new EmployeeManagementFacade(); 
+   EmployeeManagementFacade facade = new EmployeeManagementFacade();
+   private TableRowSorter<DefaultTableModel> rowSorter;
    private boolean isHeaderWritten = false;
    int mousePx;
    int mousePy;
@@ -59,6 +63,10 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+        rowSorter = new TableRowSorter<>(model);
+        EmployeeTable.setRowSorter(rowSorter);
         
         EmployeeTable.setDefaultEditor(Object.class, null);
         
@@ -480,7 +488,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Employee ID", "Name ", "Department", "Position", "Salary", "Performance Rating"
+                "Employee ID", "Name", "Department", "Position", "Salary", "Performance Rating"
             }
         ));
         EmployeeTable.setFocusable(false);
@@ -529,7 +537,7 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 14)); // NOI18N
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-sort-26.png"))); // NOI18N
 
-        SortByComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "EE", "ME", "PIP" }));
+        SortByComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Employee ID", "Name", "Department", "Position", "Salary", "Performance Rating" }));
         SortByComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 SortByComboBoxItemStateChanged(evt);
@@ -1011,18 +1019,55 @@ public class EPMSJAVAGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel2MousePressed
 
     private void SortByComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_SortByComboBoxItemStateChanged
-        String query = SortByComboBox.getSelectedItem().toString();
-        filter(query);
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+        String columnName = SortByComboBox.getSelectedItem().toString();
+        sort(columnName);
+    }
     }//GEN-LAST:event_SortByComboBoxItemStateChanged
 
     private void EmployeeSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EmployeeSearchKeyReleased
-        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(model);
-        EmployeeTable.setRowSorter(tr);
-        tr.setRowFilter(RowFilter.regexFilter(EmployeeSearch.getText()));
-        
+        rowSorter.setRowFilter(RowFilter.regexFilter(EmployeeSearch.getText()));
     }//GEN-LAST:event_EmployeeSearchKeyReleased
+    private void sort(String columnName) {
+        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+    
+    if ("None".equalsIgnoreCase(columnName)) {
+        // Revert to default sorting or no sorting
+        rowSorter.setSortKeys(null);
+        return;
+    }
 
+    // Find the column index based on the column name
+    int columnIndex = -1;
+    for (int i = 0; i < model.getColumnCount(); i++) {
+        if (model.getColumnName(i).equalsIgnoreCase(columnName)) {
+            columnIndex = i;
+            break;
+        }
+    }
+
+    if (columnIndex != -1) {
+        // Determine if the column is numeric or alphabetical
+        boolean isNumeric = true;
+        for (int row = 0; row < model.getRowCount(); row++) {
+            try {
+                Double.parseDouble(model.getValueAt(row, columnIndex).toString());
+            } catch (NumberFormatException e) {
+                isNumeric = false;
+                break;
+            }
+        }
+
+        // Apply sorting
+        if (isNumeric) {
+            rowSorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(columnIndex, SortOrder.ASCENDING)));
+        } else {
+            rowSorter.setSortKeys(Arrays.asList(new RowSorter.SortKey(columnIndex, SortOrder.ASCENDING)));
+        }
+    } else {
+        System.out.println("Column not found: " + columnName);
+    }
+}
     /**
      * @param args the command line arguments
      */
