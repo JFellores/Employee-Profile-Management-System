@@ -33,9 +33,9 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Component id="kGradientPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
@@ -64,38 +64,31 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                          <Component id="CheckIn" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="LogOut" min="-2" pref="124" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
-                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  <Component id="CheckIn" min="-2" pref="170" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="LogOut" min="-2" pref="124" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                  <Component id="TF_fullName" min="-2" pref="195" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jLabel4" alignment="1" min="-2" pref="195" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="TF_fullName" min="-2" pref="195" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                              <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -104,15 +97,15 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
                   <Component id="TF_fullName" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="CheckIn" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="311" max="32767" attributes="0"/>
+                  <EmptySpace pref="308" max="32767" attributes="0"/>
                   <Component id="LogOut" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -123,6 +116,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="18" style="1"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
             <Property name="text" type="java.lang.String" value="Welcome"/>
           </Properties>
         </Component>
@@ -157,6 +151,9 @@
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="16" green="16" red="c4" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="LOG OUT"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -361,8 +358,9 @@
               <Color blue="f2" green="f2" red="f2" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="18" style="1"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
@@ -404,8 +402,9 @@
               <Color blue="f2" green="f2" red="f2" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="18" style="1"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TF_posActionPerformed"/>
@@ -428,8 +427,9 @@
               <Color blue="f2" green="f2" red="f2" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="18" style="0"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel10">
@@ -449,8 +449,9 @@
               <Color blue="f2" green="f2" red="f2" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="18" style="0"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel11">
@@ -470,8 +471,9 @@
               <Color blue="f2" green="f2" red="f2" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="18" style="0"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TF_HWActionPerformed"/>
@@ -494,8 +496,9 @@
               <Color blue="f2" green="f2" red="f2" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="18" style="0"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel13">
@@ -512,8 +515,9 @@
         <Component class="javax.swing.JTextField" name="TF_add">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="18" style="0"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TF_addActionPerformed"/>
@@ -533,8 +537,9 @@
         <Component class="javax.swing.JTextField" name="TF_cont">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="18" style="0"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel15">
@@ -551,8 +556,9 @@
         <Component class="javax.swing.JTextField" name="TF_age">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="18" style="0"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel16">
@@ -569,9 +575,13 @@
         <Component class="javax.swing.JTextField" name="TF_sex">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="18" style="0"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TF_sexActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel17">
           <Properties>
@@ -590,8 +600,9 @@
               <Color blue="f2" green="f2" red="f2" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="18" style="1"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="TF_empID2">
@@ -600,8 +611,9 @@
               <Color blue="f2" green="f2" red="f2" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="14" style="1"/>
+              <Font name="Arial" size="18" style="1"/>
             </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
         </Component>
       </SubComponents>

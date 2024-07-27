@@ -82,7 +82,7 @@ public class EmployeeLoginForm extends javax.swing.JFrame {
 
         jLabelClose.setBackground(new java.awt.Color(44, 62, 80));
         jLabelClose.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
-        jLabelClose.setForeground(new java.awt.Color(42, 62, 80));
+        jLabelClose.setForeground(new java.awt.Color(255, 255, 255));
         jLabelClose.setText("x");
         jLabelClose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelClose.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,7 +93,7 @@ public class EmployeeLoginForm extends javax.swing.JFrame {
 
         jLabelMin.setBackground(new java.awt.Color(44, 62, 80));
         jLabelMin.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
-        jLabelMin.setForeground(new java.awt.Color(42, 62, 80));
+        jLabelMin.setForeground(new java.awt.Color(255, 255, 255));
         jLabelMin.setText("-");
         jLabelMin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelMin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -154,6 +154,7 @@ public class EmployeeLoginForm extends javax.swing.JFrame {
 
         jLabelRegister.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jLabelRegister.setForeground(java.awt.Color.white);
+        jLabelRegister.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelRegister.setText("Click here to sign-in as administrator");
         jLabelRegister.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelRegister.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -179,14 +180,13 @@ public class EmployeeLoginForm extends javax.swing.JFrame {
                         .addComponent(SignIn, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(57, 57, 57)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelRegister)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel5)
-                                .addComponent(TF_ID)
-                                .addComponent(jLabel4)
-                                .addComponent(jPassF, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5)
+                            .addComponent(TF_ID)
+                            .addComponent(jLabel4)
+                            .addComponent(jPassF, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                            .addComponent(jLabelRegister))))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +203,7 @@ public class EmployeeLoginForm extends javax.swing.JFrame {
                 .addComponent(jLabelRegister)
                 .addGap(27, 27, 27)
                 .addComponent(SignIn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -211,7 +211,7 @@ public class EmployeeLoginForm extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(44, 62, 80));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 22)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(42, 62, 80));
-        jLabel1.setText("Employee Log-In");
+        jLabel1.setText("Employee Login");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Employee (2).png"))); // NOI18N
 
@@ -254,7 +254,7 @@ public class EmployeeLoginForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );

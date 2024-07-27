@@ -81,7 +81,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
 
         jLabelClose.setBackground(new java.awt.Color(44, 62, 80));
         jLabelClose.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
-        jLabelClose.setForeground(new java.awt.Color(42, 62, 80));
+        jLabelClose.setForeground(new java.awt.Color(255, 255, 255));
         jLabelClose.setText("x");
         jLabelClose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelClose.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -92,7 +92,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
 
         jLabelMin.setBackground(new java.awt.Color(44, 62, 80));
         jLabelMin.setFont(new java.awt.Font("Arial Narrow", 1, 24)); // NOI18N
-        jLabelMin.setForeground(new java.awt.Color(42, 62, 80));
+        jLabelMin.setForeground(new java.awt.Color(255, 255, 255));
         jLabelMin.setText("-");
         jLabelMin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelMin.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -192,9 +192,9 @@ public class AdminLoginForm extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(89, 89, 89)
                         .addComponent(SignIn, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(68, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 75, Short.MAX_VALUE)
+                .addGap(0, 67, Short.MAX_VALUE)
                 .addComponent(jLabelRegister)
                 .addGap(92, 92, 92))
         );
@@ -221,7 +221,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(44, 62, 80));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 22)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(42, 62, 80));
-        jLabel1.setText("Admin Log-In");
+        jLabel1.setText("Admin Login");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/admin.png"))); // NOI18N
 
@@ -237,7 +237,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addComponent(jLabel1)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -106,7 +106,7 @@
               <Font name="Arial Narrow" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="50" green="3e" red="2a" type="rgb"/>
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="x"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -126,7 +126,7 @@
               <Font name="Arial Narrow" size="24" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="50" green="3e" red="2a" type="rgb"/>
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="-"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -176,10 +176,10 @@
                           <Component id="SignIn" min="-2" pref="121" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="68" max="32767" attributes="0"/>
+                  <EmptySpace pref="71" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="0" pref="75" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="67" max="32767" attributes="0"/>
                   <Component id="jLabelRegister" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
               </Group>
@@ -300,7 +300,7 @@
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="17" max="32767" attributes="0"/>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -328,7 +328,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="50" green="3e" red="2a" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Admin Log-In"/>
+            <Property name="text" type="java.lang.String" value="Admin Login"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">

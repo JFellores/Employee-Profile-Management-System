@@ -212,6 +212,7 @@ public class EmployeeView extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Welcome");
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/user (2).png"))); // NOI18N
@@ -232,6 +233,7 @@ public class EmployeeView extends javax.swing.JFrame {
         });
 
         LogOut.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        LogOut.setForeground(new java.awt.Color(196, 22, 22));
         LogOut.setText("LOG OUT");
         LogOut.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         LogOut.addActionListener(new java.awt.event.ActionListener() {
@@ -248,44 +250,40 @@ public class EmployeeView extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(CheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(LogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addComponent(CheckIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGap(73, 73, 73)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(LogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(2, 2, 2))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGap(94, 94, 94)
-                                .addComponent(jLabel4)))
-                        .addGap(33, 33, 33)))
-                .addGap(54, 54, 54))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(TF_fullName, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(30, 30, 30)
+                            .addComponent(TF_fullName, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(75, 75, 75)
+                            .addComponent(jLabel5))))
+                .addGap(41, 41, 41))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jLabel5)
-                .addGap(15, 15, 15)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(3, 3, 3)
                 .addComponent(TF_fullName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CheckIn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 311, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 308, Short.MAX_VALUE)
                 .addComponent(LogOut)
-                .addGap(29, 29, 29))
+                .addGap(32, 32, 32))
         );
 
         kGradientPanel1.setkEndColor(new java.awt.Color(0, 102, 51));
@@ -312,7 +310,8 @@ public class EmployeeView extends javax.swing.JFrame {
         });
 
         TF_empID.setBackground(new java.awt.Color(242, 242, 242));
-        TF_empID.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        TF_empID.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        TF_empID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -327,7 +326,8 @@ public class EmployeeView extends javax.swing.JFrame {
         jLabel8.setText("FIRST NAME");
 
         TF_pos.setBackground(new java.awt.Color(242, 242, 242));
-        TF_pos.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        TF_pos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        TF_pos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TF_pos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_posActionPerformed(evt);
@@ -339,21 +339,24 @@ public class EmployeeView extends javax.swing.JFrame {
         jLabel9.setText("POSITION");
 
         TF_Dep.setBackground(new java.awt.Color(242, 242, 242));
-        TF_Dep.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        TF_Dep.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        TF_Dep.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel10.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("DEPARTMENT");
 
         TF_Perf.setBackground(new java.awt.Color(242, 242, 242));
-        TF_Perf.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        TF_Perf.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        TF_Perf.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("PERFORMANCE RATING");
 
         TF_HW.setBackground(new java.awt.Color(242, 242, 242));
-        TF_HW.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        TF_HW.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        TF_HW.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TF_HW.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_HWActionPerformed(evt);
@@ -365,13 +368,15 @@ public class EmployeeView extends javax.swing.JFrame {
         jLabel12.setText("HOURS WORKED");
 
         TF_Sal.setBackground(new java.awt.Color(242, 242, 242));
-        TF_Sal.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        TF_Sal.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        TF_Sal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel13.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("SALARY");
 
-        TF_add.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        TF_add.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        TF_add.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TF_add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TF_addActionPerformed(evt);
@@ -382,29 +387,39 @@ public class EmployeeView extends javax.swing.JFrame {
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("ADDRESS");
 
-        TF_cont.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        TF_cont.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        TF_cont.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel15.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("CONTACT NUMBER");
 
-        TF_age.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        TF_age.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        TF_age.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("AGE");
 
-        TF_sex.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        TF_sex.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        TF_sex.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TF_sex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TF_sexActionPerformed(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("GENDER");
 
         TF_empID1.setBackground(new java.awt.Color(242, 242, 242));
-        TF_empID1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        TF_empID1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        TF_empID1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         TF_empID2.setBackground(new java.awt.Color(242, 242, 242));
-        TF_empID2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        TF_empID2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        TF_empID2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
         kGradientPanel1.setLayout(kGradientPanel1Layout);
@@ -526,9 +541,9 @@ public class EmployeeView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -856,6 +871,10 @@ public class EmployeeView extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_jLabel5MousePressed
+
+    private void TF_sexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_sexActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TF_sexActionPerformed
     private void SaveToDatabase() {                                           
         String userHome = System.getProperty("user.home");
         File documentsFolder = new File(userHome, "Documents");
