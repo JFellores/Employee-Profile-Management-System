@@ -812,7 +812,7 @@ public class AdminView extends javax.swing.JFrame {
                 double performanceRating = row.getCell(6).getNumericCellValue();
                 String department = row.getCell(7).getStringCellValue();
                 int age = (int) row.getCell(8).getNumericCellValue();
-                int contactNumber = (int) row.getCell(9).getNumericCellValue();
+                String contactNumber = row.getCell(9).getStringCellValue();
                 String address = row.getCell(10).getStringCellValue();
                 String gender = row.getCell(11).getStringCellValue();
 
@@ -955,23 +955,9 @@ public class AdminView extends javax.swing.JFrame {
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     private void LogOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutButtonActionPerformed
-        // Confirm if the user wants to save data before logging out
-        int userResponse = JOptionPane.showConfirmDialog(
-            null, 
-            "Do you want to save your data before logging out?", 
-            "Confirm Logout", 
-            JOptionPane.YES_NO_OPTION
-        );
 
-        if (userResponse == JOptionPane.YES_OPTION) {
-            // Save the data
-            SaveButtonActionPerformed(evt);
-            // Proceed with logout
             showLoginForm();
-        } else if (userResponse == JOptionPane.NO_OPTION) {
-            // Proceed with logout without saving
-            showLoginForm();
-        }
+        
     }//GEN-LAST:event_LogOutButtonActionPerformed
     private void showLoginForm() {
         // Show the login form

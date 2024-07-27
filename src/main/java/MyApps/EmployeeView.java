@@ -10,6 +10,7 @@ import MyLibs.*;
 import MyUser.*;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class EmployeeView extends javax.swing.JFrame {
     int mousePy;
     private static EmployeeManagementFacade facade;
     private static uEmployee employee;
-    private List<Employee> employeeList = new ArrayList<>();
+    private static List<Employee> employeeList = new ArrayList<>();
     
     /**
      * Creates new form EmployeeView
@@ -40,7 +41,65 @@ public class EmployeeView extends javax.swing.JFrame {
         this.facade = facade;
         this.employee = employee;
         initComponents();
+        
+        //Non - Editable Fields
+        TF_fullName.setBackground(new java.awt.Color(0,0,0,1));
+        TF_fullName.setEditable(false);
+        TF_empID1.setEditable(false);
+        TF_empID2.setEditable(false);
+        TF_empID.setEditable(false);
+        TF_Sal.setEditable(false);
+        TF_HW.setEditable(false);
+        TF_Perf.setEditable(false);
+        TF_Dep.setEditable(false);
+        TF_pos.setEditable(false);
+        TF_pos.setEditable(false);
+        
         LoadEmployees();
+        accessEmployeeData(employee.getEmployeeID());
+        
+        
+    }
+    public void accessEmployeeData(String employeeID) {
+        int index = findEmployeeIndex(employeeID);
+        if (index != -1) {
+            Employee emp = employeeList.get(index);
+            // Now you can access the employee's data
+            TF_empID1.setText(emp.getEmployeeID());
+            TF_empID2.setText(emp.getFirstName());
+            TF_empID.setText(emp.getLastName());
+            TF_fullName.setText(emp.getLastName() + ", " + emp.getFirstName());
+            TF_Sal.setText(Double.toString(emp.getBaseSalary()));
+            TF_HW.setText(Integer.toString(emp.getHoursWorked()));
+            TF_pos.setText(emp.getPosition());
+            TF_Perf.setText(Double.toString(emp.getPerformanceRating()));
+            TF_Dep.setText(emp.getDepartment());
+            
+            // Editable fields
+            TF_age.setText(String.valueOf(emp.getDetails().getAge()));
+            TF_add.setText(emp.getDetails().getAddress());
+            TF_cont.setText(String.valueOf(emp.getDetails().getContactNumber()));
+            TF_sex.setText(emp.getDetails().getGender());
+
+        } else {
+            // Employee not found
+            JOptionPane.showMessageDialog(null, "Employee not found.");
+        }
+    }
+    public int findEmployeeIndex(String employeeID) {
+        try {
+            for (int i = 0; i < employeeList.size(); i++) {
+                if (employeeList.get(i).getEmployeeID().equals(employeeID)) {
+                    return i;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("An error occurred while searching for the employee: " + e.getMessage());
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "An error occurred while searching for the employee. Please try again.");
+        }
+        JOptionPane.showMessageDialog(null, "Employee not found.");
+        return -1; // Return -1 if the employee is not found
     }
     
     private void LoadEmployees() {                                           
@@ -72,7 +131,7 @@ public class EmployeeView extends javax.swing.JFrame {
                     double performanceRating = row.getCell(6).getNumericCellValue();
                     String department = row.getCell(7).getStringCellValue();
                     int age = (int) row.getCell(8).getNumericCellValue();
-                    int contactNumber = (int) row.getCell(9).getNumericCellValue();
+                    String contactNumber = row.getCell(9).getStringCellValue();
                     String address = row.getCell(10).getStringCellValue();
                     String gender = row.getCell(11).getStringCellValue();
 
@@ -107,8 +166,9 @@ public class EmployeeView extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        CheckIn = new javax.swing.JButton();
         LogOut = new javax.swing.JButton();
+        TF_fullName = new javax.swing.JTextField();
         kGradientPanel1 = new keeptoo.KGradientPanel();
         EditButton = new javax.swing.JButton();
         TF_empID = new javax.swing.JTextField();
@@ -142,7 +202,7 @@ public class EmployeeView extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel4.setText("ONYENTENWEVE OSAS");
+        jLabel4.setText("Welcome");
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/user (2).png"))); // NOI18N
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -151,13 +211,13 @@ public class EmployeeView extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(15, 137, 15));
-        jButton2.setText("CHECK IN");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        CheckIn.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
+        CheckIn.setForeground(new java.awt.Color(15, 137, 15));
+        CheckIn.setText("CHECK IN");
+        CheckIn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        CheckIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                CheckInActionPerformed(evt);
             }
         });
 
@@ -170,36 +230,47 @@ public class EmployeeView extends javax.swing.JFrame {
             }
         });
 
+        TF_fullName.setEditable(false);
+        TF_fullName.setFont(new java.awt.Font("Berlin Sans FB Demi", 1, 18)); // NOI18N
+        TF_fullName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TF_fullName.setBorder(null);
+        TF_fullName.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        TF_fullName.setFocusable(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(LogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(75, 75, 75)
+                            .addComponent(jLabel5)
+                            .addGap(2, 2, 2)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addComponent(jLabel5))))
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(75, 75, 75)
+                        .addGap(53, 53, 53)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2)
-                            .addComponent(LogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 43, Short.MAX_VALUE))
+                            .addComponent(TF_fullName, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CheckIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jLabel5)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 333, Short.MAX_VALUE)
+                .addComponent(TF_fullName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(CheckIn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
                 .addComponent(LogOut)
                 .addGap(29, 29, 29))
         );
@@ -442,8 +513,9 @@ public class EmployeeView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -453,7 +525,7 @@ public class EmployeeView extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(kGradientPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         pack();
@@ -472,36 +544,75 @@ public class EmployeeView extends javax.swing.JFrame {
     }//GEN-LAST:event_kGradientPanel1MousePressed
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
-        System.out.println(employee.getEmployeeID() + " " + employee.getLastName());
-        for (Employee emp : employeeList) {
-        System.out.println("Employee ID: " + emp.getEmployeeID());
-        System.out.println("First Name: " + emp.getFirstName());
-        System.out.println("Last Name: " + emp.getLastName());
-        System.out.println("Base Salary: " + emp.getBaseSalary());
-        System.out.println("Hours Worked: " + emp.getHoursWorked());
-        System.out.println("Position: " + emp.getPosition());
-        System.out.println("Performance Rating: " + emp.getPerformanceRating());
-        System.out.println("Department: " + emp.getDepartment());
-        System.out.println("Age: " + emp.getDetails().getAge());
-        System.out.println("Contact Number: " + emp.getDetails().getContactNumber());
-        System.out.println("Address: " + emp.getDetails().getAddress());
-        System.out.println("Gender: " + emp.getDetails().getGender());
-        System.out.println(); // Empty line for better readability
-    }
+        // Retrieve the new values from the text fields
+        String ageText = TF_age.getText();
+        String contactNumberText = TF_cont.getText();
+        String address = TF_add.getText();
+        String gender = TF_sex.getText();
+
+        // Validate and convert the age
+        int age;
+        try {
+            age = Integer.parseInt(ageText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Invalid age value. Please enter a valid number.");
+            return;
+        }
+
+        // Validate contact number
+        if (!isValidContactNumber(contactNumberText)) {
+            JOptionPane.showMessageDialog(null, "Invalid contact number. It must be exactly 11 digits and start with '09'.");
+            return;
+        }
+
+        // Retrieve the employee ID from the text field
+        String employeeIDToUpdate = TF_empID1.getText(); // Assuming TF_empID1 contains the employee ID
+
+        // Find the index of the employee with the given ID
+        int index = findEmployeeIndex(employeeIDToUpdate);
+
+        if (index != -1) {
+            // Update the employee at the found index
+            Employee emp = employeeList.get(index);
+
+            emp.getDetails().setAge(age);
+            emp.getDetails().setContactNumber(contactNumberText); // Store as String
+            emp.getDetails().setAddress(address);
+            emp.getDetails().setGender(gender);
+
+            // Optionally, update the list
+            employeeList.set(index, emp);
+
+            JOptionPane.showMessageDialog(null, "Employee updated successfully.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Employee not found.");
+        }
+        //            System.out.println(employee.getEmployeeID() + " " + employee.getLastName());
+        //                    for (Employee emp : employeeList) {
+        //                        System.out.println("Employee ID: " + emp.getEmployeeID());
+        //                        System.out.println("First Name: " + emp.getFirstName());
+        //                        System.out.println("Last Name: " + emp.getLastName());
+        //                        System.out.println("Base Salary: " + emp.getBaseSalary());
+        //                        System.out.println("Hours Worked: " + emp.getHoursWorked());
+        //                        System.out.println("Position: " + emp.getPosition());
+        //                        System.out.println("Performance Rating: " + emp.getPerformanceRating());
+        //                        System.out.println("Department: " + emp.getDepartment());
+        //                        System.out.println("Age: " + emp.getDetails().getAge());
+        //                        System.out.println("Contact Number: " + emp.getDetails().getContactNumber());
+        //                        System.out.println("Address: " + emp.getDetails().getAddress());
+        //                        System.out.println("Gender: " + emp.getDetails().getGender());
+        //                        System.out.println(); // Empty line for better readability
+        //                }
+        //                    
+        //                 System.out.println();
     }//GEN-LAST:event_EditButtonActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
+    private boolean isValidContactNumber(String contactNumber) {
+        // Check if contact number is exactly 11 digits and starts with "09"
+        return contactNumber.matches("09\\d{9}");
+    }
     private void TF_HWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_HWActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TF_HWActionPerformed
-
-    private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
-        showLoginForm();
-
-    }//GEN-LAST:event_LogOutActionPerformed
     private void showLoginForm() {
         // Show the login form
         EmployeeLoginForm employee = new EmployeeLoginForm(facade);
@@ -510,11 +621,6 @@ public class EmployeeView extends javax.swing.JFrame {
         // Dispose of the current form
         this.dispose();
     }
-    private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
-        // TODO add your handling code here:
-       
-    }//GEN-LAST:event_jLabel5MousePressed
-
     private void TF_posActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_posActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TF_posActionPerformed
@@ -523,6 +629,82 @@ public class EmployeeView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TF_addActionPerformed
 
+    private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
+        SaveToDatabase();
+        showLoginForm();
+    }//GEN-LAST:event_LogOutActionPerformed
+    
+    private void CheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckInActionPerformed
+         if (CheckIn.getText().equals("CHECK IN")) {
+                    CheckIn.setText("CHECK OUT");
+                    CheckIn.setForeground(new java.awt.Color(255, 0, 0)); 
+                } else {
+                    CheckIn.setText("CHECK IN");
+                    CheckIn.setForeground(new java.awt.Color(15, 137, 15)); 
+                }
+    }//GEN-LAST:event_CheckInActionPerformed
+
+    private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jLabel5MousePressed
+    private void SaveToDatabase() {                                           
+        String userHome = System.getProperty("user.home");
+        File documentsFolder = new File(userHome, "Documents");
+        File fileToSave = new File(documentsFolder, "DATABASE.xlsx");
+
+        // Ensure the parent directory exists
+        if (!documentsFolder.exists() && !documentsFolder.mkdirs()) {
+            JOptionPane.showMessageDialog(null, "Failed to create the directory for saving the file.");
+            return;
+        }
+
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Employees");
+
+            // Create header row
+            Row headerRow = sheet.createRow(0);
+            headerRow.createCell(0).setCellValue("Employee ID");
+            headerRow.createCell(1).setCellValue("First Name");
+            headerRow.createCell(2).setCellValue("Last Name");
+            headerRow.createCell(3).setCellValue("Base Salary");
+            headerRow.createCell(4).setCellValue("Hours Worked");
+            headerRow.createCell(5).setCellValue("Position");
+            headerRow.createCell(6).setCellValue("Performance Rating");
+            headerRow.createCell(7).setCellValue("Department");
+            headerRow.createCell(8).setCellValue("Age");
+            headerRow.createCell(9).setCellValue("Contact Number");
+            headerRow.createCell(10).setCellValue("Address");
+            headerRow.createCell(11).setCellValue("Gender");
+
+            // Populate the sheet with employee data
+            int rowNum = 1;
+            for (Employee emp : employeeList) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(emp.getEmployeeID());
+                row.createCell(1).setCellValue(emp.getFirstName());
+                row.createCell(2).setCellValue(emp.getLastName());
+                row.createCell(3).setCellValue(emp.getBaseSalary());
+                row.createCell(4).setCellValue(emp.getHoursWorked());
+                row.createCell(5).setCellValue(emp.getPosition());
+                row.createCell(6).setCellValue(emp.getPerformanceRating());
+                row.createCell(7).setCellValue(emp.getDepartment());
+                row.createCell(8).setCellValue(emp.getDetails().getAge());
+                row.createCell(9).setCellValue(emp.getDetails().getContactNumber());
+                row.createCell(10).setCellValue(emp.getDetails().getAddress());
+                row.createCell(11).setCellValue(emp.getDetails().getGender());
+            }
+
+            try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
+                workbook.write(fileOut);
+            }
+
+            
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "An error occurred while saving the Excel file.");
+            e.printStackTrace();
+        }
+    }         
     /**
      * @param args the command line arguments
      */
@@ -560,6 +742,7 @@ public class EmployeeView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CheckIn;
     private javax.swing.JButton EditButton;
     private javax.swing.JButton LogOut;
     private javax.swing.JTextField TF_Dep;
@@ -572,9 +755,9 @@ public class EmployeeView extends javax.swing.JFrame {
     private javax.swing.JTextField TF_empID;
     private javax.swing.JTextField TF_empID1;
     private javax.swing.JTextField TF_empID2;
+    private javax.swing.JTextField TF_fullName;
     private javax.swing.JTextField TF_pos;
     private javax.swing.JTextField TF_sex;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

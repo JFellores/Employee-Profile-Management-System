@@ -16,7 +16,7 @@ public class EmployeeManagementFacade {
 
     public EmployeeManagementFacade() {}
 
-    public Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, String position, int age, int contactNumber, String address, String gender) {
+    public Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, String position, int age, String contactNumber, String address, String gender) {
         EmployeeFactory factory;
         EmployeeDetails details = new EmployeeDetails(age, contactNumber, address, gender);
 

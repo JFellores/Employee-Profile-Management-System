@@ -25,8 +25,30 @@ public class AdminLoginForm extends javax.swing.JFrame {
         initComponents();
         this.facade = facade;
         this.setLocationRelativeTo(null); // center form in the screen
+        addEnterKeyListener();
     }
+    
+    private void addEnterKeyListener() {
+        // Add KeyListener to JTextField
+        TF_User.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                    SignIn.doClick(); // Simulate a button click
+                }
+            }
+        });
 
+        // Add KeyListener to JPasswordField
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                    SignIn.doClick(); // Simulate a button click
+                }
+            }
+        });
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -42,7 +64,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         TF_User = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
-        jButtonLogin = new javax.swing.JButton();
+        SignIn = new javax.swing.JButton();
         jLabelRegister = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -126,12 +148,17 @@ public class AdminLoginForm extends javax.swing.JFrame {
 
         jPasswordField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jButtonLogin.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jButtonLogin.setText("Sign in");
-        jButtonLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
+        SignIn.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        SignIn.setText("Sign in");
+        SignIn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SignIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLoginActionPerformed(evt);
+                SignInActionPerformed(evt);
+            }
+        });
+        SignIn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                SignInKeyPressed(evt);
             }
         });
 
@@ -164,7 +191,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(89, 89, 89)
-                        .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(SignIn, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 72, Short.MAX_VALUE)
@@ -185,7 +212,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addComponent(jLabelRegister)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SignIn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(88, Short.MAX_VALUE))
         );
 
@@ -261,7 +288,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TF_UserActionPerformed
 
-    private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
+    private void SignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignInActionPerformed
         String username = TF_User.getText();
         String password = new String(jPasswordField1.getPassword());
 
@@ -277,7 +304,7 @@ public class AdminLoginForm extends javax.swing.JFrame {
         }        
         
          
-    }//GEN-LAST:event_jButtonLoginActionPerformed
+    }//GEN-LAST:event_SignInActionPerformed
 
     
     private void jLabelRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelRegisterMouseClicked
@@ -302,6 +329,10 @@ public class AdminLoginForm extends javax.swing.JFrame {
 
         setLocation(corX - mousePx, corY - mousePy);
     }//GEN-LAST:event_jPanel2MouseDragged
+
+    private void SignInKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SignInKeyPressed
+        
+    }//GEN-LAST:event_SignInKeyPressed
 
     /**
      * @param args the command line arguments
@@ -342,8 +373,8 @@ public class AdminLoginForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton SignIn;
     private javax.swing.JTextField TF_User;
-    private javax.swing.JButton jButtonLogin;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

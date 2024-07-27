@@ -10,11 +10,11 @@ package MyLibs;
  */
 public class EmployeeDetails {
     private int age;
-    private int contactNumber;
+    private String contactNumber;
     private String address;
     private String gender;
 
-    public EmployeeDetails(int age, int contactNumber, String address, String gender) {
+    public EmployeeDetails(int age, String contactNumber, String address, String gender) {
         this.age = age;
         this.contactNumber = contactNumber;
         this.address = address;
@@ -30,11 +30,11 @@ public class EmployeeDetails {
         this.age = age;
     }
 
-    public int getContactNumber() {
+    public String getContactNumber() {
         return contactNumber;
     }
 
-    public void setContactNumber(int contactNumber) {
+    public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
 

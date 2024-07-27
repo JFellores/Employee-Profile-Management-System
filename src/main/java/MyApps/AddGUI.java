@@ -485,7 +485,7 @@ public class AddGUI extends javax.swing.JFrame {
         String base = TF_Base.getText();
         String department = CB_Dept.getSelectedItem().toString();
         int age = 0;
-        int contactNumber = 0;
+        String contactNumber = "";
         String address = "";
         String gender = "";
         
