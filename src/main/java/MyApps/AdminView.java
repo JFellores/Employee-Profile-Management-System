@@ -831,7 +831,7 @@ public class AdminView extends javax.swing.JFrame {
                 });
             }
 
-            JOptionPane.showMessageDialog(null, "Data loaded from Excel file successfully.");
+            
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -944,7 +944,7 @@ public class AdminView extends javax.swing.JFrame {
             // Write the new workbook to the file
             try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
                 workbook.write(fileOut);
-                JOptionPane.showMessageDialog(null, "Data saved to Excel file successfully.");
+               
             }
 
         } catch (IOException e) {

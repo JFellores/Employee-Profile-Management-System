@@ -28,6 +28,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class EmployeeView extends javax.swing.JFrame {
+    private boolean dataChanged = false;
     int mousePx;
     int mousePy;
     private static EmployeeManagementFacade facade;
@@ -45,6 +46,7 @@ public class EmployeeView extends javax.swing.JFrame {
         //Non - Editable Fields
         TF_fullName.setBackground(new java.awt.Color(0,0,0,1));
         TF_fullName.setEditable(false);
+        TF_fullName.setFocusable(false);
         TF_empID1.setEditable(false);
         TF_empID2.setEditable(false);
         TF_empID.setEditable(false);
@@ -57,8 +59,7 @@ public class EmployeeView extends javax.swing.JFrame {
         
         LoadEmployees();
         accessEmployeeData(employee.getEmployeeID());
-        
-        
+      
     }
     public void accessEmployeeData(String employeeID) {
         int index = findEmployeeIndex(employeeID);
@@ -103,53 +104,56 @@ public class EmployeeView extends javax.swing.JFrame {
     }
     
     private void LoadEmployees() {                                           
-        String userHome = System.getProperty("user.home");
-        File documentsFolder = new File(userHome, "Documents");
-        File fileToLoad = new File(documentsFolder, "DATABASE.xlsx");
-        facade = new EmployeeManagementFacade();
-        if (!fileToLoad.exists()) {
-            JOptionPane.showMessageDialog(null, "The file DATABASE.xlsx does not exist in the Documents folder.");
-            return;
-        }
+       String userHome = System.getProperty("user.home");
+    File documentsFolder = new File(userHome, "Documents");
+    File fileToLoad = new File(documentsFolder, "DATABASE.xlsx");
+    facade = new EmployeeManagementFacade();
 
-        try (FileInputStream fileIn = new FileInputStream(fileToLoad); 
-             Workbook workbook = new XSSFWorkbook(fileIn)) {
-            Sheet sheet = workbook.getSheetAt(0);
-            int rowCount = sheet.getPhysicalNumberOfRows();
+    if (!fileToLoad.exists()) {
+        JOptionPane.showMessageDialog(null, "The file DATABASE.xlsx does not exist in the Documents folder.");
+        return;
+    }
 
-            for (int i = 1; i < rowCount; i++) { // Skip header row (i = 0)
-                Row row = sheet.getRow(i);
-                if (row == null) continue; // Skip empty rows
+    // Clear the existing list to avoid duplicates
+    employeeList.clear();
 
-                try {
-                    String employeeID = row.getCell(0).getStringCellValue();
-                    String firstName = row.getCell(1).getStringCellValue();
-                    String lastName = row.getCell(2).getStringCellValue();
-                    double baseSalary = row.getCell(3).getNumericCellValue();
-                    int hoursWorked = (int) row.getCell(4).getNumericCellValue();
-                    String position = row.getCell(5).getStringCellValue();
-                    double performanceRating = row.getCell(6).getNumericCellValue();
-                    String department = row.getCell(7).getStringCellValue();
-                    int age = (int) row.getCell(8).getNumericCellValue();
-                    String contactNumber = row.getCell(9).getStringCellValue();
-                    String address = row.getCell(10).getStringCellValue();
-                    String gender = row.getCell(11).getStringCellValue();
+    try (FileInputStream fileIn = new FileInputStream(fileToLoad); 
+         Workbook workbook = new XSSFWorkbook(fileIn)) {
+        Sheet sheet = workbook.getSheetAt(0);
+        int rowCount = sheet.getPhysicalNumberOfRows();
 
-                    // Create the Employee instance
-                    Employee emp = facade.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position, age, contactNumber, address, gender);
-                    
-                    // Add the Employee to the list
-                    employeeList.add(emp);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    // Log or handle individual row errors
-                }
+        for (int i = 1; i < rowCount; i++) { // Skip header row (i = 0)
+            Row row = sheet.getRow(i);
+            if (row == null) continue; // Skip empty rows
+
+            try {
+                String employeeID = row.getCell(0).getStringCellValue();
+                String firstName = row.getCell(1).getStringCellValue();
+                String lastName = row.getCell(2).getStringCellValue();
+                double baseSalary = row.getCell(3).getNumericCellValue();
+                int hoursWorked = (int) row.getCell(4).getNumericCellValue();
+                String position = row.getCell(5).getStringCellValue();
+                double performanceRating = row.getCell(6).getNumericCellValue();
+                String department = row.getCell(7).getStringCellValue();
+                int age = (int) row.getCell(8).getNumericCellValue();
+                String contactNumber = row.getCell(9).getStringCellValue();
+                String address = row.getCell(10).getStringCellValue();
+                String gender = row.getCell(11).getStringCellValue();
+
+                // Create the Employee instance
+                Employee emp = facade.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position, age, contactNumber, address, gender);
+                
+                // Add the Employee to the list
+                employeeList.add(emp);
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Log or handle individual row errors
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "An error occurred while loading the Excel file.");
         }
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "An error occurred while loading the Excel file.");
+    }
     }                 
     
 
@@ -236,6 +240,11 @@ public class EmployeeView extends javax.swing.JFrame {
         TF_fullName.setBorder(null);
         TF_fullName.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         TF_fullName.setFocusable(false);
+        TF_fullName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TF_fullNameActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -243,12 +252,13 @@ public class EmployeeView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(LogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(75, 75, 75)
-                            .addComponent(jLabel5)
-                            .addGap(2, 2, 2)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(LogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(2, 2, 2))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(94, 94, 94)
                         .addComponent(jLabel4))
@@ -572,21 +582,36 @@ public class EmployeeView extends javax.swing.JFrame {
         int index = findEmployeeIndex(employeeIDToUpdate);
 
         if (index != -1) {
-            // Update the employee at the found index
-            Employee emp = employeeList.get(index);
+        // Update the employee at the found index
+        Employee emp = employeeList.get(index);
 
+        boolean updated = false;
+        if (emp.getDetails().getAge() != age) {
             emp.getDetails().setAge(age);
+            updated = true;
+        }
+        if (!emp.getDetails().getContactNumber().equals(contactNumberText)) {
             emp.getDetails().setContactNumber(contactNumberText); // Store as String
+            updated = true;
+        }
+        if (!emp.getDetails().getAddress().equals(address)) {
             emp.getDetails().setAddress(address);
+            updated = true;
+        }
+        if (!emp.getDetails().getGender().equals(gender)) {
             emp.getDetails().setGender(gender);
+            updated = true;
+        }
 
-            // Optionally, update the list
-            employeeList.set(index, emp);
-
+        if (updated) {
+            dataChanged = true;
             JOptionPane.showMessageDialog(null, "Employee updated successfully.");
         } else {
-            JOptionPane.showMessageDialog(null, "Employee not found.");
+            JOptionPane.showMessageDialog(null, "No changes detected.");
         }
+    } else {
+        JOptionPane.showMessageDialog(null, "Employee not found.");
+    }
         //            System.out.println(employee.getEmployeeID() + " " + employee.getLastName());
         //                    for (Employee emp : employeeList) {
         //                        System.out.println("Employee ID: " + emp.getEmployeeID());
@@ -630,7 +655,9 @@ public class EmployeeView extends javax.swing.JFrame {
     }//GEN-LAST:event_TF_addActionPerformed
 
     private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
+        if (dataChanged) {
         SaveToDatabase();
+        }
         showLoginForm();
     }//GEN-LAST:event_LogOutActionPerformed
     
@@ -648,62 +675,68 @@ public class EmployeeView extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_jLabel5MousePressed
+
+    private void TF_fullNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_fullNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TF_fullNameActionPerformed
     private void SaveToDatabase() {                                           
-        String userHome = System.getProperty("user.home");
-        File documentsFolder = new File(userHome, "Documents");
-        File fileToSave = new File(documentsFolder, "DATABASE.xlsx");
+    String userHome = System.getProperty("user.home");
+    File documentsFolder = new File(userHome, "Documents");
+    File fileToSave = new File(documentsFolder, "DATABASE.xlsx");
 
-        // Ensure the parent directory exists
-        if (!documentsFolder.exists() && !documentsFolder.mkdirs()) {
-            JOptionPane.showMessageDialog(null, "Failed to create the directory for saving the file.");
-            return;
+    // Ensure the parent directory exists
+    if (!documentsFolder.exists() && !documentsFolder.mkdirs()) {
+        JOptionPane.showMessageDialog(null, "Failed to create the directory for saving the file.");
+        return;
+    }
+
+    try (Workbook workbook = new XSSFWorkbook()) {
+        Sheet sheet = workbook.createSheet("Employees");
+
+        // Create header row
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("Employee ID");
+        headerRow.createCell(1).setCellValue("First Name");
+        headerRow.createCell(2).setCellValue("Last Name");
+        headerRow.createCell(3).setCellValue("Base Salary");
+        headerRow.createCell(4).setCellValue("Hours Worked");
+        headerRow.createCell(5).setCellValue("Position");
+        headerRow.createCell(6).setCellValue("Performance Rating");
+        headerRow.createCell(7).setCellValue("Department");
+        headerRow.createCell(8).setCellValue("Age");
+        headerRow.createCell(9).setCellValue("Contact Number");
+        headerRow.createCell(10).setCellValue("Address");
+        headerRow.createCell(11).setCellValue("Gender");
+
+        // Populate the sheet with employee data
+        int rowNum = 1;
+        for (Employee emp : employeeList) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(emp.getEmployeeID());
+            row.createCell(1).setCellValue(emp.getFirstName());
+            row.createCell(2).setCellValue(emp.getLastName());
+            row.createCell(3).setCellValue(emp.getBaseSalary());
+            row.createCell(4).setCellValue(emp.getHoursWorked());
+            row.createCell(5).setCellValue(emp.getPosition());
+            row.createCell(6).setCellValue(emp.getPerformanceRating());
+            row.createCell(7).setCellValue(emp.getDepartment());
+            row.createCell(8).setCellValue(emp.getDetails().getAge());
+            row.createCell(9).setCellValue(emp.getDetails().getContactNumber());
+            row.createCell(10).setCellValue(emp.getDetails().getAddress());
+            row.createCell(11).setCellValue(emp.getDetails().getGender());
         }
 
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Employees");
-
-            // Create header row
-            Row headerRow = sheet.createRow(0);
-            headerRow.createCell(0).setCellValue("Employee ID");
-            headerRow.createCell(1).setCellValue("First Name");
-            headerRow.createCell(2).setCellValue("Last Name");
-            headerRow.createCell(3).setCellValue("Base Salary");
-            headerRow.createCell(4).setCellValue("Hours Worked");
-            headerRow.createCell(5).setCellValue("Position");
-            headerRow.createCell(6).setCellValue("Performance Rating");
-            headerRow.createCell(7).setCellValue("Department");
-            headerRow.createCell(8).setCellValue("Age");
-            headerRow.createCell(9).setCellValue("Contact Number");
-            headerRow.createCell(10).setCellValue("Address");
-            headerRow.createCell(11).setCellValue("Gender");
-
-            // Populate the sheet with employee data
-            int rowNum = 1;
-            for (Employee emp : employeeList) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(emp.getEmployeeID());
-                row.createCell(1).setCellValue(emp.getFirstName());
-                row.createCell(2).setCellValue(emp.getLastName());
-                row.createCell(3).setCellValue(emp.getBaseSalary());
-                row.createCell(4).setCellValue(emp.getHoursWorked());
-                row.createCell(5).setCellValue(emp.getPosition());
-                row.createCell(6).setCellValue(emp.getPerformanceRating());
-                row.createCell(7).setCellValue(emp.getDepartment());
-                row.createCell(8).setCellValue(emp.getDetails().getAge());
-                row.createCell(9).setCellValue(emp.getDetails().getContactNumber());
-                row.createCell(10).setCellValue(emp.getDetails().getAddress());
-                row.createCell(11).setCellValue(emp.getDetails().getGender());
-            }
-
-            try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
-                workbook.write(fileOut);
-            }
-
-            
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "An error occurred while saving the Excel file.");
-            e.printStackTrace();
+        // Save the workbook to the file
+        try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
+            workbook.write(fileOut);
         }
+
+       
+
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "An error occurred while saving the Excel file.");
+        e.printStackTrace();
+    }
     }         
     /**
      * @param args the command line arguments
