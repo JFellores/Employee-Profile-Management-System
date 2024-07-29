@@ -709,29 +709,30 @@ public class EmployeeView extends javax.swing.JFrame {
                 }
             }
 
-            // Calculate seconds worked if checkInTime is found
-            int secondsWorked = 0;
+            // Calculate hours worked if checkInTime is found
+            int hoursWorked = (int) 0.0;
             if (checkInTime != null) {
                 long durationMillis = now.getTime() - checkInTime.getTime();
-                secondsWorked = (int) (durationMillis / 1000); // Convert milliseconds to seconds
+                hoursWorked = (int) (durationMillis / 3600000.0); // Convert milliseconds to hours
             }
 
-            saveCheckInData(employeeID, false, null, now, secondsWorked);
-            updateEmployeeHoursWorked(employeeID, secondsWorked);
+            saveCheckInData(employeeID, false, null, now, hoursWorked);
+            updateEmployeeHoursWorked(employeeID, hoursWorked);
             // Update the button text
             CheckIn.setText("CHECK IN");
             CheckIn.setForeground(new java.awt.Color(15, 137, 61));
         } else {
             // Checking in
             saveCheckInData(employeeID, true, now, null, 0);
-            
+
             // Update the button text
             CheckIn.setText("CHECK OUT");
             CheckIn.setForeground(new java.awt.Color(255, 0, 0));
         }
+
     }//GEN-LAST:event_CheckInActionPerformed
     
-    private void saveCheckInData(String employeeID, boolean checkedIn, Date checkInTime, Date checkOutTime, int secondsWorked) {
+    private void saveCheckInData(String employeeID, boolean checkedIn, Date checkInTime, Date checkOutTime, int hoursWorked) {
         String userHome = System.getProperty("user.home");
         File documentsFolder = new File(userHome, "Documents");
         File fileToSave = new File(documentsFolder, "checkIn.xlsx");
@@ -759,7 +760,7 @@ public class EmployeeView extends javax.swing.JFrame {
             headerRow.createCell(1).setCellValue("Checked In");
             headerRow.createCell(2).setCellValue("Check In Time");
             headerRow.createCell(3).setCellValue("Check Out Time");
-            headerRow.createCell(4).setCellValue("Seconds Worked");
+            headerRow.createCell(4).setCellValue("Hours Worked");
         }
 
         boolean rowExists = false;
@@ -776,7 +777,7 @@ public class EmployeeView extends javax.swing.JFrame {
                         row.createCell(2, CellType.STRING).setCellValue("");
                     }
                     row.createCell(3, CellType.STRING).setCellValue(checkOutTime != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(checkOutTime) : "");
-                    row.createCell(4, CellType.NUMERIC).setCellValue(secondsWorked); // Update seconds worked
+                    row.createCell(4, CellType.NUMERIC).setCellValue(hoursWorked); // Update seconds worked
                 }
                 break;
             }
@@ -789,7 +790,7 @@ public class EmployeeView extends javax.swing.JFrame {
             row.createCell(1).setCellValue(checkedIn);
             row.createCell(2, CellType.STRING).setCellValue(checkedIn ? (checkInTime != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(checkInTime) : "") : "");
             row.createCell(3, CellType.STRING).setCellValue(!checkedIn ? (checkOutTime != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(checkOutTime) : "") : "");
-            row.createCell(4, CellType.NUMERIC).setCellValue(!checkedIn ? secondsWorked : 0); // Update seconds worked
+            row.createCell(4, CellType.NUMERIC).setCellValue(!checkedIn ? hoursWorked : 0); // Update seconds worked
         }
 
         // Save the workbook to file
