@@ -12,6 +12,6 @@ public class CustomerService implements EmployeeFactory {
     @Override
     public Employee createEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, EmployeeDetails details) {
         return new Employee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department,
-                            new ContractualSalaryStrategy(), new PerformanceClassificationStrategy(), "Customer Service", details);
+                            new PartTimeSalaryStrategy(), new PerformanceClassificationStrategy(), "Customer Service", details);
     }
 }

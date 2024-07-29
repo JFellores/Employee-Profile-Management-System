@@ -13,10 +13,15 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -58,13 +63,15 @@ public class EmployeeView extends javax.swing.JFrame {
         
         LoadEmployees();
         accessEmployeeData(employee.getEmployeeID());
-      
+        loadCheckInStatus(employee.getEmployeeID());
+
     }
+    
     public void accessEmployeeData(String employeeID) {
         int index = findEmployeeIndex(employeeID);
         if (index != -1) {
             Employee emp = employeeList.get(index);
-            // Now you can access the employee's data
+            
             TF_empID1.setText(emp.getEmployeeID());
             TF_empID2.setText(emp.getFirstName());
             TF_empID.setText(emp.getLastName());
@@ -103,56 +110,56 @@ public class EmployeeView extends javax.swing.JFrame {
     }
     
     private void LoadEmployees() {                                           
-       String userHome = System.getProperty("user.home");
-    File documentsFolder = new File(userHome, "Documents");
-    File fileToLoad = new File(documentsFolder, "DATABASE.xlsx");
-    facade = new EmployeeManagementFacade();
+        String userHome = System.getProperty("user.home");
+        File documentsFolder = new File(userHome, "Documents");
+        File fileToLoad = new File(documentsFolder, "DATABASE.xlsx");
+        
 
-    if (!fileToLoad.exists()) {
-        JOptionPane.showMessageDialog(null, "The file DATABASE.xlsx does not exist in the Documents folder.");
-        return;
-    }
-
-    // Clear the existing list to avoid duplicates
-    employeeList.clear();
-
-    try (FileInputStream fileIn = new FileInputStream(fileToLoad); 
-         Workbook workbook = new XSSFWorkbook(fileIn)) {
-        Sheet sheet = workbook.getSheetAt(0);
-        int rowCount = sheet.getPhysicalNumberOfRows();
-
-        for (int i = 1; i < rowCount; i++) { // Skip header row (i = 0)
-            Row row = sheet.getRow(i);
-            if (row == null) continue; // Skip empty rows
-
-            try {
-                String employeeID = row.getCell(0).getStringCellValue();
-                String firstName = row.getCell(1).getStringCellValue();
-                String lastName = row.getCell(2).getStringCellValue();
-                double baseSalary = row.getCell(3).getNumericCellValue();
-                int hoursWorked = (int) row.getCell(4).getNumericCellValue();
-                String position = row.getCell(5).getStringCellValue();
-                double performanceRating = row.getCell(6).getNumericCellValue();
-                String department = row.getCell(7).getStringCellValue();
-                int age = (int) row.getCell(8).getNumericCellValue();
-                String contactNumber = row.getCell(9).getStringCellValue();
-                String address = row.getCell(10).getStringCellValue();
-                String gender = row.getCell(11).getStringCellValue();
-
-                // Create the Employee instance
-                Employee emp = facade.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position, age, contactNumber, address, gender);
-                
-                // Add the Employee to the list
-                employeeList.add(emp);
-            } catch (Exception e) {
-                e.printStackTrace();
-                // Log or handle individual row errors
-            }
+        if (!fileToLoad.exists()) {
+            JOptionPane.showMessageDialog(null, "The file DATABASE.xlsx does not exist in the Documents folder.");
+            return;
         }
-    } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "An error occurred while loading the Excel file.");
-    }
+
+        // Clear the existing list to avoid duplicates
+        employeeList.clear();
+
+        try (FileInputStream fileIn = new FileInputStream(fileToLoad); 
+             Workbook workbook = new XSSFWorkbook(fileIn)) {
+            Sheet sheet = workbook.getSheetAt(0);
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for (int i = 1; i < rowCount; i++) { // Skip header row (i = 0)
+                Row row = sheet.getRow(i);
+                if (row == null) continue; // Skip empty rows
+
+                try {
+                    String employeeID = row.getCell(0).getStringCellValue();
+                    String firstName = row.getCell(1).getStringCellValue();
+                    String lastName = row.getCell(2).getStringCellValue();
+                    double baseSalary = row.getCell(3).getNumericCellValue();
+                    int hoursWorked = (int) row.getCell(4).getNumericCellValue();
+                    String position = row.getCell(5).getStringCellValue();
+                    double performanceRating = row.getCell(6).getNumericCellValue();
+                    String department = row.getCell(7).getStringCellValue();
+                    int age = (int) row.getCell(8).getNumericCellValue();
+                    String contactNumber = row.getCell(9).getStringCellValue();
+                    String address = row.getCell(10).getStringCellValue();
+                    String gender = row.getCell(11).getStringCellValue();
+
+                    // Create the Employee instance
+                    Employee emp = facade.createEmployee(employeeID, firstName, lastName, baseSalary, hoursWorked, performanceRating, department, position, age, contactNumber, address, gender);
+
+                    // Add the Employee to the list
+                    employeeList.add(emp);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // Log or handle individual row errors
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "An error occurred while loading the Excel file.");
+        }
     }                 
     
 
@@ -550,82 +557,65 @@ public class EmployeeView extends javax.swing.JFrame {
     }//GEN-LAST:event_kGradientPanel1MousePressed
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
-        // Retrieve the new values from the text fields
-        String ageText = TF_age.getText();
-        String contactNumberText = TF_cont.getText();
-        String address = TF_add.getText();
-        String gender = TF_sex.getText();
+            // Retrieve the new values from the text fields
+            String ageText = TF_age.getText();
+            String contactNumberText = TF_cont.getText();
+            String address = TF_add.getText();
+            String gender = TF_sex.getText();
 
-        // Validate and convert the age
-        int age;
-        try {
-            age = Integer.parseInt(ageText);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Invalid age value. Please enter a valid number.");
-            return;
-        }
+            // Validate and convert the age
+            int age;
+            try {
+                age = Integer.parseInt(ageText);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Invalid age value. Please enter a valid number.");
+                return;
+            }
 
-        // Validate contact number
-        if (!isValidContactNumber(contactNumberText)) {
-            JOptionPane.showMessageDialog(null, "Invalid contact number. It must be exactly 11 digits and start with '09'.");
-            return;
-        }
+            // Validate contact number
+            if (!isValidContactNumber(contactNumberText)) {
+                JOptionPane.showMessageDialog(null, "Invalid contact number. It must be exactly 11 digits and start with '09'.");
+                return;
+            }
 
-        // Retrieve the employee ID from the text field
-        String employeeIDToUpdate = TF_empID1.getText(); // Assuming TF_empID1 contains the employee ID
+            // Retrieve the employee ID from the text field
+            String employeeIDToUpdate = TF_empID1.getText(); // Assuming TF_empID1 contains the employee ID
 
-        // Find the index of the employee with the given ID
-        int index = findEmployeeIndex(employeeIDToUpdate);
+            // Find the index of the employee with the given ID
+            int index = findEmployeeIndex(employeeIDToUpdate);
 
-        if (index != -1) {
-        // Update the employee at the found index
-        Employee emp = employeeList.get(index);
+            if (index != -1) {
+            // Update the employee at the found index
+            Employee emp = employeeList.get(index);
 
-        boolean updated = false;
-        if (emp.getDetails().getAge() != age) {
-            emp.getDetails().setAge(age);
-            updated = true;
-        }
-        if (!emp.getDetails().getContactNumber().equals(contactNumberText)) {
-            emp.getDetails().setContactNumber(contactNumberText); // Store as String
-            updated = true;
-        }
-        if (!emp.getDetails().getAddress().equals(address)) {
-            emp.getDetails().setAddress(address);
-            updated = true;
-        }
-        if (!emp.getDetails().getGender().equals(gender)) {
-            emp.getDetails().setGender(gender);
-            updated = true;
-        }
+            boolean updated = false;
+            if (emp.getDetails().getAge() != age) {
+                emp.getDetails().setAge(age);
+                updated = true;
+            }
+            if (!emp.getDetails().getContactNumber().equals(contactNumberText)) {
+                emp.getDetails().setContactNumber(contactNumberText); // Store as String
+                updated = true;
+            }
+            if (!emp.getDetails().getAddress().equals(address)) {
+                emp.getDetails().setAddress(address);
+                updated = true;
+            }
+            if (!emp.getDetails().getGender().equals(gender)) {
+                emp.getDetails().setGender(gender);
+                updated = true;
+            }
 
-        if (updated) {
-            dataChanged = true;
-            JOptionPane.showMessageDialog(null, "Employee updated successfully.");
+            if (updated) {
+                dataChanged = true;
+                JOptionPane.showMessageDialog(null, "Employee updated successfully.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No changes detected.");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "No changes detected.");
+            JOptionPane.showMessageDialog(null, "Employee not found.");
         }
-    } else {
-        JOptionPane.showMessageDialog(null, "Employee not found.");
-    }
-        //            System.out.println(employee.getEmployeeID() + " " + employee.getLastName());
-        //                    for (Employee emp : employeeList) {
-        //                        System.out.println("Employee ID: " + emp.getEmployeeID());
-        //                        System.out.println("First Name: " + emp.getFirstName());
-        //                        System.out.println("Last Name: " + emp.getLastName());
-        //                        System.out.println("Base Salary: " + emp.getBaseSalary());
-        //                        System.out.println("Hours Worked: " + emp.getHoursWorked());
-        //                        System.out.println("Position: " + emp.getPosition());
-        //                        System.out.println("Performance Rating: " + emp.getPerformanceRating());
-        //                        System.out.println("Department: " + emp.getDepartment());
-        //                        System.out.println("Age: " + emp.getDetails().getAge());
-        //                        System.out.println("Contact Number: " + emp.getDetails().getContactNumber());
-        //                        System.out.println("Address: " + emp.getDetails().getAddress());
-        //                        System.out.println("Gender: " + emp.getDetails().getGender());
-        //                        System.out.println(); // Empty line for better readability
-        //                }
-        //                    
-        //                 System.out.println();
+
     }//GEN-LAST:event_EditButtonActionPerformed
     private boolean isValidContactNumber(String contactNumber) {
         // Check if contact number is exactly 11 digits and starts with "09"
@@ -651,84 +641,279 @@ public class EmployeeView extends javax.swing.JFrame {
     }//GEN-LAST:event_TF_addActionPerformed
 
     private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
-        if (dataChanged) {
-        SaveToDatabase();
-        }
+        SaveToDatabase();    
         showLoginForm();
     }//GEN-LAST:event_LogOutActionPerformed
     
     private void CheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CheckInActionPerformed
-         if (CheckIn.getText().equals("CHECK IN")) {
-                    CheckIn.setText("CHECK OUT");
-                    CheckIn.setForeground(new java.awt.Color(255, 0, 0)); 
-                } else {
-                    CheckIn.setText("CHECK IN");
-                    CheckIn.setForeground(new java.awt.Color(15, 137, 15)); 
-                }
-    }//GEN-LAST:event_CheckInActionPerformed
+        boolean isCheckingIn = CheckIn.getText().equals("CHECK IN");
+        String employeeID = TF_empID1.getText(); // Adjust according to your employee ID field
+        Date now = new Date();
 
+        if (!isCheckingIn) {
+            // If checking out, find the existing check-in record and get the check-in time
+            String userHome = System.getProperty("user.home");
+            File documentsFolder = new File(userHome, "Documents");
+            File fileToLoad = new File(documentsFolder, "checkIn.xlsx");
+
+            Date checkInTime = null;
+            if (fileToLoad.exists()) {
+                try (FileInputStream fileIn = new FileInputStream(fileToLoad);
+                     Workbook workbook = new XSSFWorkbook(fileIn)) {
+                    Sheet sheet = workbook.getSheetAt(0);
+                    int rowCount = sheet.getPhysicalNumberOfRows();
+
+                    for (int i = 1; i < rowCount; i++) { // Skip header row (i = 0)
+                        Row row = sheet.getRow(i);
+                        if (row == null) continue; // Skip empty rows
+
+                        String id = row.getCell(0).getStringCellValue();
+                        if (id.equals(employeeID)) {
+                            Cell checkInCell = row.getCell(2);
+                            if (checkInCell != null) {
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                if (checkInCell.getCellType() == CellType.STRING) {
+                                    String cellValue = checkInCell.getStringCellValue();
+                                    if (!cellValue.isEmpty()) {
+                                        try {
+                                            checkInTime = dateFormat.parse(cellValue);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace(); // Handle parse exception
+                                        }
+                                    }
+                                } else if (checkInCell.getCellType() == CellType.NUMERIC) {
+                                    checkInTime = checkInCell.getDateCellValue();
+                                }
+                            }
+                            break;
+                        }
+                    }
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "An error occurred while loading the Excel file.");
+                    e.printStackTrace();
+                }
+            }
+
+            // Calculate seconds worked if checkInTime is found
+            int secondsWorked = 0;
+            if (checkInTime != null) {
+                long durationMillis = now.getTime() - checkInTime.getTime();
+                secondsWorked = (int) (durationMillis / 1000); // Convert milliseconds to seconds
+            }
+
+            saveCheckInData(employeeID, false, null, now, secondsWorked);
+            updateEmployeeHoursWorked(employeeID, secondsWorked);
+            // Update the button text
+            CheckIn.setText("CHECK IN");
+            CheckIn.setForeground(new java.awt.Color(15, 137, 61));
+        } else {
+            // Checking in
+            saveCheckInData(employeeID, true, now, null, 0);
+            
+            // Update the button text
+            CheckIn.setText("CHECK OUT");
+            CheckIn.setForeground(new java.awt.Color(255, 0, 0));
+        }
+    }//GEN-LAST:event_CheckInActionPerformed
+    
+    private void saveCheckInData(String employeeID, boolean checkedIn, Date checkInTime, Date checkOutTime, int secondsWorked) {
+        String userHome = System.getProperty("user.home");
+        File documentsFolder = new File(userHome, "Documents");
+        File fileToSave = new File(documentsFolder, "checkIn.xlsx");
+
+        Workbook workbook;
+        Sheet sheet;
+
+        // Create or open the workbook
+        if (fileToSave.exists()) {
+            try (FileInputStream fileIn = new FileInputStream(fileToSave)) {
+                workbook = new XSSFWorkbook(fileIn);
+                sheet = workbook.getSheetAt(0);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "An error occurred while opening the Excel file.");
+                e.printStackTrace();
+                return;
+            }
+        } else {
+            workbook = new XSSFWorkbook();
+            sheet = workbook.createSheet("CheckIn");
+
+            // Write header row
+            Row headerRow = sheet.createRow(0);
+            headerRow.createCell(0).setCellValue("Employee ID");
+            headerRow.createCell(1).setCellValue("Checked In");
+            headerRow.createCell(2).setCellValue("Check In Time");
+            headerRow.createCell(3).setCellValue("Check Out Time");
+            headerRow.createCell(4).setCellValue("Seconds Worked");
+        }
+
+        boolean rowExists = false;
+        for (Row row : sheet) {
+            Cell cell = row.getCell(0);
+            if (cell != null && cell.getStringCellValue().equals(employeeID)) {
+                rowExists = true;
+                // Update existing row
+                row.getCell(1).setCellValue(checkedIn);
+                if (checkedIn) {
+                    row.createCell(2, CellType.STRING).setCellValue(checkInTime != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(checkInTime) : "");
+                } else {
+                    if (row.getCell(2) == null) {
+                        row.createCell(2, CellType.STRING).setCellValue("");
+                    }
+                    row.createCell(3, CellType.STRING).setCellValue(checkOutTime != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(checkOutTime) : "");
+                    row.createCell(4, CellType.NUMERIC).setCellValue(secondsWorked); // Update seconds worked
+                }
+                break;
+            }
+        }
+
+        if (!rowExists) {
+            // Add new row if it doesn't exist
+            Row row = sheet.createRow(sheet.getPhysicalNumberOfRows());
+            row.createCell(0).setCellValue(employeeID);
+            row.createCell(1).setCellValue(checkedIn);
+            row.createCell(2, CellType.STRING).setCellValue(checkedIn ? (checkInTime != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(checkInTime) : "") : "");
+            row.createCell(3, CellType.STRING).setCellValue(!checkedIn ? (checkOutTime != null ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(checkOutTime) : "") : "");
+            row.createCell(4, CellType.NUMERIC).setCellValue(!checkedIn ? secondsWorked : 0); // Update seconds worked
+        }
+
+        // Save the workbook to file
+        try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
+            workbook.write(fileOut);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "An error occurred while saving the Excel file.");
+            e.printStackTrace();
+        }
+        }
+
+
+    private void loadCheckInStatus(String employeeID) {
+        String userHome = System.getProperty("user.home");
+        File documentsFolder = new File(userHome, "Documents");
+        File fileToLoad = new File(documentsFolder, "checkIn.xlsx");
+
+        if (!fileToLoad.exists()) {
+            return; // No check-in data to load
+        }
+
+        try (FileInputStream fileIn = new FileInputStream(fileToLoad);
+             Workbook workbook = new XSSFWorkbook(fileIn)) {
+            Sheet sheet = workbook.getSheet("CheckIn");
+            int rowCount = sheet.getPhysicalNumberOfRows();
+
+            for (int i = 1; i < rowCount; i++) { // Skip header row (i = 0)
+                Row row = sheet.getRow(i);
+                if (row == null) continue; // Skip empty rows
+
+                try {
+                    String id = row.getCell(0).getStringCellValue();
+                    if (id.equals(employeeID)) {
+                        boolean checkedIn = row.getCell(1).getBooleanCellValue();
+                        String checkInTime = row.getCell(2).getStringCellValue();
+                        String checkOutTime = row.getCell(3).getStringCellValue();
+
+                        // Set the check-in status and update the button text
+                        if (checkedIn) {
+                            CheckIn.setText("CHECK OUT");
+                            CheckIn.setForeground(new java.awt.Color(255, 0, 0));
+                        } else {
+                            CheckIn.setText("CHECK IN");
+                            CheckIn.setForeground(new java.awt.Color(15, 137, 61));
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // Log or handle individual row errors
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "An error occurred while loading the check-in status file.");
+        }
+    }
+    public void updateEmployeeHoursWorked(String employeeID, int additionalSeconds) {
+        int index = findEmployeeIndex(employeeID); // Method to find the index of the employee
+        if (index != -1) {
+            Employee emp = employeeList.get(index);
+
+            // Calculate the new hours worked
+            int currentHoursWorked = emp.getHoursWorked();
+            int newHoursWorked = currentHoursWorked + additionalSeconds;
+
+            // Update the employee's hours worked
+            emp.setHoursWorked(newHoursWorked);
+
+            // Refresh the UI fields
+            TF_HW.setText(Integer.toString(emp.getHoursWorked()));
+
+
+        } else {
+            // Employee not found
+            JOptionPane.showMessageDialog(null, "Employee not found.");
+        }
+    }
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
         // TODO add your handling code here:
 
     }//GEN-LAST:event_jLabel5MousePressed
     private void SaveToDatabase() {                                           
-    String userHome = System.getProperty("user.home");
-    File documentsFolder = new File(userHome, "Documents");
-    File fileToSave = new File(documentsFolder, "DATABASE.xlsx");
+        String userHome = System.getProperty("user.home");
+        File documentsFolder = new File(userHome, "Documents");
+        File fileToSave = new File(documentsFolder, "DATABASE.xlsx");
 
-    // Ensure the parent directory exists
-    if (!documentsFolder.exists() && !documentsFolder.mkdirs()) {
-        JOptionPane.showMessageDialog(null, "Failed to create the directory for saving the file.");
-        return;
-    }
-
-    try (Workbook workbook = new XSSFWorkbook()) {
-        Sheet sheet = workbook.createSheet("Employees");
-
-        // Create header row
-        Row headerRow = sheet.createRow(0);
-        headerRow.createCell(0).setCellValue("Employee ID");
-        headerRow.createCell(1).setCellValue("First Name");
-        headerRow.createCell(2).setCellValue("Last Name");
-        headerRow.createCell(3).setCellValue("Base Salary");
-        headerRow.createCell(4).setCellValue("Hours Worked");
-        headerRow.createCell(5).setCellValue("Position");
-        headerRow.createCell(6).setCellValue("Performance Rating");
-        headerRow.createCell(7).setCellValue("Department");
-        headerRow.createCell(8).setCellValue("Age");
-        headerRow.createCell(9).setCellValue("Contact Number");
-        headerRow.createCell(10).setCellValue("Address");
-        headerRow.createCell(11).setCellValue("Gender");
-
-        // Populate the sheet with employee data
-        int rowNum = 1;
-        for (Employee emp : employeeList) {
-            Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(emp.getEmployeeID());
-            row.createCell(1).setCellValue(emp.getFirstName());
-            row.createCell(2).setCellValue(emp.getLastName());
-            row.createCell(3).setCellValue(emp.getBaseSalary());
-            row.createCell(4).setCellValue(emp.getHoursWorked());
-            row.createCell(5).setCellValue(emp.getPosition());
-            row.createCell(6).setCellValue(emp.getPerformanceRating());
-            row.createCell(7).setCellValue(emp.getDepartment());
-            row.createCell(8).setCellValue(emp.getDetails().getAge());
-            row.createCell(9).setCellValue(emp.getDetails().getContactNumber());
-            row.createCell(10).setCellValue(emp.getDetails().getAddress());
-            row.createCell(11).setCellValue(emp.getDetails().getGender());
+        // Ensure the parent directory exists
+        if (!documentsFolder.exists() && !documentsFolder.mkdirs()) {
+            JOptionPane.showMessageDialog(null, "Failed to create the directory for saving the file.");
+            return;
         }
 
-        // Save the workbook to the file
-        try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
-            workbook.write(fileOut);
+        try (Workbook workbook = new XSSFWorkbook()) {
+            Sheet sheet = workbook.createSheet("Employees");
+
+            // Create header row
+            Row headerRow = sheet.createRow(0);
+            headerRow.createCell(0).setCellValue("Employee ID");
+            headerRow.createCell(1).setCellValue("First Name");
+            headerRow.createCell(2).setCellValue("Last Name");
+            headerRow.createCell(3).setCellValue("Base Salary");
+            headerRow.createCell(4).setCellValue("Hours Worked");
+            headerRow.createCell(5).setCellValue("Position");
+            headerRow.createCell(6).setCellValue("Performance Rating");
+            headerRow.createCell(7).setCellValue("Department");
+            headerRow.createCell(8).setCellValue("Age");
+            headerRow.createCell(9).setCellValue("Contact Number");
+            headerRow.createCell(10).setCellValue("Address");
+            headerRow.createCell(11).setCellValue("Gender");
+
+            // Populate the sheet with employee data
+            int rowNum = 1;
+            for (Employee emp : employeeList) {
+                Row row = sheet.createRow(rowNum++);
+                row.createCell(0).setCellValue(emp.getEmployeeID());
+                row.createCell(1).setCellValue(emp.getFirstName());
+                row.createCell(2).setCellValue(emp.getLastName());
+                row.createCell(3).setCellValue(emp.getBaseSalary());
+                row.createCell(4).setCellValue(emp.getHoursWorked());
+                row.createCell(5).setCellValue(emp.getPosition());
+                row.createCell(6).setCellValue(emp.getPerformanceRating());
+                row.createCell(7).setCellValue(emp.getDepartment());
+                row.createCell(8).setCellValue(emp.getDetails().getAge());
+                row.createCell(9).setCellValue(emp.getDetails().getContactNumber());
+                row.createCell(10).setCellValue(emp.getDetails().getAddress());
+                row.createCell(11).setCellValue(emp.getDetails().getGender());
+            }
+
+            // Save the workbook to the file
+            try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
+                workbook.write(fileOut);
+            }
+
+
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "An error occurred while saving the Excel file.");
+            e.printStackTrace();
         }
-
-       
-
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(null, "An error occurred while saving the Excel file.");
-        e.printStackTrace();
-    }
     }         
     /**
      * @param args the command line arguments
