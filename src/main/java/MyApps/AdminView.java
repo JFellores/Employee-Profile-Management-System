@@ -77,24 +77,25 @@ public class AdminView extends javax.swing.JFrame {
         EmployeeTable.getTableHeader().setBackground(new Color(88,74,169));
         EmployeeTable.getTableHeader().setForeground(new Color(255,255,255));
         EmployeeTable.setRowHeight(25);
+        EmployeeTable.setDefaultEditor(Object.class,null);
         
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         changeTable(EmployeeTable, 5);
     }
     
-    private void filter(String query) {
-        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(model);
-        EmployeeTable.setRowSorter(tr);
-
-        if (query != null && !query.equals("None") && !query.trim().isEmpty()) {
-            // Apply the filter with the provided query
-            tr.setRowFilter(RowFilter.regexFilter(query));
-        } else {
-            // Reset the filter to show all rows
-            tr.setRowFilter(null);
-        }
-    }
+//    private void filter(String query) {
+//        DefaultTableModel model = (DefaultTableModel) EmployeeTable.getModel();
+//        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<>(model);
+//        EmployeeTable.setRowSorter(tr);
+//
+//        if (query != null && !query.equals("None") && !query.trim().isEmpty()) {
+//            // Apply the filter with the provided query
+//            tr.setRowFilter(RowFilter.regexFilter(query));
+//        } else {
+//            // Reset the filter to show all rows
+//            tr.setRowFilter(null);
+//        }
+//    }
     
     public void changeTable(JTable table, int column_index) {
         table.getColumnModel().getColumn(column_index).setCellRenderer(new DefaultTableCellRenderer() {
@@ -786,6 +787,9 @@ public class AdminView extends javax.swing.JFrame {
         File documentsFolder = new File(userHome, "Documents");
         File fileToLoad = new File(documentsFolder, "DATABASE.xlsx");
 
+        facade.clearEmployees();
+        
+        
         if (!fileToLoad.exists()) {
             JOptionPane.showMessageDialog(null, "The file DATABASE.xlsx does not exist in the Documents folder.");
             return;
@@ -830,9 +834,6 @@ public class AdminView extends javax.swing.JFrame {
                     employee.classifyPerformance(),
                 });
             }
-
-            
-
         } catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "An error occurred while loading the Excel file.");
@@ -907,6 +908,7 @@ public class AdminView extends javax.swing.JFrame {
 
             // Add data rows
             ArrayList<Employee> employees = facade.getAllEmployees(); // Fetch employees from the facade
+            
             int rowIndex = 1; // Start from row 1 (row 0 is for headers)
 
             for (Employee employee : employees) {
@@ -935,7 +937,6 @@ public class AdminView extends javax.swing.JFrame {
                     dataRow.createCell(11).setCellValue("N/A");
                 }
             }
-
             // Resize columns to fit the content
             for (int col = 0; col < headers.length; col++) {
                 sheet.autoSizeColumn(col);
@@ -944,14 +945,12 @@ public class AdminView extends javax.swing.JFrame {
             // Write the new workbook to the file
             try (FileOutputStream fileOut = new FileOutputStream(fileToSave)) {
                 workbook.write(fileOut);
-               
             }
-
-        } catch (IOException e) {
+        } 
+        catch (IOException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "An error occurred while saving the Excel file.");
         }
-
     }//GEN-LAST:event_SaveButtonActionPerformed
 
     private void LogOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutButtonActionPerformed

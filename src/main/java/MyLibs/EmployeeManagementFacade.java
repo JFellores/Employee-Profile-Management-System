@@ -61,7 +61,10 @@ public class EmployeeManagementFacade {
     public void removeEmployee(String employeeID) {
         employees.removeIf(employee -> employee.getEmployeeID().equals(employeeID));
     }
-
+    
+    public void clearEmployees (){
+        employees.clear();
+    }
     public void updateEmployee(String employeeID, String firstName, String lastName, double baseSalary, int hoursWorked, double performanceRating, String department, String position) {
         Employee employee = getEmployeeById(employeeID);
 
